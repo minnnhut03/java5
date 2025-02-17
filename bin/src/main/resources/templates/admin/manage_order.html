@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+<title>Quản Lý Đơn Hàng</title>
+<!-- Required meta tags -->
+<meta charset="utf-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+<!-- Bootstrap CSS v5.2.1 -->
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+	crossorigin="anonymous" />
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<link
+	href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css"
+	rel="stylesheet">
+<!-- Bootstrap CSS -->
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<!-- Bootstrap JS Bundle -->
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+<style>
+.list-group-item {
+	transition: all 0.3s ease-in-out;
+	border: none;
+	border-left: 4px solid transparent;
+}
+
+.list-group-item:hover {
+	background-color: rgba(0, 123, 255, 0.1);
+	border-left: 4px solid #007bff;
+	transform: scale(1.02);
+}
+</style>
+</head>
+
+<body>
+	<div class="d-flex">
+		<!-- Sidebar -->
+		<div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark"
+			style="width: 280px;">
+			<a href="index.html"
+				class="d-flex align-items-center mb-3 mb-md-0 text-white text-decoration-none">
+				<div
+					class="icon-container bg-warning rounded-circle d-flex justify-content-center align-items-center me-2"
+					style="width: 40px; height: 40px;">
+					<i class="bi bi-shop fs-4"></i>
+				</div> <span class="fs-5 fw-bold">Quản Lý Bán Giày</span>
+			</a>
+			<hr>
+			<ul class="nav nav-pills flex-column mb-auto">
+				<li class="nav-item"><a href="/admin" class="nav-link active"
+					aria-current="page"> <i class="bi bi-house-door me-2"></i>
+						Trang chủ
+				</a></li>
+				<hr>
+				<li><a href="/admin/product" class="nav-link text-white"> <i
+						class="bi bi-bag me-2"></i> Quản Lý Sản Phẩm
+				</a></li>
+				<hr>
+				<li><a href="/admin/caterory" class="nav-link text-white">
+						<i class="bi bi-tags me-2"></i> Quản Lý Danh Mục
+				</a></li>
+				<hr>
+				<li><a href="/admin/order" class="nav-link text-white"> <i
+						class="bi bi-card-checklist me-2"></i> Quản Lý Đơn Hàng
+				</a></li>
+				<hr>
+				<li><a href="/admin/account" class="nav-link text-white"> <i
+						class="bi bi-people me-2"></i> Quản Lý Khách Hàng
+				</a></li>
+				<hr>
+			</ul>
+			<div class="dropdown">
+				<a href="#"
+					class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+					id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+					<img src="https://github.com/mdo.png" alt="" width="32" height="32"
+					class="rounded-circle me-2"> <strong>Admin</strong>
+				</a>
+				<ul class="dropdown-menu dropdown-menu-dark text-small shadow"
+					aria-labelledby="dropdownUser1">
+					<li><a class="dropdown-item" href="#">Cài đặt</a></li>
+					<li><a class="dropdown-item" href="#">Hồ sơ</a></li>
+					<li>
+						<hr class="dropdown-divider">
+					</li>
+					<li><a class="dropdown-item" href="login.html">Đăng xuất</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="container-fluid p-4">
+			<h3 class="text-center">DANH SÁCH ĐƠN HÀNG</h3>
+			<hr>
+			<div class="alert alert-danger" style="display: none;"
+				id="error-message"></div>
+
+			<!-- Tìm kiếm và Thêm mới -->
+			<div class="d-flex justify-content-between align-items-center mb-3">
+				<!-- Nút thêm mới -->
+				<a href="/admin/order/add">
+					<button type="button" class="btn btn-primary">Thêm mới</button>
+				</a>
+
+				<!-- Form tìm kiếm -->
+				<form action="/admin/order/list" method="get" class="d-flex">
+					<input type="text" name="keyword" class="form-control me-2"
+						placeholder="Tìm kiếm theo ID hoặc trạng thái" value=""
+						style="width: 300px;">
+				</form>
+			</div>
+
+			<!-- Bảng danh sách đơn hàng -->
+			<table id="orderTable" class="table table-striped table-bordered">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>User ID</th>
+						<th>Trạng thái</th>
+						<th>Ngày tạo</th>
+						<th>Tổng tiền</th>
+						<th>Địa chỉ</th>
+						<th>Hành động</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>1</td>
+						<td>101</td>
+						<td><span class="badge bg-success text-dark">Hoàn
+								thành</span></td>
+						<td>2025-01-24</td>
+						<td>1,500,000 VND</td>
+						<td>
+							<button class="btn btn-secondary btn-sm"
+								onclick="showAddressDetails('Nguyễn Văn A', '0901234567', '123 Đường ABC, Quận 1, TP.HCM')">
+								Chi tiết</button>
+						</td>
+
+						<td><a href="/admin/order/edit">
+								<button class="btn btn-primary btn-sm" onclick="editOrder(1)">Sửa</button>
+						</a>
+							<button class="btn btn-danger btn-sm" onclick="removeOrder(1)">Xóa</button>
+							<button class="btn btn-secondary btn-sm"
+								onclick="showOrderDetails(1)">Chi tiết</button></td>
+					</tr>
+					<!-- Thêm các dòng dữ liệu khác tại đây -->
+				</tbody>
+			</table>
+
+			<!-- Phân trang -->
+			<nav aria-label="Page navigation">
+				<ul class="pagination justify-content-end">
+					<li class="page-item disabled"><a class="page-link"
+						href="/admin/order/list?page=0&keyword="> Previous </a></li>
+					<li class="page-item active"><a class="page-link"
+						href="/admin/order/list?page=1&keyword=">1</a></li>
+					<li class="page-item"><a class="page-link"
+						href="/admin/order/list?page=2&keyword=">2</a></li>
+					<li class="page-item"><a class="page-link"
+						href="/admin/order/list?page=3&keyword="> Next </a></li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+	<!-- Modal Chi Tiết Địa Chỉ -->
+	<div class="modal fade" id="AddressModal" tabindex="-1"
+		aria-labelledby="AddressModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="AddressModalLabel">Chi Tiết Địa
+						Chỉ</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<!-- Nội dung chi tiết địa chỉ -->
+					<p>
+						<strong>Tên khách hàng:</strong> <span id="customerName"></span>
+					</p>
+					<p>
+						<strong>Số điện thoại:</strong> <span id="phoneNumber"></span>
+					</p>
+					<p>
+						<strong>Địa chỉ:</strong> <span id="addressDetail"></span>
+					</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-bs-dismiss="modal">Đóng</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="OrderDetailModal" tabindex="-1"
+		aria-labelledby="OrderDetailModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="OrderDetailModalLabel">Chi Tiết
+						Đơn Hàng</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<!-- Bảng chi tiết đơn hàng -->
+					<table class="table table-bordered" id="orderDetailTable">
+						<thead>
+							<tr>
+								<th>ID Sản Phẩm</th>
+								<th>Giá</th>
+								<th>Số Lượng</th>
+								<th>Kích Cỡ</th>
+							</tr>
+						</thead>
+						<tbody>
+							<!-- Hàng chi tiết sẽ được thêm vào đây bằng JavaScript -->
+						</tbody>
+					</table>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-bs-dismiss="modal">Đóng</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Bootstrap JavaScript Libraries -->
+	<script
+		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+		integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+		crossorigin="anonymous"></script>
+
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+		integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script
+		src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+</body>
+<script>
+    function edit(id, name) {
+        $('#id').val(id);
+        $('#name').val(name);
+        $('#CategoryModal').modal('show');
+    }
+    function remove(id) {
+        $('#iddelete').val(id);
+        $('#deleteModal').modal('show');
+    }
+    // Hàm mở modal với dữ liệu chi tiết
+    function showAddressDetails(customerName, phoneNumber, address) {
+        document.getElementById('customerName').innerText = customerName;
+        document.getElementById('phoneNumber').innerText = phoneNumber;
+        document.getElementById('addressDetail').innerText = address;
+        var addressModal = new bootstrap.Modal(document.getElementById('AddressModal'));
+        addressModal.show();
+    }
+    function showOrderDetails(orderId) {
+        // Gửi AJAX để lấy chi tiết đơn hàng từ server
+        $.ajax({
+            url: '/api/order-details', // URL API để lấy thông tin chi tiết
+            method: 'GET',
+            data: { orderId: orderId }, // Gửi orderId lên server
+            success: function(response) {
+                // Xóa dữ liệu cũ trong bảng chi tiết
+                $('#orderDetailTable tbody').empty();
+
+                // Thêm dữ liệu mới vào bảng
+                response.forEach(detail => {
+                    const row = `
+                        <tr>
+                            <td>${detail.id_product}</td>
+                            <td>${detail.price}</td>
+                            <td>${detail.quantity}</td>
+                            <td>${detail.size}</td>
+                        </tr>
+                    `;
+                    $('#orderDetailTable tbody').append(row);
+                });
+
+                // Hiển thị modal chi tiết
+                var orderDetailModal = new bootstrap.Modal(document.getElementById('OrderDetailModal'));
+                orderDetailModal.show();
+            },
+            error: function(error) {
+                alert('Không thể tải chi tiết đơn hàng. Vui lòng thử lại!');
+                console.error(error);
+            }
+        });
+    }
+</script>
+
+</html>
