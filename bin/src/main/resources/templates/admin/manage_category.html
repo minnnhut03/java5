@@ -137,7 +137,8 @@
                         </td>
                         <td><img src="path/to/image.jpg" alt="Category Image" width="50" height="50"></td>
                         <td>
-                            <button class="btn btn-primary btn-sm">Sửa</button>
+                            <button class="btn btn-primary btn-sm" onclick="edit(1, 'Category Name')">Sửa</button>
+                            <button class="btn btn-danger btn-sm" onclick="remove(1)">Xóa</button>
                         </td>
                     </tr>
                     <!-- Additional rows will go here -->
@@ -168,32 +169,30 @@
             </nav>
         </div>
     </div>
-   <div class="modal fade" id="CategoryModal" tabindex="-1" aria-labelledby="CategoryModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="CategoryModalLabel">Thêm/Sửa danh mục</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <!-- Thanh trạng thái -->
-            <div id="statusMessage" class="alert d-none" role="alert"></div>
-            <form action="/admin/category/insert" method="post" id="categoryForm">
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="name" class="form-label">Tên danh mục</label>
-                        <input type="text" class="form-control" id="name" name="name" required>
-                        <input type="hidden" id="id" name="id" value="0">
+    <!-- Modal Thêm/Sửa -->
+    <div class="modal fade" id="CategoryModal" tabindex="-1" aria-labelledby="CategoryModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="CategoryModalLabel">Thêm/Sửa danh mục</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="/admin/category/insert" method="post">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Tên danh mục</label>
+                            <input type="text" class="form-control" id="name" name="name" required>
+                            <input type="hidden" id="id" name="id" value="0">
+                        </div>
                     </div>
-                </div>
-                thêm cái thẻ option trạng thái 
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                    <button type="submit" class="btn btn-primary">Lưu</button>
-                </div>
-            </form>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                        <button type="submit" class="btn btn-primary">Lưu</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</div>
     <!-- Modal Xóa -->
     <div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
@@ -228,5 +227,17 @@
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 </body>
+<script>
+    function edit(id, name) {
+        $('#id').val(id);
+        $('#name').val(name);
+        $('#CategoryModal').modal('show');
+    }
+    function remove(id) {
+        $('#iddelete').val(id);
+        $('#deleteModal').modal('show');
+    }
+
+</script>
 
 </html>

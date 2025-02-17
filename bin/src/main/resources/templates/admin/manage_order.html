@@ -107,6 +107,10 @@
 
 			<!-- Tìm kiếm và Thêm mới -->
 			<div class="d-flex justify-content-between align-items-center mb-3">
+				<!-- Nút thêm mới -->
+				<a href="/admin/order/add">
+					<button type="button" class="btn btn-primary">Thêm mới</button>
+				</a>
 
 				<!-- Form tìm kiếm -->
 				<form action="/admin/order/list" method="get" class="d-flex">
@@ -121,7 +125,7 @@
 				<thead>
 					<tr>
 						<th>ID</th>
-						<th>User name</th>
+						<th>User ID</th>
 						<th>Trạng thái</th>
 						<th>Ngày tạo</th>
 						<th>Tổng tiền</th>
@@ -143,10 +147,12 @@
 								Chi tiết</button>
 						</td>
 
-						<td>
-							<button class="btn btn-success btn-sm">sửa</button>
-							<button class="btn btn-secondary btn-sm">Chi tiết</button>
-						</td>
+						<td><a href="/admin/order/edit">
+								<button class="btn btn-primary btn-sm" onclick="editOrder(1)">Sửa</button>
+						</a>
+							<button class="btn btn-danger btn-sm" onclick="removeOrder(1)">Xóa</button>
+							<button class="btn btn-secondary btn-sm"
+								onclick="showOrderDetails(1)">Chi tiết</button></td>
 					</tr>
 					<!-- Thêm các dòng dữ liệu khác tại đây -->
 				</tbody>
@@ -248,5 +254,57 @@
 	<script
 		src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 </body>
+<script>
+    function edit(id, name) {
+        $('#id').val(id);
+        $('#name').val(name);
+        $('#CategoryModal').modal('show');
+    }
+    function remove(id) {
+        $('#iddelete').val(id);
+        $('#deleteModal').modal('show');
+    }
+    // Hàm mở modal với dữ liệu chi tiết
+    function showAddressDetails(customerName, phoneNumber, address) {
+        document.getElementById('customerName').innerText = customerName;
+        document.getElementById('phoneNumber').innerText = phoneNumber;
+        document.getElementById('addressDetail').innerText = address;
+        var addressModal = new bootstrap.Modal(document.getElementById('AddressModal'));
+        addressModal.show();
+    }
+    function showOrderDetails(orderId) {
+        // Gửi AJAX để lấy chi tiết đơn hàng từ server
+        $.ajax({
+            url: '/api/order-details', // URL API để lấy thông tin chi tiết
+            method: 'GET',
+            data: { orderId: orderId }, // Gửi orderId lên server
+            success: function(response) {
+                // Xóa dữ liệu cũ trong bảng chi tiết
+                $('#orderDetailTable tbody').empty();
+
+                // Thêm dữ liệu mới vào bảng
+                response.forEach(detail => {
+                    const row = `
+                        <tr>
+                            <td>${detail.id_product}</td>
+                            <td>${detail.price}</td>
+                            <td>${detail.quantity}</td>
+                            <td>${detail.size}</td>
+                        </tr>
+                    `;
+                    $('#orderDetailTable tbody').append(row);
+                });
+
+                // Hiển thị modal chi tiết
+                var orderDetailModal = new bootstrap.Modal(document.getElementById('OrderDetailModal'));
+                orderDetailModal.show();
+            },
+            error: function(error) {
+                alert('Không thể tải chi tiết đơn hàng. Vui lòng thử lại!');
+                console.error(error);
+            }
+        });
+    }
+</script>
 
 </html>
