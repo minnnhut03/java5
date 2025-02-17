@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sửa Sản Phẩm</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            font-size: 0.9rem; /* Thu nhỏ kích thước chữ */
+        }
+        .form-container {
+            max-width: 600px; /* Giới hạn chiều rộng */
+            margin: auto;
+        }
+        .form-label {
+            font-size: 0.85rem; /* Thu nhỏ chữ nhãn */
+        }
+        .form-control, .form-select {
+            font-size: 0.85rem; /* Thu nhỏ chữ trong input/select */
+            padding: 0.4rem 0.6rem; /* Giảm padding */
+        }
+        .btn {
+            font-size: 0.85rem; /* Thu nhỏ chữ nút */
+        }
+    </style>
+</head>
+<body>
+    <div class="container p-3">
+        <div class="form-container shadow p-3 rounded bg-light">
+            <h5 class="text-center mb-3">Sửa Sản Phẩm</h5>
+            <form action="/admin/product/update" method="post" enctype="multipart/form-data">
+                <!-- Product ID (hidden field for editing) -->
+                <input type="hidden" name="id" value="{{product.id}}">
+
+                <!-- Product Name -->
+                <div class="mb-2">
+                    <label for="name" class="form-label fw-semibold">Tên sản phẩm</label>
+                    <input type="text" class="form-control" id="name" name="name" value="{{product.name}}" placeholder="Nhập tên sản phẩm" required>
+                </div>
+
+                <!-- Product Description -->
+                <div class="mb-2">
+                    <label for="description" class="form-label fw-semibold">Mô tả</label>
+                    <textarea class="form-control" id="description" name="description" rows="2" placeholder="Nhập mô tả sản phẩm" required>{{product.description}}</textarea>
+                </div>
+
+                <!-- Product Price -->
+                <div class="mb-2">
+                    <label for="price" class="form-label fw-semibold">Giá</label>
+                    <input type="number" class="form-control" id="price" name="price" value="{{product.price}}" placeholder="Nhập giá sản phẩm" min="0" step="0.01" required>
+                </div>
+
+                <!-- Product Quantity -->
+                <div class="mb-2">
+                    <label for="quantity" class="form-label fw-semibold">Số lượng</label>
+                    <input type="number" class="form-control" id="quantity" name="quantity" value="{{product.quantity}}" placeholder="Nhập số lượng sản phẩm" min="0" required>
+                </div>
+
+                <!-- Product Status -->
+                <div class="mb-2">
+                    <label for="status" class="form-label fw-semibold">Trạng thái</label>
+                    <select class="form-select" id="status" name="status" required>
+                        <option value="Active" {{product.status == 'Active' ? 'selected' : ''}}>Active</option>
+                        <option value="Inactive" {{product.status == 'Inactive' ? 'selected' : ''}}>Inactive</option>
+                    </select>
+                </div>
+
+                <!-- Product Category -->
+                <div class="mb-2">
+                    <label for="category" class="form-label fw-semibold">Danh mục</label>
+                    <select class="form-select" id="category" name="category" required>
+                        <option value="1" {{product.category == 1 ? 'selected' : ''}}>Danh mục 1</option>
+                        <option value="2" {{product.category == 2 ? 'selected' : ''}}>Danh mục 2</option>
+                    </select>
+                </div>
+
+                <!-- Product Image (if new image is uploaded) -->
+                <div class="mb-2">
+                    <label for="image" class="form-label fw-semibold">Hình ảnh</label>
+                    <input type="file" class="form-control" id="image" name="image" accept="image/*">
+                    <small class="form-text text-muted">Chọn nếu bạn muốn thay đổi hình ảnh sản phẩm.</small>
+                    <!-- Display current image if available -->
+                    {% if product.image %}
+                        <div class="mt-2">
+                            <img src="/path/to/images/{{product.image}}" alt="Current Image" class="img-fluid" style="max-width: 150px;">
+                        </div>
+                    {% endif %}
+                </div>
+
+                <!-- Submit and Cancel Buttons -->
+                <div class="mb-2">
+                    <button type="submit" class="btn btn-primary">Cập nhật sản phẩm</button>
+                    <a href="/admin/product" class="btn btn-secondary">Hủy</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

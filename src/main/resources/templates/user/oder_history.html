@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xem Đơn Hàng Đã Mua</title>
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+    <style>
+        .navbar {
+            background-color: #fff;
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        .navbar-nav .nav-link {
+            color: #000;
+            font-weight: bold;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #000;
+        }
+
+        .navbar-brand img {
+            height: 30px;
+        }
+
+        .promo-bar {
+            background-color: #f5f5f5;
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        .promo-bar a {
+            color: #000;
+            font-weight: bold;
+        }
+
+        .order-history {
+            padding: 20px 0;
+        }
+
+        .custom-width {
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .order-card {
+            border: 1px solid #e5e5e5;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .order-card h5 {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .order-card p {
+            font-size: 14px;
+            margin: 0;
+        }
+
+        .btn-dark {
+            background-color: #343a40;
+            /* Màu đậm */
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-dark:hover {
+            background-color: #495057;
+            /* Màu hover đậm hơn */
+            box-shadow: 0 0 8px rgba(52, 58, 64, 0.5);
+            /* Hiệu ứng hover */
+        }
+
+        .card-body img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .badge {
+            font-size: 0.85rem;
+        }
+
+        /* Change the text color of all tabs to dark */
+        .nav-link {
+            color: #343a40;
+            /* Dark text color */
+        }
+
+        /* Optionally, change the active tab text color */
+        .nav-link.active {
+            color: #212529;
+            /* Darker color for active tab */
+        }
+
+        .footer {
+            background-color: #333;
+            color: #fff;
+            padding: 20px 0;
+            margin-top: 20px;
+        }
+
+        .footer h5 {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .footer ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer li {
+            margin-bottom: 10px;
+        }
+
+        .footer a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            color: #ccc;
+        }
+
+        .footer p {
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        /* Media Queries for responsiveness */
+        @media (max-width: 767px) {
+            .navbar-nav {
+                text-align: center;
+            }
+
+            .order-history {
+                padding: 10px;
+            }
+
+            .custom-width {
+                width: 100%;
+            }
+
+            .btn-dark {
+                width: 100%;
+            }
+
+            .table td,
+            .table th {
+                font-size: 12px;
+            }
+
+            .table img {
+                width: 50px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .navbar-nav .nav-link {
+                font-size: 14px;
+            }
+
+            .order-history h2 {
+                font-size: 20px;
+            }
+
+            .order-card h5 {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img alt="Nike logo" src="image/Nike.png" />
+            </a>
+            <button aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"
+                class="navbar-toggler" data-bs-target="#navbarNav" data-bs-toggle="collapse" type="button">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item"><a class="nav-link" href="#">New &amp; Featured</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Men</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Women</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Kids</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Sale</a></li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="#">Find a Store</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Help</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Join Us</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Sign In</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-search"></i></a></li>
+                    <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-heart"></i></a></li>
+                    <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-shopping-cart"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container my-4">
+        <!-- Tabs -->
+        <ul class="nav nav-tabs mb-3" id="orderTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="all-tab" data-bs-toggle="tab" data-bs-target="#all" type="button" role="tab" aria-controls="all" aria-selected="true">Tất cả</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="pending-tab" data-bs-toggle="tab" data-bs-target="#pending" type="button" role="tab" aria-controls="pending" aria-selected="false">Chờ thanh toán</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="shipping-tab" data-bs-toggle="tab" data-bs-target="#shipping" type="button" role="tab" aria-controls="shipping" aria-selected="false">Vận chuyển</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="delivering-tab" data-bs-toggle="tab" data-bs-target="#delivering" type="button" role="tab" aria-controls="delivering" aria-selected="false">Chờ giao hàng</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="completed-tab" data-bs-toggle="tab" data-bs-target="#completed" type="button" role="tab" aria-controls="completed" aria-selected="false">Hoàn thành</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="cancelled-tab" data-bs-toggle="tab" data-bs-target="#cancelled" type="button" role="tab" aria-controls="cancelled" aria-selected="false">Đã hủy</button>
+            </li>
+        </ul>
+
+        <!-- Search bar -->
+        <div class="input-group mb-4">
+            <input type="text" class="form-control" placeholder="Tìm kiếm theo ID đơn hàng hoặc Tên Sản phẩm">
+            <button class="btn btn-secondary" type="button">Tìm kiếm</button>
+        </div>
+
+        <!-- Tab Content -->
+        <div class="tab-content" id="orderTabsContent">
+            <!-- Tab: All Orders -->
+            <div class="tab-pane fade show active" id="all" role="tabpanel" aria-labelledby="all-tab">
+                <!-- Product 1 -->
+                <div class="card mb-3">
+                    <div class="card-header d-flex justify-content-between align-items-center flex-wrap">
+                        <div>
+                            <span class="badge bg-danger me-2">Yêu thích+</span>
+                            <span class="fw-bold">HAVEN'S</span>
+                        </div>
+                        <div class="mt-2 mt-md-0">
+                            <button class="btn btn-outline-dark btn-sm me-2">Chat</button>
+                            <button class="btn btn-outline-secondary btn-sm">Xem Shop</button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-4 col-md-2">
+                                <img src="jeans.jpg" class="img-fluid rounded" alt="Quần Jean">
+                            </div>
+                            <div class="col-8 col-md-6">
+                                <h6 class="card-title text-truncate">HAVEN'S | QUẦN JEAN WASH MÀU VINTAGE HAVEN'S 03#</h6>
+                                <p class="card-text mb-1">Phân loại hàng: S, ĐEN WASH - HAVEN'S 40#</p>
+                                <p class="card-text">x1</p>
+                                <span class="badge text-dark">Đang chờ Người bán đánh giá</span>
+                            </div>
+                            <!-- <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                                <p class="text-decoration-line-through text-muted small mb-0">₫350.000</p>
+                                <p class="text-danger fw-bold">₫249.000</p>
+                            </div> -->
+                        </div>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between align-items-center flex-wrap">
+                        <div class="fw-bold mb-2 mb-md-0">Thành tiền: <span class="text-danger">₫229.080</span></div>
+                        <div>
+                            <button class="btn btn-danger btn-sm">Mua Lại</button>
+                            <button class="btn btn-secondary btn-sm">Yêu Cầu Trả Hàng/Hoàn Tiền</button>
+                            <button class="btn btn-outline-secondary btn-sm">Thêm</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 2 -->
+                <div class="card mb-3">
+                    <div class="card-header d-flex justify-content-between align-items-center flex-wrap">
+                        <div>
+                            <span class="badge bg-danger me-2">Yêu thích+</span>
+                            <span class="fw-bold">Lâm Vlog Food</span>
+                        </div>
+                        <div class="mt-2 mt-md-0">
+                            <button class="btn btn-outline-dark btn-sm me-2">Chat</button>
+                            <button class="btn btn-outline-secondary btn-sm">Xem Shop</button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-4 col-md-2">
+                                <img src="sauce.jpg" class="img-fluid rounded" alt="Sốt Chấm Cay">
+                            </div>
+                            <div class="col-8 col-md-6">
+                                <h6 class="card-title text-truncate">Sốt Chấm CayTeDai 450gr</h6>
+                                <p class="card-text mb-1">Chua Cay Muối Tỏi, Sản xuất tại Tây Ninh</p>
+                                <p class="card-text">x1</p>
+                                <span class="badge text-dark">Giao hàng thành công</span>
+                            </div>
+                            <!-- <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                                <p class="text-decoration-line-through text-muted small mb-0">₫90.000</p>
+                                <p class="text-danger fw-bold">₫75.000</p>
+                            </div> -->
+                        </div>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between align-items-center flex-wrap">
+                        <div class="fw-bold mb-2 mb-md-0">Thành tiền: <span class="text-danger">₫75.000</span></div>
+                        <div>
+                            <button class="btn btn-danger btn-sm">Mua Lại</button>
+                            <button class="btn btn-secondary btn-sm">Yêu Cầu Trả Hàng/Hoàn Tiền</button>
+                            <button class="btn btn-outline-secondary btn-sm">Thêm</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Other Tabs (e.g., Pending, Shipping, etc.) -->
+            <div class="tab-pane fade" id="pending" role="tabpanel" aria-labelledby="pending-tab">
+                <p>Chờ thanh toán - Hiển thị các đơn hàng tương ứng...</p>
+            </div>
+            <div class="tab-pane fade" id="shipping" role="tabpanel" aria-labelledby="shipping-tab">
+                <p>Vận chuyển - Hiển thị các đơn hàng tương ứng...</p>
+            </div>
+            <div class="tab-pane fade" id="delivering" role="tabpanel" aria-labelledby="delivering-tab">
+                <p>Chờ giao hàng - Hiển thị các đơn hàng tương ứng...</p>
+            </div>
+            <div class="tab-pane fade" id="completed" role="tabpanel" aria-labelledby="completed-tab">
+                <p>Hoàn thành - Hiển thị các đơn hàng tương ứng...</p>
+            </div>
+            <div class="tab-pane fade" id="cancelled" role="tabpanel" aria-labelledby="cancelled-tab">
+                <p>Đã hủy - Hiển thị các đơn hàng tương ứng...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>Thông Tin</h5>
+                    <ul>
+                        <li><a href="#">Về Chúng Tôi</a></li>
+                        <li><a href="#">Chính Sách Bảo Mật</a></li>
+                        <li><a href="#">Chính Sách Đổi Trả</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Hỗ Trợ</h5>
+                    <ul>
+                        <li><a href="#">Hỗ Trợ Trực Tuyến</a></li>
+                        <li><a href="#">Câu Hỏi Thường Gặp</a></li>
+                        <li><a href="#">Liên Hệ</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Kết Nối</h5>
+                    <ul>
+                        <li><a href="#">Facebook</a></li>
+                        <li><a href="#">Instagram</a></li>
+                        <li><a href="#">Twitter</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <p>&copy; 2023 Nike. Tất cả quyền được bảo lưu.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
