@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang Bán Hàng - Giày</title>
+    <!-- Link Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            color: #333;
+        }
+  
+        .sidebar {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .sidebar h5 {
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+        .sidebar ul li {
+            margin-bottom: 10px;
+        }
+        .sidebar ul li a{
+            text-decoration: none;
+            color: #333;
+        }
+        .sidebar ul li a:hover{
+         color: #007bff;
+
+        }
+        .product-card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            background-color: #f0f8ff;
+        }
+        .product-card:hover {
+            transform: scale(1.05);
+        }
+        .product-card img {
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+        }
+        .product-card .card-title {
+            font-weight: bold;
+            color: #007bff;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+            border-radius: 30px;
+            color: #ffffff;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container my-5">
+        <div class="row">
+            <!-- Sidebar -->
+            <aside class="col-md-2 sidebar">
+                <h5>Loại Giày</h5>
+                <ul>
+                    <li><a href="#">Giày Thể Thao</a></li>
+                    <li><a href="#">Giày Chạy Bộ</a></li>
+                    <li><a href="#">Giày Thời Trang</a></li>
+                </ul>
+                <h5>Size Giày</h5>
+                <ul>
+                    <li><a href="#">Size 38</a></li>
+                    <li><a href="#">Size 39</a></li>
+                    <li><a href="#">Size 40</a></li>
+                    <li><a href="#">Size 41</a></li>
+                </ul>
+                <h5>Giá Tiền</h5>
+                <ul>
+                    <li><a href="#">Dưới 1 triệu</a></li>
+                    <li><a href="#">1 - 3 triệu</a></li>
+                    <li><a href="#">Trên 3 triệu</a></li>
+                </ul>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="col-md-10">
+                <h2 class="mb-4">Sản Phẩm</h2>
+                <div class="row">
+                    <div class="col-md-4 mb-4">
+                        <div class="card product-card">
+                            <img src="https://via.placeholder.com/300" class="card-img-top" alt="Sản phẩm 1">
+                            <div class="card-body">
+                                <h5 class="card-title">Giày Thể Thao 1</h5>
+                                <p class="card-text">Mô tả ngắn về giày thể thao 1.</p><p style="color: red;"> Giá: 2,200,000 VND</p>
+                                <a href="#" class="btn btn-primary">Mua ngay</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card product-card">
+                            <img src="https://via.placeholder.com/300" class="card-img-top" alt="Sản phẩm 2">
+                            <div class="card-body">
+                                <h5 class="card-title">Giày Thể Thao 2</h5>
+                                <p class="card-text">Mô tả ngắn về giày thể thao 2.</p><p style="color: red;"> Giá: 2,200,000 VND</p>
+                                <a href="#" class="btn btn-primary">Mua ngay</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card product-card">
+                            <img src="https://via.placeholder.com/300" class="card-img-top" alt="Sản phẩm 3">
+                            <div class="card-body">
+                                <h5 class="card-title">Giày Thể Thao 3</h5>
+                                <p class="card-text">Mô tả ngắn về giày thể thao 3.</p><p style="color: red;"> Giá: 2,200,000 VND</p>
+                                <a href="#" class="btn btn-primary">Mua ngay</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card product-card">
+                            <img src="https://via.placeholder.com/300" class="card-img-top" alt="Sản phẩm 4">
+                            <div class="card-body">
+                                <h5 class="card-title">Giày Thể Thao 4</h5>
+                                <p class="card-text">Mô tả ngắn về giày thể thao 4. Giá: </p><p style="color: red;"> Giá: 2,200,000 VND</p>
+                                <a href="#" class="btn btn-primary">Mua ngay</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card product-card">
+                            <img src="https://via.placeholder.com/300" class="card-img-top" alt="Sản phẩm 5">
+                            <div class="card-body">
+                                <h5 class="card-title">Giày Thể Thao 5</h5>
+                                <p class="card-text">Mô tả ngắn về giày thể thao 5.</p><p style="color: red;"> Giá: 2,200,000 VND</p>
+                                <a href="#" class="btn btn-primary">Mua ngay</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card product-card">
+                            <img src="https://via.placeholder.com/300" class="card-img-top" alt="Sản phẩm 6">
+                            <div class="card-body">
+                                <h5 class="card-title">Giày Thể Thao 6</h5>
+                                <p class="card-text">Mô tả ngắn về giày thể thao 6.</p><p style="color: red;"> Giá: 2,200,000 VND</p>
+                                <a href="#" class="btn btn-primary">Mua ngay</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 mb-4">
+                        <div class="card product-card">
+                            <img src="https://via.placeholder.com/300" class="card-img-top" alt="Sản phẩm 1">
+                            <div class="card-body">
+                                <h5 class="card-title">Giày Thể Thao 1</h5>
+                                <p class="card-text">Mô tả ngắn về giày thể thao 1.</p><p style="color: red;"> Giá: 2,200,000 VND</p>
+                                <a href="#" class="btn btn-primary">Mua ngay</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card product-card">
+                            <img src="https://via.placeholder.com/300" class="card-img-top" alt="Sản phẩm 2">
+                            <div class="card-body">
+                                <h5 class="card-title">Giày Thể Thao 2</h5>
+                                <p class="card-text">Mô tả ngắn về giày thể thao 2.</p><p style="color: red;"> Giá: 2,200,000 VND</p>
+                                <a href="#" class="btn btn-primary">Mua ngay</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card product-card">
+                            <img src="https://via.placeholder.com/300" class="card-img-top" alt="Sản phẩm 3">
+                            <div class="card-body">
+                                <h5 class="card-title">Giày Thể Thao 3</h5>
+                                <p class="card-text">Mô tả ngắn về giày thể thao 3.</p><p style="color: red;"> Giá: 2,200,000 VND</p>
+                                <a href="#" class="btn btn-primary">Mua ngay</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card product-card">
+                            <img src="https://via.placeholder.com/300" class="card-img-top" alt="Sản phẩm 4">
+                            <div class="card-body">
+                                <h5 class="card-title">Giày Thể Thao 4</h5>
+                                <p class="card-text">Mô tả ngắn về giày thể thao 4.</p><p style="color: red;"> Giá: 2,200,000 VND</p>
+                                <a href="#" class="btn btn-primary">Mua ngay</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card product-card">
+                            <img src="https://via.placeholder.com/300" class="card-img-top" alt="Sản phẩm 5">
+                            <div class="card-body">
+                                <h5 class="card-title">Giày Thể Thao 5</h5>
+                                <p class="card-text">Mô tả ngắn về giày thể thao 5.</p><p style="color: red;"> Giá: 2,200,000 VND</p>
+                                <a href="#" class="btn btn-primary">Mua ngay</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card product-card">
+                            <img src="https://via.placeholder.com/300" class="card-img-top" alt="Sản phẩm 6">
+                            <div class="card-body">
+                                <h5 class="card-title">Giày Thể Thao 6</h5>
+                                <p class="card-text">Mô tả ngắn về giày thể thao 6. </p><p style="color: red;"> Giá: 2,200,000 VND</p>
+                                <a href="#" class="btn btn-primary">Mua ngay</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Link JavaScript Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
