@@ -46,5 +46,5 @@ public class UserEntity {
     @ColumnDefault("1")
     @Column(name = "status", nullable = false)
     private Boolean status = false;
-
+    êjfej	
 }
