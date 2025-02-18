@@ -17,33 +17,27 @@ import lombok.*;
 @Table(name = "users")
 public class UserEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) 
     @Column(name = "user_id", nullable = false)
     private Integer id;
 
-    @Size(max = 100)
-    @NotNull
     @Column(name = "password", nullable = false, length = 100)
     private String password;
 
-    @Lob
-    @Column(name = "name")
+    @Column(name = "name" ,nullable = false)
     private String name;
 
-    @Lob
-    @Column(name = "email")
+    @Column(name = "email", nullable = false)
     private String email;
 
     @Lob
-    @Column(name = "address")
+    @Column(name = "address",nullable = false)
     private String address;
 
-    @NotNull
-    @ColumnDefault("1")
     @Column(name = "role", nullable = false)
     private Integer role;
 
-    @NotNull
-    @ColumnDefault("1")
+
     @Column(name = "status", nullable = false)
     private Boolean status = false;
 

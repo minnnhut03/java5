@@ -1,15 +1,15 @@
 package com.java5.demoJV5.entity;
 import java.math.BigDecimal;
-import java.time.Instant;
+
 
 import org.hibernate.annotations.ColumnDefault;
 
 import jakarta.persistence.*;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.*;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -33,7 +33,7 @@ public class OrderEntity {
     @NotNull
     @ColumnDefault("getdate()")
     @Column(name = "date_created", nullable = false)
-    private Instant dateCreated;
+    private LocalDateTime dateCreated;
 
     @NotNull
     @ColumnDefault("0.00")

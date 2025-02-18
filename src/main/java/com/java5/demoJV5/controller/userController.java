@@ -53,11 +53,7 @@ public class userController {
 	public String login() {
 		return "user/login.html";
 	}
-
-	@GetMapping("/register")
-	public String register() {
-		return "user/register.html";
-	}
+	
 	@GetMapping("/checkout")
 	public String checkOut() {
 		return "user/checkout.html";

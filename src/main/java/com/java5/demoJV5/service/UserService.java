@@ -5,16 +5,24 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 
 import com.java5.demoJV5.bean.UserBean;
 import com.java5.demoJV5.entity.UserEntity;
 import com.java5.demoJV5.jpa.UserJPA;
+
+import jakarta.validation.Valid;
+import jakarta.validation.Validator;
 
 @Service
 public class UserService {
 
     @Autowired
     private UserJPA userJPA;
+
+    @Autowired
+    private Validator validator; // Used for manual validation
 
     public List<UserBean> getAllUsers() {
         return userJPA.findAll().stream().map(this::convertToBean).collect(Collectors.toList());
@@ -24,22 +32,54 @@ public class UserService {
         return userJPA.findById(userId).map(this::convertToBean).orElse(null);
     }
 
-    public String saveUser(UserBean userBean) {
-        try {
+    public String saveUser(@Valid UserBean userBean, BindingResult result) {
+        // Manually validate the bean if @Valid annotation is not enough
+        if (result.hasErrors()) {
+            StringBuilder errors = new StringBuilder("Errors: ");
+            for (ObjectError error : result.getAllErrors()) {
+                errors.append(error.getDefaultMessage()).append("; ");
+            }
+            return errors.toString();
+        }
 
+        try {
+            // Check if the email already exists
             if (userJPA.existsByEmail(userBean.getEmail())) {
                 return "Lỗi: Email đã tồn tại!";
             }
 
+            // Set default values for role and status if not provided
+            if (userBean.getRole() == null) {
+                userBean.setRole(1); // Set default role to 1
+            }
+
+            if (userBean.getStatus() == null) {
+                userBean.setStatus(true); // Set default status to true
+            }
+
+            // Convert UserBean to UserEntity
             UserEntity userEntity = convertToEntity(userBean);
+
+            // Save the user to the database
             userJPA.save(userEntity);
+
             return "User added successfully!";
         } catch (Exception e) {
             return "Error: " + e.getMessage();
         }
     }
 
-    public String updateUser(UserBean userBean) {
+
+    public String updateUser(@Valid UserBean userBean, BindingResult result) {
+        // Validate the UserBean object
+        if (result.hasErrors()) {
+            StringBuilder errors = new StringBuilder("Errors: ");
+            for (ObjectError error : result.getAllErrors()) {
+                errors.append(error.getDefaultMessage()).append("; ");
+            }
+            return errors.toString();
+        }
+
         try {
             UserEntity existingUser = userJPA.findById(userBean.getUserId()).orElse(null);
             if (existingUser == null) {
@@ -50,9 +90,11 @@ public class UserService {
                 return "Lỗi: Email đã tồn tại!";
             }
 
+            // Convert UserBean to UserEntity and save
             UserEntity userEntity = convertToEntity(userBean);
+
             if (userBean.getPassword() == null || userBean.getPassword().isEmpty()) {
-                userEntity.setPassword(existingUser.getPassword());
+                userEntity.setPassword(existingUser.getPassword()); // Keep existing password if not provided
             }
 
             userJPA.save(userEntity);
@@ -88,13 +130,19 @@ public class UserService {
 
     private UserEntity convertToEntity(UserBean bean) {
         UserEntity entity = new UserEntity();
-        entity.setId(bean.getUserId());
+        
+        // Do not set ID for new users
+        if (bean.getUserId() != 0) {
+            entity.setId(bean.getUserId());
+        }
+
         entity.setPassword(bean.getPassword());
-        entity.setName(bean.getFullName());
+        entity.setName(bean.getName());
         entity.setEmail(bean.getEmail());
         entity.setAddress(bean.getAddress());
         entity.setRole(bean.getRole());
-entity.setStatus(bean.getStatus());
+        entity.setStatus(bean.getStatus());
+
         return entity;
     }
 }

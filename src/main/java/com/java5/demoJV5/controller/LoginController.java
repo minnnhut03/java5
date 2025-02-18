@@ -20,10 +20,10 @@ import java.util.Optional;
 @Controller
 public class LoginController {
     @Autowired
-    private UserJPA userJPA;
+    UserJPA userJPA;
 
     @Autowired
-    private HttpSession session;
+    HttpSession session;
 
     @PostMapping("/login/check")
     public String loginCheck(@Valid @ModelAttribute("loginBean") LoginBean loginBean,

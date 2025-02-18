@@ -1,6 +1,5 @@
 package com.java5.demoJV5.bean;
 
-
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -25,13 +24,13 @@ public class UserBean {
 
     @NotBlank(message = "Họ và tên không được để trống")
     @Size(max = 100, message = "Họ và tên không được vượt quá 100 ký tự")
-    private String fullName;
+    private String name;
 
     @NotBlank(message = "Địa chỉ không được để trống")
     @Size(max = 255, message = "Địa chỉ không được vượt quá 255 ký tự")
     private String address;
     
-    private Integer role = 1; 
+    private Integer role; 
 
-    private Boolean status = true;
+    private Boolean status;
 }
