@@ -1,10 +1,10 @@
 package com.java5.demoJV5.entity;
 import java.math.BigDecimal;
+import java.util.List;
 
 import org.hibernate.annotations.ColumnDefault;
 
 import jakarta.persistence.*;
-import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -17,35 +17,31 @@ import lombok.*;
 @NoArgsConstructor
 @Table(name = "products")
 public class ProductEntity {
-    @Id
-    @Column(name = "product_id", nullable = false)
-    private Integer id;
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "product_id")
+    private int id;
 
-    @Size(max = 100)
-    @NotNull
-    @Column(name = "product_name", nullable = false, length = 100)
-    private String productName;
+    @Column(name = "product_name", columnDefinition = "VARCHAR(100)", nullable = false)
+    private String name;
 
-    @Lob
-    @Column(name = "description")
-    private String description;
+    @Column(name = "description", columnDefinition = "TEXT", nullable = false)
+    private String desc;
 
-    @NotNull
-    @Column(name = "price", nullable = false, precision = 18, scale = 2)
-    private BigDecimal price;
+    @Column(name = "price", nullable = false)
+    private long price;
 
-    @NotNull
     @Column(name = "quantity", nullable = false)
-    private Integer quantity;
+    private int quantity;
 
-    @NotNull
-    @ColumnDefault("1")
     @Column(name = "status", nullable = false)
-    private Boolean status = false;
+    private boolean status;
 
-    @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "category_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY) 
+    @JoinColumn(name = "category_id")
     private CategoryEntity category;
+    
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<ImageEntity> images;
 
 }

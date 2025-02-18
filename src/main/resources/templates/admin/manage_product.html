@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
 <title>Quản Lý Sản Phẩm</title>
@@ -126,7 +126,6 @@
 					<tr>
 						<th>ID</th>
 						<th>Hình ảnh</th>
-						<!-- Thêm tiêu đề cột hình ảnh -->
 						<th>Tên sản phẩm</th>
 						<th>Mô tả</th>
 						<th>Giá</th>
@@ -137,19 +136,21 @@
 					</tr>
 				</thead>
 				<tbody>
+				<th:block th:each="item : ${products}">
 					<tr>
-						<td>1</td>
-						<td><img src="image/Brazil 1998 Reissue.png"
-							alt="Product Image" width="50" /></td>
-						<!-- Thêm hình ảnh -->
-						<td>Product Name</td>
-						<td>This is a sample description</td>
-						<td>100,000 VND</td>
-						<td><span class=" text-dark">10</span>
-							<button class="badge btn btn-secondary btn-sm"
-								onclick="edit(1, 'Product Name')">Chi tiết</button></td>
-						<td><span class="badge bg-success text-dark">Active</span></td>
-						<td>Category Name</td>
+						<td th:text="${item.id}"></td>
+						<td>
+	                    	
+							<img alt="" th:src="${'/images/'+item.images.get(0).name}" style="width: 50px; height: 50px;">
+							
+	                    </td>
+                		<td th:text="${item.name}"></td>
+                		<td th:text="${item.desc}"></td>
+                		<td th:text="${item.price}"></td>
+                		<td th:text="${item.quantity}"></td>
+                		<td th:text="${item.status}"></td>
+	                    <td th:text="${item.category.name}"></td>
+	                    
 						<td><a href="/admin/product/add">
 								<button class="btn btn-primary btn-sm"
 									onclick="edit(1, 'Product Name')">Sửa</button>
@@ -161,7 +162,7 @@
 							</a>
 						</td>
 					</tr>
-					<!-- Thêm các hàng khác tương tự -->
+				</th:block>
 				</tbody>
 			</table>
 

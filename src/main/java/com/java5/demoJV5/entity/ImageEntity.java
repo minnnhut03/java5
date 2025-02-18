@@ -1,5 +1,5 @@
 package com.java5.demoJV5.entity;
-import org.hibernate.annotations.ColumnDefault;
+
 
 import jakarta.persistence.*;
 import jakarta.persistence.Table;
@@ -18,14 +18,12 @@ public class ImageEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "image_id", nullable = false)
-    private Integer id;
+    private int id;
 
-    @Size(max = 255)
     @Column(name = "image_name")
-    private String imageName;
+    private String name;
 
-    @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)
     private ProductEntity product;
 

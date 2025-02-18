@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -29,53 +29,62 @@
     <div class="container p-3">
         <div class="form-container shadow p-3 rounded bg-light">
             <h5 class="text-center mb-3">Thêm Sản Phẩm Mới</h5>
-            <form action="/admin/product/insert" method="post" enctype="multipart/form-data">
+            <form th:object="${productBean}" action="/admin/product/add" method="post" enctype="multipart/form-data">
                 <!-- Product Name -->
                 <div class="mb-2">
                     <label for="name" class="form-label fw-semibold">Tên sản phẩm</label>
-                    <input type="text" class="form-control" id="name" name="name" placeholder="Nhập tên sản phẩm" required>
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Nhập tên sản phẩm" >
+                    <div class = "text-danger" th:errors = "*{name}"></div>
                 </div>
 
                 <!-- Product Description -->
                 <div class="mb-2">
                     <label for="description" class="form-label fw-semibold">Mô tả</label>
-                    <textarea class="form-control" id="description" name="description" rows="2" placeholder="Nhập mô tả sản phẩm" required></textarea>
+                    <textarea class="form-control" id="description" name="desc" rows="2" placeholder="Nhập mô tả sản phẩm" ></textarea>
+                    <div class = "text-danger" th:errors = "*{desc}"></div>
                 </div>
 
                 <!-- Product Price -->
                 <div class="mb-2">
                     <label for="price" class="form-label fw-semibold">Giá</label>
-                    <input type="number" class="form-control" id="price" name="price" placeholder="Nhập giá sản phẩm" min="0" step="0.01" required>
+                    <input type="number" class="form-control" id="price" name="price" placeholder="Nhập giá sản phẩm" >
+                    <div class = "text-danger" th:errors = "*{price}"></div>
                 </div>
 
                 <!-- Product Quantity -->
                 <div class="mb-2">
                     <label for="quantity" class="form-label fw-semibold">Số lượng</label>
-                    <input type="number" class="form-control" id="quantity" name="quantity" placeholder="Nhập số lượng sản phẩm" min="0" required>
+                    <input type="number" class="form-control" id="quantity" name="quantity" placeholder="Nhập số lượng sản phẩm" >
+                    <div class = "text-danger" th:errors = "*{quantity}"></div>
                 </div>
 
                 <!-- Product Status -->
                 <div class="mb-2">
                     <label for="status" class="form-label fw-semibold">Trạng thái</label>
-                    <select class="form-select" id="status" name="status" required>
-                        <option value="Active">Active</option>
-                        <option value="Inactive">Inactive</option>
+                    <select class="form-select" id="status" name="status" >
+                        <option value="1">Active</option>
+                        <option value="0">Inactive</option>
                     </select>
                 </div>
 
                 <!-- Product Category -->
                 <div class="mb-2">
                     <label for="category" class="form-label fw-semibold">Danh mục</label>
-                    <select class="form-select" id="category" name="category" required>
-                        <option value="1">Danh mục 1</option>
-                        <option value="2">Danh mục 2</option>
-                    </select>
+                    <select  class="form-select form-select-lg" name="category" id="">
+		            	<option selected value="-1">---------Chọn danh mục---------</option>
+		
+		            	<th:block th:each="item : ${category}">
+		              		<option th:value="${item.id}" th:text="${item.name}"></option>
+		            	</th:block>
+		          	</select>
+		          	<div class="text-danger" th:errors="*{category}"></div>
                 </div>
 
                 <!-- Product Image -->
                 <div class="mb-2">
                     <label for="image" class="form-label fw-semibold">Hình ảnh</label>
-                    <input type="file" class="form-control" id="image" name="image" accept="image/*" required>
+                    <input type="file" class="form-control" id="image" name="images" accept="image/*" multiple>
+                    <div class = "text-danger" th:if="${errorImage != null}" th:text="${errorImage}"></div>
                 </div>
 
                 <!-- Submit and Cancel Buttons -->
