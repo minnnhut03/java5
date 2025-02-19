@@ -32,6 +32,18 @@ public class ProductBean {
 	
 	@Min(value = 1, message = "Số lượng phải lớn hơn hoặc bằng 1")
 	private int quantity;
+	
+	private int size38;
+	
+	private int size39;
+	
+	private int size40;
+	
+	private int size41;
+	
+	private int size42;
+	
+	private int size43;
 
 	@Min(value = 0, message = "Danh mục không được bỏ trống")
 	private int category;

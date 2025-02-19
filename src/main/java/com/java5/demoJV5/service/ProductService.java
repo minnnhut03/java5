@@ -11,15 +11,20 @@ import com.java5.demoJV5.bean.ProductBean;
 import com.java5.demoJV5.entity.CategoryEntity;
 import com.java5.demoJV5.entity.ImageEntity;
 import com.java5.demoJV5.entity.ProductEntity;
+import com.java5.demoJV5.entity.ProductSizeEntity;
 import com.java5.demoJV5.jpa.CategoryJPA;
 import com.java5.demoJV5.jpa.ImageJPA;
 import com.java5.demoJV5.jpa.ProductJPA;
+import com.java5.demoJV5.jpa.ProductSizeJPA;
 
 
 @Service
 public class ProductService {
 	@Autowired
 	ProductJPA productJPA;
+	
+	@Autowired
+	ProductSizeJPA productSizeJPA;
 	
 	@Autowired
 	CategoryJPA categoryJPA;
@@ -51,9 +56,28 @@ public class ProductService {
 				images.add(image);	
 			}
 			imageJPA.saveAll(images);
+			
+			List<ProductSizeEntity> productSizes = new ArrayList<ProductSizeEntity>();
+			AddProductSize(productSizes, product, "38", productBean.getSize38());
+			AddProductSize(productSizes, product, "39", productBean.getSize39());
+			AddProductSize(productSizes, product, "40", productBean.getSize40());
+			AddProductSize(productSizes, product, "41", productBean.getSize41());
+			AddProductSize(productSizes, product, "42", productBean.getSize42());
+			AddProductSize(productSizes, product, "43", productBean.getSize43());
+			productSizeJPA.saveAll(productSizes);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return null;
+	}
+	public String AddProductSize(List<ProductSizeEntity> productSizes, 
+			ProductEntity productEntity, String size, int stock) {
+		ProductSizeEntity productSizeEntity = new ProductSizeEntity();
+		productSizeEntity.setProduct(productEntity);
+		productSizeEntity.setSize(size);
+		productSizeEntity.setStock(stock);
+		productSizes.add(productSizeEntity);
+		
 		return null;
 	}
 }
