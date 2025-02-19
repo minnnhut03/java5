@@ -24,7 +24,7 @@ public class ImageEntity {
     @Column(name = "image_name")
     private String imageName;
 
-    @NotNull
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "product_id", nullable = false)
     private ProductEntity product;

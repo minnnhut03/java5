@@ -88,6 +88,27 @@
                     required>
             </div>
 
+            <!-- Vai trò -->
+            <div class="mb-3">
+                <label for="role" class="form-label">Vai trò</label>
+                <select class="form-select" id="role" name="role" required>
+                    <option value="">Chọn vai trò</option>
+                    <option value="admin">Quản trị viên</option>
+                    <option value="user">Người dùng</option>
+                    <option value="guest">Khách</option>
+                </select>
+            </div>
+
+            <!-- Trạng thái -->
+            <div class="mb-3">
+                <label for="status" class="form-label">Trạng thái</label>
+                <select class="form-select" id="status" name="status" required>
+                    <option value="">Chọn trạng thái</option>
+                    <option value="active">Hoạt động</option>
+                    <option value="inactive">Không hoạt động</option>
+                </select>
+            </div>
+
             <!-- Checkbox chấp nhận điều khoản -->
             <div class="mb-3 form-check">
                 <input type="checkbox" class="form-check-input" id="terms" name="terms" required>

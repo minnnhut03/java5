@@ -31,11 +31,10 @@ public class CategoryEntity {
     private Integer id;
 
     @Size(max = 100)
-    @NotNull
     @Column(name = "category_name", nullable = false, length = 100)
     private String categoryName;
 
-    @NotNull
+
     @ColumnDefault("1")
     @Column(name = "status", nullable = false)
     private Boolean status = false;
