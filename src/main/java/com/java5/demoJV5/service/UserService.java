@@ -1,7 +1,6 @@
 package com.java5.demoJV5.service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,13 +18,13 @@ import jakarta.validation.Validator;
 public class UserService {
 
     @Autowired
-    private UserJPA userJPA;
+    UserJPA userJPA;
 
     @Autowired
-    private Validator validator; // Used for manual validation
+    Validator validator; // Used for manual validation
 
-    public List<UserBean> getAllUsers() {
-        return userJPA.findAll().stream().map(this::convertToBean).collect(Collectors.toList());
+    public List<UserEntity> getAllUsers() {
+        return userJPA.findAll();
     }
 
     public UserBean getUserById(int userId) {
@@ -50,7 +49,7 @@ public class UserService {
 
             // Set default values for role and status if not provided
             if (userBean.getRole() == null) {
-                userBean.setRole(1); // Set default role to 1
+                userBean.setRole(2); 
             }
 
             if (userBean.getStatus() == null) {
@@ -66,6 +65,22 @@ public class UserService {
             return "User added successfully!";
         } catch (Exception e) {
             return "Error: " + e.getMessage();
+        }
+    }
+    
+    public String updateUserStatus(int userId, boolean newStatus) {
+        try {
+            UserEntity existingUser = userJPA.findById(userId).orElse(null);
+            if (existingUser == null) {
+                return "Lỗi: Người dùng không tồn tại!";
+            }
+
+            existingUser.setStatus(newStatus);
+
+            userJPA.save(existingUser);
+            return "Trạng thái người dùng được cập nhật thành công!";
+        } catch (Exception e) {
+            return "Lỗi: " + e.getMessage();
         }
     }
 

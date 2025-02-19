@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <title>Quản Lý Khách Hàng</title>
@@ -117,37 +117,38 @@
             </div>
         
             <!-- Bảng danh sách người dùng -->
-            <table id="userTable" class="table table-striped table-bordered">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Tên</th>
-                        <th>Email</th>
-                        <th>Địa chỉ</th>
-                        <th>Vai trò</th>
-                        <th>Trạng thái</th>
-                        <th>Hành động</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Nguyễn Văn A</td>
-                        <td>example@gmail.com</td>
-                        <td>123 Đường ABC, TP.HCM</td>
-                        <td>Admin</td>
-                        <td>
-                            <span class="badge bg-success text-dark">Hoạt động</span>
-                        </td>
-                        <td><a href="/admin/account/edit">
-                            <button class="btn btn-primary btn-sm" onclick="editUser(1)">Sửa</button>
-                            </a>
-                            <button class="btn btn-danger btn-sm" onclick="removeUser(1)">Xóa</button>
-                        </td>
-                    </tr>
-                    <!-- Thêm các dòng dữ liệu khác tại đây -->
-                </tbody>
-            </table>
+		    <table id="userTable" class="table table-striped table-bordered">
+		      <thead>
+		      <tr>
+		        <th>ID</th>
+		        <th>Tên</th>
+		        <th>Email</th>
+		        <th>Địa chỉ</th>
+		        <th>Vai trò</th>
+		        <th>Trạng thái</th>
+		      </tr>
+		      </thead>
+		      <tbody>
+		      <th:block th:each="item: ${users}">
+		        <tr>
+		          <td th:text="${item.id}"></td>
+		          <td th:text="${item.name}"></td>
+		          <td th:text="${item.email}"></td>
+		          <td th:text="${item.address}"></td>
+		          <td th:text="${item.role == 1 ? 'Admin' : 'Người dùng'}"></td>
+		          <td>
+				    <form th:action="@{/admin/user/update-status/{id}(id=${item.id})}" method="post">
+				        <select name="status" class="form-select form-select-sm" onchange="this.form.submit()">
+				            <option th:value="true" th:selected="${item.status}">Hoạt động</option>
+				            <option th:value="false" th:selected="${!item.status}">Không hoạt động</option>
+				        </select>
+				    </form>
+				</td>
+		        </tr>
+		        </th:block>
+		      <!-- Thêm các dòng dữ liệu khác tại đây -->
+		      </tbody>
+		    </table>
         
             <!-- Phân trang -->
             <nav aria-label="Page navigation">
@@ -186,17 +187,5 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 </body>
-<script>
-    function edit(id, name) {
-        $('#id').val(id);
-        $('#name').val(name);
-        $('#CategoryModal').modal('show');
-    }
-    function remove(id) {
-        $('#iddelete').val(id);
-        $('#deleteModal').modal('show');
-    }
-
-</script>
 
 </html>

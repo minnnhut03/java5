@@ -37,10 +37,10 @@ public class adminController {
 	}
 
 
-	@GetMapping("/admin/account")
-	public String adminAccount() {
-		return "admin/manage_user.html";
-	}
+//	@GetMapping("/admin/account")
+//	public String adminAccount() {
+//		return "admin/manage_user.html";
+//	}
 	
 	@GetMapping("/admin/order/add")
 	public String adminOrderAdd() {

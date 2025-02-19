@@ -1,11 +1,7 @@
 package com.java5.demoJV5.entity;
 
-import org.hibernate.annotations.ColumnDefault;
-
 import jakarta.persistence.*;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.*;
 
@@ -30,7 +26,6 @@ public class UserEntity {
     @Column(name = "email", nullable = false)
     private String email;
 
-    @Lob
     @Column(name = "address",nullable = false)
     private String address;
 
@@ -39,6 +34,6 @@ public class UserEntity {
 
 
     @Column(name = "status", nullable = false)
-    private Boolean status = false;
+    private Boolean status;
 
 }
