@@ -21,7 +21,7 @@ import com.java5.demoJV5.service.ProductService;
 import jakarta.validation.Valid;
 
 @Controller
-public class ProductController {
+public class ManageProductController {
 	@Autowired
 	ProductJPA productJPA;
 	
@@ -43,7 +43,7 @@ public class ProductController {
 		List<CategoryEntity> categories = categoryJPA.findAll();
 		model.addAttribute("category",categories);
 		model.addAttribute("productBean", new ProductBean());
-		return "admin/form/add_product.html";
+		return "admin/form/product_form.html";
 	}
 	
 	
@@ -57,7 +57,7 @@ public class ProductController {
 			List<CategoryEntity> categories = categoryJPA.findAll();
 			model.addAttribute("category",categories);
 			model.addAttribute("errorImage", productBean.validateImageFiles());
-			return "admin/form/add_product.html";
+			return "admin/form/product_form.html";
 		}
 		productService.insertProduct(productBean);
 		return "redirect:/admin/product";
