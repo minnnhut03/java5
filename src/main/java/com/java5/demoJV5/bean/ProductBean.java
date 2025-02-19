@@ -58,7 +58,7 @@ public class ProductBean {
     public String validateImageFiles() {
         long totalSize = 0;
         if (images.size() <= 3) {
-            return "Bạn chỉ được tải lên tối đa 3 ảnh.";
+            return "Bạn phải thêm ít nhất 3 ảnh.";
         }
 
         for (MultipartFile file : images) {

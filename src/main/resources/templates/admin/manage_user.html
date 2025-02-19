@@ -35,68 +35,8 @@
 <body>
     <div class="d-flex">
         <!-- Sidebar -->
-        <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 280px;">
-            <a href="index.html" class="d-flex align-items-center mb-3 mb-md-0 text-white text-decoration-none">
-                <div class="icon-container bg-warning rounded-circle d-flex justify-content-center align-items-center me-2"
-                    style="width: 40px; height: 40px;">
-                    <i class="bi bi-shop fs-4"></i>
-                </div>
-                <span class="fs-5 fw-bold">Quản Lý Bán Giày</span>
-            </a>
-            <hr>
-            <ul class="nav nav-pills flex-column mb-auto">
-                <li class="nav-item">
-                    <a href="/admin" class="nav-link active" aria-current="page">
-                        <i class="bi bi-house-door me-2"></i>
-                        Trang chủ
-                    </a>
-                </li>
-                <hr>
-                <li>
-                    <a href="/admin/product" class="nav-link text-white">
-                        <i class="bi bi-bag me-2"></i>
-                        Quản Lý Sản Phẩm
-                    </a>
-                </li>
-                <hr>
-                <li>
-                    <a href="/admin/caterory" class="nav-link text-white">
-                        <i class="bi bi-tags me-2"></i>
-                        Quản Lý Danh Mục
-                    </a>
-                </li>
-                <hr>
-                <li>
-                    <a href="/admin/order" class="nav-link text-white">
-                        <i class="bi bi-card-checklist me-2"></i>
-                        Quản Lý Đơn Hàng
-                    </a>
-                </li>
-                <hr>
-                <li>
-                    <a href="/admin/account" class="nav-link text-white">
-                        <i class="bi bi-people me-2"></i>
-                        Quản Lý Khách Hàng
-                    </a>
-                </li>
-                <hr>
-            </ul>
-            <div class="dropdown">
-                <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
-                    id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
-                    <strong>Admin</strong>
-                </a>
-                <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
-                    <li><a class="dropdown-item" href="#">Cài đặt</a></li>
-                    <li><a class="dropdown-item" href="#">Hồ sơ</a></li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-                    <li><a class="dropdown-item" href="/logout">Đăng xuất</a></li>
-                </ul>
-            </div>
-        </div>
+        <div th:insert="~{admin/sidebar :: sidebar}"></div>
+        
         <div class="container-fluid p-4">
             <h3 class="text-center">DANH SÁCH NGƯỜI DÙNG</h3>
             <hr>
