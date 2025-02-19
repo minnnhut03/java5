@@ -31,15 +31,7 @@ public class UserService {
         return userJPA.findById(userId).map(this::convertToBean).orElse(null);
     }
 
-    public String saveUser(@Valid UserBean userBean, BindingResult result) {
-        // Manually validate the bean if @Valid annotation is not enough
-        if (result.hasErrors()) {
-            StringBuilder errors = new StringBuilder("Errors: ");
-            for (ObjectError error : result.getAllErrors()) {
-                errors.append(error.getDefaultMessage()).append("; ");
-            }
-            return errors.toString();
-        }
+    public String saveUser(UserBean userBean) {
 
         try {
             // Check if the email already exists
@@ -119,17 +111,7 @@ public class UserService {
         }
     }
 
-    public boolean deleteUser(int id) {
-        if (!userJPA.existsById(id)) {
-            return false;
-        }
-        try {
-            userJPA.deleteById(id);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
-    }
+    
 
     private UserBean convertToBean(UserEntity entity) {
         return new UserBean(
