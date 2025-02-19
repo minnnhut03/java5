@@ -1,20 +1,8 @@
 package com.java5.demoJV5.entity;
 import java.util.List;
 
-import org.hibernate.annotations.ColumnDefault;
-
 import jakarta.persistence.*;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
-
-import jakarta.persistence.*;
-import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.*;
 
@@ -28,13 +16,13 @@ public class CategoryEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "category_id", nullable = false)
-    private int id;
+    private Integer id;
 
     @Column(name = "category_name", nullable = false, length = 100)
     private String name;
 
     @Column(name = "status", nullable = false)
-    private Boolean status = false;
+    private Boolean status;
 
     @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
     private List<ProductEntity> products;

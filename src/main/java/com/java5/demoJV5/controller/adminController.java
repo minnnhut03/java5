@@ -27,11 +27,6 @@ public class adminController {
 	public String admin() {
 		return "admin/manage_dashboard.html";
 	}
-
-	@GetMapping("/admin/caterory")
-	public String adminCategory() {
-		return "admin/manage_category.html";
-	}
 	
 
 	

@@ -16,5 +16,5 @@ public class CategoryBean {
     @Size(max = 255, message = "Tên danh mục không được vượt quá 255 ký tự")
     private String categoryName;
     
-    private Boolean status = true;
+    private Boolean status;
 }
