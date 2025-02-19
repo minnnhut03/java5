@@ -35,36 +35,40 @@ public class ProductService {
 	@Autowired
 	ImageService imageService;
 	
+	
+	
 	public String insertProduct(ProductBean productBean) {
 		try {
-			List<String> fileNames = imageService.saveImages(productBean.getImages());
-			Optional<CategoryEntity> category = categoryJPA.findById(productBean.getCategory());
+				List<String> fileNames = imageService.saveImages(productBean.getImages());
+				Optional<CategoryEntity> category = categoryJPA.findById(productBean.getCategory());
+				
+				ProductEntity product = new ProductEntity();
+				product.setName(productBean.getName());
+				product.setDesc(productBean.getDesc());
+				product.setPrice(productBean.getPrice());
+				product.setQuantity(productBean.getQuantity());
+				product.setCategory(category.get());
+				product.setStatus(productBean.getStatus());
+				productJPA.save(product);
+				
+				List<ImageEntity> images = new ArrayList<ImageEntity>();
+				for(String fileName : fileNames) {
+					ImageEntity image = new ImageEntity();
+					image.setName(fileName);
+					image.setProduct(product);
+					images.add(image);	
+				}
+				imageJPA.saveAll(images);
+				
+				List<ProductSizeEntity> productSizes = new ArrayList<ProductSizeEntity>();
+				AddProductSize(productSizes, product, "38", productBean.getSize38());
+				AddProductSize(productSizes, product, "39", productBean.getSize39());
+				AddProductSize(productSizes, product, "40", productBean.getSize40());
+				AddProductSize(productSizes, product, "41", productBean.getSize41());
+				AddProductSize(productSizes, product, "42", productBean.getSize42());
+				AddProductSize(productSizes, product, "43", productBean.getSize43());
+				productSizeJPA.saveAll(productSizes);
 			
-			ProductEntity product = new ProductEntity();
-			product.setName(productBean.getName());
-			product.setDesc(productBean.getDesc());
-			product.setPrice(productBean.getPrice());
-			product.setQuantity(productBean.getQuantity());
-			product.setCategory(category.get());
-			productJPA.save(product);
-			
-			List<ImageEntity> images = new ArrayList<ImageEntity>();
-			for(String fileName : fileNames) {
-				ImageEntity image = new ImageEntity();
-				image.setName(fileName);
-				image.setProduct(product);
-				images.add(image);	
-			}
-			imageJPA.saveAll(images);
-			
-			List<ProductSizeEntity> productSizes = new ArrayList<ProductSizeEntity>();
-			AddProductSize(productSizes, product, "38", productBean.getSize38());
-			AddProductSize(productSizes, product, "39", productBean.getSize39());
-			AddProductSize(productSizes, product, "40", productBean.getSize40());
-			AddProductSize(productSizes, product, "41", productBean.getSize41());
-			AddProductSize(productSizes, product, "42", productBean.getSize42());
-			AddProductSize(productSizes, product, "43", productBean.getSize43());
-			productSizeJPA.saveAll(productSizes);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

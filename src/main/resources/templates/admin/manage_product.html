@@ -148,7 +148,10 @@
                 		<td th:text="${item.desc}"></td>
                 		<td th:text="${item.price}"></td>
                 		<td th:text="${item.quantity}"></td>
-                		<td th:text="${item.status}"></td>
+						<td>
+						    <span th:class="${item.status ? 'badge bg-success' : 'badge bg-danger'}"
+						          th:text="${item.status ? 'Active' : 'Inactive'}"></span>
+						</td>
 	                    <td th:text="${item.category.name}"></td>
 	                    
 						<td><a href="/admin/product/form">
@@ -161,7 +164,7 @@
 									ảnh</button>
 							</a>
 							<a th:href="${'/admin/product/size?productId='+item.id}">
-								<button class="btn btn-primary mt-1">Xem size</button>
+								<button class="btn btn-primary btn-sm">Số Lượng</button>
 							</a>
 						</td>
 					</tr>
