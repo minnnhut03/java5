@@ -18,22 +18,17 @@ public class ProductSizeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_size_id", nullable = false)
-    private Integer id;
+    private int id;
 
-    @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
 
     @JoinColumn(name = "product_id", nullable = false)
     private ProductEntity product;
 
-    @Size(max = 10)
-    @NotNull
-    @Column(name = "\"size\"", nullable = false, length = 10)
+    @Column(name = "size", nullable = false, length = 10)
     private String size;
 
-    @NotNull
-    @ColumnDefault("0")
     @Column(name = "stock", nullable = false)
-    private Integer stock;
+    private int stock;
 
 }

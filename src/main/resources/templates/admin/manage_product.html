@@ -151,14 +151,17 @@
                 		<td th:text="${item.status}"></td>
 	                    <td th:text="${item.category.name}"></td>
 	                    
-						<td><a href="/admin/product/add">
+						<td><a href="/admin/product/form">
 								<button class="btn btn-primary btn-sm"
-									onclick="edit(1, 'Product Name')">Sửa</button>
+									>Sửa</button>
 						</a>
-							<button class="btn btn-danger btn-sm" onclick="remove(1)">Xóa</button>
-							<a href="/admin/product/image">
-								<button class="btn btn-secondary btn-sm" onclick="remove(1)">Xem
+							
+							<a th:href="${'/admin/product/image?productId='+ item.id}">
+								<button class="btn btn-secondary btn-sm">Xem
 									ảnh</button>
+							</a>
+							<a th:href="${'/admin/product/size?productId='+item.id}">
+								<button class="btn btn-primary mt-1">Xem size</button>
 							</a>
 						</td>
 					</tr>

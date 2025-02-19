@@ -9,13 +9,18 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.java5.demoJV5.bean.ProductBean;
 import com.java5.demoJV5.entity.CategoryEntity;
+import com.java5.demoJV5.entity.ImageEntity;
 import com.java5.demoJV5.entity.ProductEntity;
+import com.java5.demoJV5.entity.ProductSizeEntity;
 import com.java5.demoJV5.jpa.CategoryJPA;
+import com.java5.demoJV5.jpa.ImageJPA;
 import com.java5.demoJV5.jpa.ProductJPA;
+import com.java5.demoJV5.jpa.ProductSizeJPA;
+import com.java5.demoJV5.service.ImageService;
 import com.java5.demoJV5.service.ProductService;
 
 import jakarta.validation.Valid;
@@ -31,6 +36,14 @@ public class ManageProductController {
 	@Autowired
 	ProductService productService;
 	
+	@Autowired
+	ImageJPA imageJPA;
+	
+	@Autowired
+	ImageService imageService;
+	
+	@Autowired
+	ProductSizeJPA productSizeJPA;
 	
 	@GetMapping("/admin/product")
 	public String adminProduct(Model model) {
@@ -64,13 +77,25 @@ public class ManageProductController {
 	}
 	
 	
-	@GetMapping("/admin/product/quantity")
-	public String adminQuantity() {
+	@GetMapping("/admin/product/size")
+	public String adminQuantity(@RequestParam(name="productId") int id, Model model) {
+		List<ProductSizeEntity> productSizeEntities = productSizeJPA.findByProductId(id);
+		model.addAttribute("productSizeEntities",productSizeEntities);
 		return "admin/Manage_quantityDetail.html";
 	}
-
+	
+	
+	
 	@GetMapping("/admin/product/image")
-	public String adminImage() {
+	public String adminImage(@RequestParam(name="productId") int id, Model model) {
+		List<ImageEntity> imageEntities = imageJPA.findAllImageByProductId(id);
+		model.addAttribute("imageEntities",imageEntities);
 		return "admin/manage_image.html";
+	}
+	@PostMapping("/admin/deleteImage")
+	public String deleteImage(@RequestParam(name="imageId") int id ,
+			@RequestParam(name="productId") int productiId) {
+		boolean delete = imageService.deleteImage(id);
+		return "redirect:/admin/product/image?productId=" + productiId;
 	}
 }

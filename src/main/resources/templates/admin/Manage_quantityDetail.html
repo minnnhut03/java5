@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <title>Chi Tiết Số Lượng Sản Phẩm</title>
@@ -99,35 +99,26 @@
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Kho</th>
-                        <th>Chi nhánh</th>
-                        <th>Số lượng hiện tại</th>
-                        <th>Số lượng đã bán</th>
+                        <th>Tên sản phẩm</th>
+                        <th>size</th>
+                        <th>Số lượng</th>
                         <th>Hành động</th>
                     </tr>
                 </thead>
                 <tbody>
+                <th:block th:each="item : ${productSizeEntities}">
                     <tr>
-                        <td>1</td>
-                        <td>Kho Chính</td>
-                        <td>Hà Nội</td>
-                        <td>150</td>
-                        <td>100</td>
+                        <td th:text="${item.id}"></td>
+                        <td th:text="${item.product.name}"></td>
+                        <td th:text="${item.size}"></td>
+                        <td th:text="${item.stock}"></td>
                         <td>
-                            <button class="btn btn-primary btn-sm" onclick="editQuantity(1)">Cập nhật</button>
+                            <a >
+                            	<button class="btn btn-primary btn-sm" >Cập nhật</button>
+                            </a>
                         </td>
                     </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Kho Chi Nhánh</td>
-                        <td>TP. Hồ Chí Minh</td>
-                        <td>200</td>
-                        <td>80</td>
-                        <td>
-                            <button class="btn btn-primary btn-sm" onclick="editQuantity(2)">Cập nhật</button>
-                        </td>
-                    </tr>
-                    <!-- Thêm dòng khác ở đây -->
+                </th:block>
                 </tbody>
             </table>
         </div>
