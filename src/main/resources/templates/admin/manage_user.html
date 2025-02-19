@@ -126,7 +126,6 @@
 		        <th>Địa chỉ</th>
 		        <th>Vai trò</th>
 		        <th>Trạng thái</th>
-		        <th>Hành động</th>
 		      </tr>
 		      </thead>
 		      <tbody>
@@ -137,9 +136,14 @@
 		          <td th:text="${item.email}"></td>
 		          <td th:text="${item.address}"></td>
 		          <td th:text="${item.role == 1 ? 'Admin' : 'Người dùng'}"></td>
-		          <td th:text="${item.status? 'Hoạt động' : 'Không hoạt động'}"></td>
-		          <td><a class="btn btn-info btn-primary" th:href="${'/add-user'+ item.id}">Sửa</a>
-		          </td>
+		          <td>
+				    <form th:action="@{/admin/user/update-status/{id}(id=${item.id})}" method="post">
+				        <select name="status" class="form-select form-select-sm" onchange="this.form.submit()">
+				            <option th:value="true" th:selected="${item.status}">Hoạt động</option>
+				            <option th:value="false" th:selected="${!item.status}">Không hoạt động</option>
+				        </select>
+				    </form>
+				</td>
 		        </tr>
 		        </th:block>
 		      <!-- Thêm các dòng dữ liệu khác tại đây -->

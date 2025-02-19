@@ -67,6 +67,22 @@ public class UserService {
             return "Error: " + e.getMessage();
         }
     }
+    
+    public String updateUserStatus(int userId, boolean newStatus) {
+        try {
+            UserEntity existingUser = userJPA.findById(userId).orElse(null);
+            if (existingUser == null) {
+                return "Lỗi: Người dùng không tồn tại!";
+            }
+
+            existingUser.setStatus(newStatus);
+
+            userJPA.save(existingUser);
+            return "Trạng thái người dùng được cập nhật thành công!";
+        } catch (Exception e) {
+            return "Lỗi: " + e.getMessage();
+        }
+    }
 
 
     public String updateUser(@Valid UserBean userBean, BindingResult result) {
