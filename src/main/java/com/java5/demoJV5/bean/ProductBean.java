@@ -51,16 +51,14 @@ public class ProductBean {
     @NotNull(message = "Trạng thái sản phẩm không được để trống")
     private Boolean status = true;
     
+    @NotEmpty(message = "Bạn cần tải lên ít nhất một hình ảnh.")
     private List<MultipartFile> images;
 
+
     public String validateImageFiles() {
-        if (images == null || images.isEmpty()) {
-            return "Bạn cần tải lên ít nhất một hình ảnh.";
-        }
-        
         long totalSize = 0;
-        if (images.size() > 3) {
-            return "Bạn chỉ được tải lên tối đa 3 ảnh.";
+        if (images.size() <= 3) {
+            return "Bạn phải thêm ít nhất 3 ảnh.";
         }
 
         for (MultipartFile file : images) {

@@ -65,6 +65,12 @@ public class ManageProductController {
 			Errors errors,
 			Model model) 
 	{
+		if (productJPA.existsByName(productBean.getName())) {
+            model.addAttribute("errorName", "Tên sản phẩm đã tồn tại!");
+            List<CategoryEntity> categories = categoryJPA.findAll();
+			model.addAttribute("category",categories);
+            return "admin/form/product_form.html"; // Quay lại trang form
+        }
 		
 		if(errors.hasErrors() || productBean.validateImageFiles() != null) {
 			List<CategoryEntity> categories = categoryJPA.findAll();

@@ -39,7 +39,7 @@ public class LoginController {
                 session.setAttribute("loggedInUser", user);
 
                 // Lưu cookie với thời gian sống là 2 tiếng (7200 giây)
-                saveCookie(response, "name", user.getName(), 7200);
+                saveCookie(response, "id", String.valueOf(user.getId()), 7200);
                 saveCookie(response, "email", user.getEmail(), 7200);
                 saveCookie(response, "role", String.valueOf(user.getRole()), 7200);
 
