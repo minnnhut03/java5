@@ -1,14 +1,14 @@
 package com.java5.demoJV5.entity;
+
 import java.math.BigDecimal;
-
-
+import java.time.LocalDateTime;
 import org.hibernate.annotations.ColumnDefault;
-
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
-import lombok.*;
-import java.time.LocalDateTime;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Setter
@@ -17,10 +17,11 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Table(name = "orders")
 public class OrderEntity {
-    @Id
-    @Column(name = "order_id", nullable = false)
-    private Integer id;
-    
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "order_id", nullable = false)
+	private Integer id;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private UserEntity user;
@@ -34,13 +35,20 @@ public class OrderEntity {
     private Integer status;
 
     @NotNull
-    @ColumnDefault("getdate()")
     @Column(name = "date_created", nullable = false)
     private LocalDateTime dateCreated;
 
     @NotNull
-    @ColumnDefault("0.00")
     @Column(name = "total_amount", nullable = false, precision = 18, scale = 2)
     private BigDecimal totalAmount;
 
+    @PrePersist
+    protected void onCreate() {
+        if (dateCreated == null) {
+            dateCreated = LocalDateTime.now();
+        }
+        if (totalAmount == null) {
+            totalAmount = BigDecimal.ZERO;
+        }
+    }
 }
