@@ -5,7 +5,6 @@ import java.math.BigDecimal;
 import org.hibernate.annotations.ColumnDefault;
 
 import jakarta.persistence.*;
-import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.*;
@@ -21,6 +20,10 @@ public class OrderEntity {
     @Id
     @Column(name = "order_id", nullable = false)
     private Integer id;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private UserEntity user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "address_id")

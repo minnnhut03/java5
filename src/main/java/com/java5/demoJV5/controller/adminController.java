@@ -31,10 +31,10 @@ public class adminController {
 
 	
 
-	@GetMapping("/admin/order")
-	public String adminOrder() {
-		return "admin/manage_order.html";
-	}
+//	@GetMapping("/admin/order")
+//	public String adminOrder() {
+//		return "admin/manage_order.html";
+//	}
 
 
 //	@GetMapping("/admin/account")

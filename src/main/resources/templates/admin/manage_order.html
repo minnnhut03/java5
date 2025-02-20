@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
 
 <head>
 <title>Quản Lý Đơn Hàng</title>
@@ -61,7 +61,7 @@
 				<!-- Form tìm kiếm -->
 				<form action="/admin/order/list" method="get" class="d-flex">
 					<input type="text" name="keyword" class="form-control me-2"
-						placeholder="Tìm kiếm theo ID hoặc trạng thái" value=""
+						placeholder="Tìm kiếm" value=""
 						style="width: 300px;">
 				</form>
 			</div>
@@ -71,7 +71,8 @@
 				<thead>
 					<tr>
 						<th>ID</th>
-						<th>User name</th>
+						<th>Tên</th>
+						<!-- <th>Số điện thoại</th> -->
 						<th>Trạng thái</th>
 						<th>Ngày tạo</th>
 						<th>Tổng tiền</th>
@@ -80,25 +81,27 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<td>1</td>
-						<td>101</td>
-						<td><span class="badge bg-success text-dark">Hoàn
-								thành</span></td>
-						<td>2025-01-24</td>
-						<td>1,500,000 VND</td>
-						<td>
-							<button class="btn btn-secondary btn-sm"
-								onclick="showAddressDetails('Nguyễn Văn A', '0901234567', '123 Đường ABC, Quận 1, TP.HCM')">
-								Chi tiết</button>
+				<th:block th:each="item : ${orders}">
+				<tr>
+						<td th:text="${item.id}"></td>
+						<td th:text="${item.address.customerName}"></td>
+						<!-- <td th:text="${item.address.phoneNumber}"></td> -->
+						<td th:switch="${item.status}">
+						    <span th:case="0">Chưa duyệt</span>
+						    <span th:case="1">Đã duyệt</span>
+						    <span th:case="2">Đang giao</span>
+						    <span th:case="3">Giao thành công</span>
 						</td>
+						<td th:text="${item.dateCreated}"></td>
+						<td th:text="${item.totalAmount}"></td>
+						<td th:text="${item.address.address}"></td>
 
 						<td>
 							<button class="btn btn-success btn-sm">sửa</button>
 							<button class="btn btn-secondary btn-sm">Chi tiết</button>
 						</td>
 					</tr>
-					<!-- Thêm các dòng dữ liệu khác tại đây -->
+				</th:block>
 				</tbody>
 			</table>
 
