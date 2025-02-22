@@ -43,16 +43,6 @@ public class userController {
 	public String favourite() {
 		return "user/favourite.html";
 	}
-
-	@GetMapping("/forgot-password")
-	public String forgotPassword() {
-		return "user/forgot-password.html";
-	}
-
-	@GetMapping("/login")
-	public String login() {
-		return "user/login.html";
-	}
 	
 	@GetMapping("/user/checkout")
 	public String checkOut() {
