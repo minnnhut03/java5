@@ -31,6 +31,9 @@
             <h5 class="text-center mb-3">Thêm Sản Phẩm Mới</h5>
             <form th:object="${productBean}" action="/admin/product/add" method="post" enctype="multipart/form-data">
                 <!-- Product Name -->
+                <th:block th:if="*{id != null}">
+					<input name="id" type="hidden" th:value="*{id.get()}">
+				</th:block>
                 <div class="mb-2">
                     <label for="name" class="form-label fw-semibold">Tên sản phẩm</label>
                     <input type="text" class="form-control" id="name" name="name" placeholder="Nhập tên sản phẩm" th:field="*{name}" >
@@ -66,28 +69,34 @@
 				        <div class="col">
 				            <label for="size38" class="form-label">Size 38</label>
 				            <input type="number" class="form-control size-input" id="size38" name="size38" value="" th:field="*{size38}">
+				            <div class="text-danger" th:errors="*{size38}"></div>
 				        </div>
 				        <div class="col">
 				            <label for="size39" class="form-label">Size 39</label>
 				            <input type="number" class="form-control size-input" id="size39" name="size39" value="" th:field="*{size39}">
+				            <div class="text-danger" th:errors="*{size39}"></div>
 				        </div>
 				        <div class="col">
 				            <label for="size40" class="form-label">Size 40</label>
 				            <input type="number" class="form-control size-input" id="size40" name="size40" value="" th:field="*{size40}">
+				            <div class="text-danger" th:errors="*{size40}"></div>
 				        </div>
 				    </div>
 				    <div class="row mt-2">
 				        <div class="col">
 				            <label for="size41" class="form-label">Size 41</label>
 				            <input type="number" class="form-control size-input" id="size41" name="size41" value="" th:field="*{size41}">
+				            <div class="text-danger" th:errors="*{size41}"></div>
 				        </div>
 				        <div class="col">
 				            <label for="size42" class="form-label">Size 42</label>
 				            <input type="number" class="form-control size-input" id="size42" name="size42" value="" th:field="*{size42}">
+				            <div class="text-danger" th:errors="*{size42}"></div>
 				        </div>
 				        <div class="col">
 				            <label for="size43" class="form-label">Size 43</label>
 				            <input type="number" class="form-control size-input" id="size43" name="size43" value="" th:field="*{size43}">
+				            <div class="text-danger" th:errors="*{size43}"></div>
 				        </div>
 				    </div>
 				</div>
@@ -119,8 +128,13 @@
                 <div class="mb-2">
                     <label for="image" class="form-label fw-semibold">Hình ảnh</label>
                     <input type="file" class="form-control" id="image" name="images" accept="image/*" multiple th:field="*{images}">
+                    <th:block th:each="item : ${imageEntities}">
+                    	<img th:src="${'/images/'+item.name}" style="width: 50px; height: 50px;">
+                    </th:block>
                     <div class = "text-danger" th:if="${errorImage != null}" th:text="${errorImage}"></div>
                 </div>
+                
+                
 
                 <!-- Submit and Cancel Buttons -->
                 <div class="mb-2">
@@ -151,7 +165,6 @@
 				        }
 				    });
 				
-				    // Nếu muốn nhập size riêng lẻ, cập nhật lại tổng số lượng
 				    document.querySelectorAll(".size-input").forEach(input => {
 				        input.addEventListener("input", function() {
 				            let total = Array.from(document.querySelectorAll(".size-input"))
