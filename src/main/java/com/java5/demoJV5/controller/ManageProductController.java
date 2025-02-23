@@ -1,6 +1,7 @@
 package com.java5.demoJV5.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -52,10 +53,40 @@ public class ManageProductController {
 		return "admin/manage_product.html";
 	}
 	@GetMapping("/admin/product/form")
-	public String adminProductForm(Model model) {
+	public String adminProductForm(@RequestParam(name="productId") Optional<Integer> id, Model model) {
+		ProductBean productBean = new ProductBean();
+		if(id.isPresent()) {
+			Optional<ProductEntity> productEntity = productJPA.findById(id.get());
+			List<ImageEntity> imageEntities = imageJPA.findAllImageByProductId(id.get());
+			
+			if(productEntity.isPresent()) {
+				productBean.setId(id);
+				productBean.setName(productEntity.get().getName());
+				productBean.setDesc(productEntity.get().getDesc());
+				productBean.setPrice(productEntity.get().getPrice());
+				productBean.setQuantity(productEntity.get().getQuantity());
+				productBean.setCategory(productEntity.get().getCategory().getId());
+				productBean.setStatus(productEntity.get().isStatus());
+				
+				for(ProductSizeEntity size : productEntity.get().getProductSizes()) {
+	                switch (size.getSize()) {
+	                    case "38": productBean.setSize38(size.getStock()); break;
+	                    case "39": productBean.setSize39(size.getStock()); break;
+	                    case "40": productBean.setSize40(size.getStock()); break;
+	                    case "41": productBean.setSize41(size.getStock()); break;
+	                    case "42": productBean.setSize42(size.getStock()); break;
+	                    case "43": productBean.setSize43(size.getStock()); break;
+	                }
+	            }
+				model.addAttribute("imageEntities",imageEntities);
+			}
+		} 
+		
+		
+		
 		List<CategoryEntity> categories = categoryJPA.findAll();
 		model.addAttribute("category",categories);
-		model.addAttribute("productBean", new ProductBean());
+		model.addAttribute("productBean", productBean);
 		return "admin/form/product_form.html";
 	}
 	
@@ -65,20 +96,31 @@ public class ManageProductController {
 			Errors errors,
 			Model model) 
 	{
-		if (productJPA.existsByName(productBean.getName())) {
+		if (productJPA.existsByName(productBean.getName()) && !productBean.getId().isPresent()) {
             model.addAttribute("errorName", "Tên sản phẩm đã tồn tại!");
             List<CategoryEntity> categories = categoryJPA.findAll();
 			model.addAttribute("category",categories);
             return "admin/form/product_form.html"; // Quay lại trang form
         }
 		
-		if(errors.hasErrors() || productBean.validateImageFiles() != null) {
+		if(errors.hasErrors()) {
 			List<CategoryEntity> categories = categoryJPA.findAll();
 			model.addAttribute("category",categories);
-			model.addAttribute("errorImage", productBean.validateImageFiles());
+			
 			return "admin/form/product_form.html";
 		}
-		productService.insertProduct(productBean);
+		if(productBean.getId() != null && productBean.getId().isPresent()) {
+			productService.UpdateProduct(productBean);
+		} else {
+			if(productBean.validateImageFiles() != null) {
+				List<CategoryEntity> categories = categoryJPA.findAll();
+				model.addAttribute("category",categories);
+				model.addAttribute("errorImage", productBean.validateImageFiles());
+				return "admin/form/product_form.html";
+			}
+			productService.insertProduct(productBean);
+		}
+		
 		return "redirect:/admin/product";
 	}
 	
@@ -90,12 +132,38 @@ public class ManageProductController {
 		return "admin/Manage_quantityDetail.html";
 	}
 	
+	@PostMapping("/admin/product/size/update")
+	public String updateProductSize(@RequestParam(name="productId") int id, 
+			@RequestParam(name="stock") int stock
+	    ) {
+	    try {
+	    	ProductSizeEntity productSize = productSizeJPA.findById(id).orElseThrow(() -> new IllegalArgumentException("Không tìm thấy sản phẩm có ID: " + id));
+	            
+	        productSize.setStock(stock);
+	        productSizeJPA.save(productSize);
+
+	        
+	        ProductEntity product = productSize.getProduct();
+	        int totalStock = productSizeJPA.getTotalStockByProductId(product.getId());
+	        product.setQuantity(totalStock);
+	        productJPA.save(product);
+
+	        return "redirect:/admin/product/size?productId=" + product.getId();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+		return null;
+	    
+	}
+
+	
 	
 	
 	@GetMapping("/admin/product/image")
 	public String adminImage(@RequestParam(name="productId") int id, Model model) {
 		List<ImageEntity> imageEntities = imageJPA.findAllImageByProductId(id);
 		model.addAttribute("imageEntities",imageEntities);
+		model.addAttribute("productId", id);
 		return "admin/manage_image.html";
 	}
 	@PostMapping("/admin/deleteImage")
