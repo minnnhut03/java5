@@ -128,24 +128,6 @@
 	color: #333;
 	/* Màu đen nhạt khi hover */
 }
-.footer {
-      background-color: #333;
-      color: #fff;
-      padding: 20px 0;
-      margin-top: 20px;
-    }
-
-.search-box i, .navbar a i {
-	color: #555;
-	/* Màu xám đậm, phù hợp với header */
-	transition: color 0.3s ease;
-	/* Hiệu ứng mượt */
-}
-
-.search-box:hover i, .navbar a:hover i {
-	color: #333;
-	/* Màu đen nhạt khi hover */
-}
 
 .trending-section {
 	background-color: white;
@@ -159,7 +141,6 @@
 	align-items: center;
 	gap: 10px;
 }
-
 .shop-btn {
 	background: none;
 	border: none;
@@ -169,10 +150,6 @@
 	color: black;
 }
 
-    .footer p {
-      font-size: 14px;
-      margin-bottom: 10px;
-    }
 .shop-btn:hover {
 	text-decoration: underline;
 }
@@ -327,85 +304,6 @@
 	<div class="container my-1">
 		<!-- Slide chạy ảnh -->
 		<div class="mb-3">
-          <img th:src="@{/images/Background.jpg}" class="d-block w-100" alt="Slide 1">
-        </div>
-
-		<!-- Sản phẩm bán chạy -->
-		<h2 class="mb-4">Sản Phẩm Bán Chạy</h2>
-		<div class="row mb-5">
-			<div class="col-md-4 mb-4">
-				<div class="card">
-					<img src="img/tải xuống (1).jpg" class="card-img-top"
-						alt="Sản phẩm 1">
-					<div class="card-body">
-						<h5 class="card-title">Sản phẩm 1</h5>
-						<p class="card-text">Mô tả ngắn về sản phẩm. Đây là sản phẩm
-							bán chạy hàng đầu.</p>
-						<a href="#" class="btn btn-primary">Xem chi tiết</a>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-4 mb-4">
-				<div class="card">
-					<img src="img/tải xuống (1).jpg" class="card-img-top"
-						alt="Sản phẩm 2">
-					<div class="card-body">
-						<h5 class="card-title">Sản phẩm 2</h5>
-						<p class="card-text">Mô tả ngắn về sản phẩm. Chất lượng được
-							khách hàng đánh giá cao.</p>
-						<a href="#" class="btn btn-primary">Xem chi tiết</a>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-4 mb-4">
-				<div class="card">
-					<img src="img/tải xuống (1).jpg00" class="card-img-top"
-						alt="Sản phẩm 3">
-					<div class="card-body">
-						<h5 class="card-title">Sản phẩm 3</h5>
-						<p class="card-text">Mô tả ngắn về sản phẩm. Sản phẩm luôn
-							trong tình trạng cháy hàng.</p>
-						<a href="#" class="btn btn-primary">Xem chi tiết</a>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<!-- Sản phẩm được yêu thích -->
-		<h2 class="mb-4">Sản Phẩm Được Yêu Thích</h2>
-		<div class="row">
-			<div class="col-md-4 mb-4">
-				<div class="card">
-					<img src="https://via.placeholder.com/300" class="card-img-top"
-						alt="Sản phẩm 4">
-					<div class="card-body">
-						<h5 class="card-title">Sản phẩm 4</h5>
-						<p class="card-text">Mô tả ngắn về sản phẩm. Lựa chọn hàng đầu
-							của khách hàng.</p>
-						<a href="#" class="btn btn-primary">Xem chi tiết</a>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-4 mb-4">
-				<div class="card">
-					<img src="https://via.placeholder.com/300" class="card-img-top"
-						alt="Sản phẩm 5">
-					<div class="card-body">
-						<h5 class="card-title">Sản phẩm 5</h5>
-						<p class="card-text">Mô tả ngắn về sản phẩm. Được yêu thích
-							bởi chất lượng vượt trội.</p>
-						<a href="#" class="btn btn-primary">Xem chi tiết</a>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-4 mb-4">
-				<div class="card">
-					<img src="https://via.placeholder.com/300" class="card-img-top"
-						alt="Sản phẩm 6">
-					<div class="card-body">
-						<h5 class="card-title">Sản phẩm 6</h5>
-						<p class="card-text">Lựa chọn hàng đầu của người dùng.</p>
-						<a href="#" class="btn btn-primary">Xem chi tiết</a>
 			<img th:src="@{/images/Background.jpg}" class="d-block w-100"
 				alt="Slide 1">
 		</div>
@@ -488,7 +386,7 @@
 						<div class="product-card">
 							<img src="image/Tennis.jpg" class="card-img-top" alt="Basketball">
 							<button class="sport-btn">Tennis</button>
-						</div>
+</div>
 						<div class="product-card">
 							<img src="image/Yoga.webp" class="card-img-top" alt="Basketball">
 							<button class="sport-btn">Yoga</button>
@@ -605,8 +503,7 @@
 			});
 	document.addEventListener("DOMContentLoaded", function () {
 		  const favoriteIcons = document.querySelectorAll(".favorite-icon");
-
-		  favoriteIcons.forEach(icon => {
+favoriteIcons.forEach(icon => {
 		    icon.addEventListener("click", function () {
 		      this.classList.toggle("active"); // Thêm hoặc xóa class "active"
 		    });
