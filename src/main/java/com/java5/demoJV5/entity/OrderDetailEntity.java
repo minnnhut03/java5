@@ -16,7 +16,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "order_details")
-public class OrderDetail {
+public class OrderDetailEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_detail_id", nullable = false)
@@ -28,11 +28,9 @@ public class OrderDetail {
     @JoinColumn(name = "order_id", nullable = false)
     private OrderEntity order;
 
-    @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-
     @JoinColumn(name = "product_id", nullable = false)
-    private OrderEntity product;
+    private ProductEntity product;
 
     @NotNull
     @Column(name = "quantity", nullable = false)

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
 
 <head>
 <title>Quản Lý Đơn Hàng</title>
@@ -47,58 +47,8 @@
 <body>
 	<div class="d-flex">
 		<!-- Sidebar -->
-		<div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark"
-			style="width: 280px;">
-			<a href="index.html"
-				class="d-flex align-items-center mb-3 mb-md-0 text-white text-decoration-none">
-				<div
-					class="icon-container bg-warning rounded-circle d-flex justify-content-center align-items-center me-2"
-					style="width: 40px; height: 40px;">
-					<i class="bi bi-shop fs-4"></i>
-				</div> <span class="fs-5 fw-bold">Quản Lý Bán Giày</span>
-			</a>
-			<hr>
-			<ul class="nav nav-pills flex-column mb-auto">
-				<li class="nav-item"><a href="/admin" class="nav-link active"
-					aria-current="page"> <i class="bi bi-house-door me-2"></i>
-						Trang chủ
-				</a></li>
-				<hr>
-				<li><a href="/admin/product" class="nav-link text-white"> <i
-						class="bi bi-bag me-2"></i> Quản Lý Sản Phẩm
-				</a></li>
-				<hr>
-				<li><a href="/admin/caterory" class="nav-link text-white">
-						<i class="bi bi-tags me-2"></i> Quản Lý Danh Mục
-				</a></li>
-				<hr>
-				<li><a href="/admin/order" class="nav-link text-white"> <i
-						class="bi bi-card-checklist me-2"></i> Quản Lý Đơn Hàng
-				</a></li>
-				<hr>
-				<li><a href="/admin/account" class="nav-link text-white"> <i
-						class="bi bi-people me-2"></i> Quản Lý Khách Hàng
-				</a></li>
-				<hr>
-			</ul>
-			<div class="dropdown">
-				<a href="#"
-					class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
-					id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-					<img src="https://github.com/mdo.png" alt="" width="32" height="32"
-					class="rounded-circle me-2"> <strong>Admin</strong>
-				</a>
-				<ul class="dropdown-menu dropdown-menu-dark text-small shadow"
-					aria-labelledby="dropdownUser1">
-					<li><a class="dropdown-item" href="#">Cài đặt</a></li>
-					<li><a class="dropdown-item" href="#">Hồ sơ</a></li>
-					<li>
-						<hr class="dropdown-divider">
-					</li>
-					<li><a class="dropdown-item" href="/logout">Đăng xuất</a></li>
-				</ul>
-			</div>
-		</div>
+		<div th:insert="~{admin/sidebar :: sidebar}"></div>
+		
 		<div class="container-fluid p-4">
 			<h3 class="text-center">DANH SÁCH ĐƠN HÀNG</h3>
 			<hr>
@@ -111,7 +61,7 @@
 				<!-- Form tìm kiếm -->
 				<form action="/admin/order/list" method="get" class="d-flex">
 					<input type="text" name="keyword" class="form-control me-2"
-						placeholder="Tìm kiếm theo ID hoặc trạng thái" value=""
+						placeholder="Tìm kiếm" value=""
 						style="width: 300px;">
 				</form>
 			</div>
@@ -121,7 +71,8 @@
 				<thead>
 					<tr>
 						<th>ID</th>
-						<th>User name</th>
+						<th>Tên</th>
+						<!-- <th>Số điện thoại</th> -->
 						<th>Trạng thái</th>
 						<th>Ngày tạo</th>
 						<th>Tổng tiền</th>
@@ -130,25 +81,30 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<td>1</td>
-						<td>101</td>
-						<td><span class="badge bg-success text-dark">Hoàn
-								thành</span></td>
-						<td>2025-01-24</td>
-						<td>1,500,000 VND</td>
+				<th:block th:each="item : ${orders}">
+				<tr>
+						<td th:text="${item.id}"></td>
+						<td th:text="${item.address.customerName}"></td>
 						<td>
-							<button class="btn btn-secondary btn-sm"
-								onclick="showAddressDetails('Nguyễn Văn A', '0901234567', '123 Đường ABC, Quận 1, TP.HCM')">
-								Chi tiết</button>
+						    <form th:action="@{/admin/order/update-status/{id}(id=${item.id})}" method="post">
+						        <select name="status" class="form-select form-select-sm" onchange="this.form.submit()">
+						            <option th:value="0" th:selected="${item.status == 0}">Chưa duyệt</option>
+						            <option th:value="1" th:selected="${item.status == 1}">Đã duyệt</option>
+						            <option th:value="2" th:selected="${item.status == 2}">Đang giao</option>
+						            <option th:value="3" th:selected="${item.status == 3}">Giao thành công</option>
+						        </select>
+						    </form>
 						</td>
+						<td th:text="${item.dateCreated}"></td>
+						<td th:text="${item.totalAmount}"></td>
+						<td th:text="${item.address.address}"></td>
 
 						<td>
-							<button class="btn btn-success btn-sm">sửa</button>
-							<button class="btn btn-secondary btn-sm">Chi tiết</button>
+						    <a th:href="@{/admin/order/detail(orderId=${item.id})}" class="btn btn-success btn-sm">Chi tiết</a>
 						</td>
+
 					</tr>
-					<!-- Thêm các dòng dữ liệu khác tại đây -->
+				</th:block>
 				</tbody>
 			</table>
 
@@ -165,70 +121,6 @@
 						href="/admin/order/list?page=3&keyword="> Next </a></li>
 				</ul>
 			</nav>
-		</div>
-	</div>
-	<!-- Modal Chi Tiết Địa Chỉ -->
-	<div class="modal fade" id="AddressModal" tabindex="-1"
-		aria-labelledby="AddressModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="AddressModalLabel">Chi Tiết Địa
-						Chỉ</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"
-						aria-label="Close"></button>
-				</div>
-				<div class="modal-body">
-					<!-- Nội dung chi tiết địa chỉ -->
-					<p>
-						<strong>Tên khách hàng:</strong> <span id="customerName"></span>
-					</p>
-					<p>
-						<strong>Số điện thoại:</strong> <span id="phoneNumber"></span>
-					</p>
-					<p>
-						<strong>Địa chỉ:</strong> <span id="addressDetail"></span>
-					</p>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary"
-						data-bs-dismiss="modal">Đóng</button>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="modal fade" id="OrderDetailModal" tabindex="-1"
-		aria-labelledby="OrderDetailModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-lg">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="OrderDetailModalLabel">Chi Tiết
-						Đơn Hàng</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"
-						aria-label="Close"></button>
-				</div>
-				<div class="modal-body">
-					<!-- Bảng chi tiết đơn hàng -->
-					<table class="table table-bordered" id="orderDetailTable">
-						<thead>
-							<tr>
-								<th>ID Sản Phẩm</th>
-								<th>Giá</th>
-								<th>Số Lượng</th>
-								<th>Kích Cỡ</th>
-							</tr>
-						</thead>
-						<tbody>
-							<!-- Hàng chi tiết sẽ được thêm vào đây bằng JavaScript -->
-						</tbody>
-					</table>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary"
-						data-bs-dismiss="modal">Đóng</button>
-				</div>
-			</div>
 		</div>
 	</div>
 

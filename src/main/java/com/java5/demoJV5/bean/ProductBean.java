@@ -33,46 +33,49 @@ public class ProductBean {
 	@Min(value = 1, message = "Số lượng phải lớn hơn hoặc bằng 1")
 	private int quantity;
 	
+	@Min(value = 0, message = "Số lượng phải lớn hơn hoặc bằng 0")
 	private int size38;
 	
+	@Min(value = 0, message = "Số lượng phải lớn hơn hoặc bằng 0")
 	private int size39;
 	
+	@Min(value = 0, message = "Số lượng phải lớn hơn hoặc bằng 0")
 	private int size40;
 	
+	@Min(value = 0, message = "Số lượng phải lớn hơn hoặc bằng 0")
 	private int size41;
 	
+	@Min(value = 0, message = "Số lượng phải lớn hơn hoặc bằng 0")
 	private int size42;
 	
+	@Min(value = 0, message = "Số lượng phải lớn hơn hoặc bằng 0")
 	private int size43;
 
 	@Min(value = 0, message = "Danh mục không được bỏ trống")
 	private int category;
 
     @NotNull(message = "Trạng thái sản phẩm không được để trống")
-    private Boolean status = true;
+    private Boolean status;
     
     private List<MultipartFile> images;
 
-    public String validateImageFiles() {
-        if (images == null || images.isEmpty()) {
-            return "Bạn cần tải lên ít nhất một hình ảnh.";
-        }
-        
-        long totalSize = 0;
-        if (images.size() > 3) {
-            return "Bạn chỉ được tải lên tối đa 3 ảnh.";
-        }
 
+    public String validateImageFiles() {
+        long totalSize = 0;
+        long size = (2 * 1024 * 1024);
         for (MultipartFile file : images) {
             totalSize += file.getSize();
-            if (file.getSize() > 5 * 1024 * 1024) { 
-                return "Mỗi ảnh không được vượt quá 5MB.";
-            }
+        }
+        if (images.size() < 3) {
+            return "Bạn phải thêm ít nhất 3 ảnh";
         }
 
-        if (totalSize > 20 * 1024 * 1024) {
-            return "Tổng dung lượng ảnh không được vượt quá 20MB.";
+        
+        if (totalSize > size) {
+            return "Tổng dung lượng ảnh không được vượt quá 2MB";
         }
+
+        
 
         return null;
     }

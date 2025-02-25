@@ -12,4 +12,6 @@ public interface ImageJPA extends JpaRepository<ImageEntity, Integer> {
 	@Query(value="SELECT * FROM images WHERE product_id = ?1", nativeQuery = true)
 	public List<ImageEntity> findAllImageByProductId(int id);
 	
+	@Query(value="DELETE FROM images WHERE product_id = ?1", nativeQuery = true)
+	public boolean deleteByProductID(int id);
 }

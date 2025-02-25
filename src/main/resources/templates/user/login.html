@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <title>Trang Đăng Nhập</title>
@@ -118,19 +118,24 @@
         </div>
 
         <h2 class="text-center mb-4">Đăng Nhập</h2>
+		        <!-- Hiển thị thông báo lỗi nếu có -->
+		<div th:if="${error}" class="alert alert-danger text-center" role="alert">
+		    <span th:text="${error}"></span>
+		</div>
+
         <form action="/login/check" method="POST">
             <!-- Email -->
             <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
                 <input type="email" class="form-control" id="email" name="email" placeholder="Nhập email của bạn"
-                    required>
+                    >
             </div>
 
             <!-- Mật khẩu -->
             <div class="mb-3">
                 <label for="password" class="form-label">Mật khẩu</label>
                 <input type="password" class="form-control" id="password" name="password" placeholder="Nhập mật khẩu"
-                    required>
+                    >
             </div>
 
             <!-- Nút Đăng nhập -->

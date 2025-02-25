@@ -1,6 +1,7 @@
 package com.java5.demoJV5.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,15 +32,7 @@ public class UserService {
         return userJPA.findById(userId).map(this::convertToBean).orElse(null);
     }
 
-    public String saveUser(@Valid UserBean userBean, BindingResult result) {
-        // Manually validate the bean if @Valid annotation is not enough
-        if (result.hasErrors()) {
-            StringBuilder errors = new StringBuilder("Errors: ");
-            for (ObjectError error : result.getAllErrors()) {
-                errors.append(error.getDefaultMessage()).append("; ");
-            }
-            return errors.toString();
-        }
+    public String saveUser(UserBean userBean) {
 
         try {
             // Check if the email already exists
@@ -118,18 +111,23 @@ public class UserService {
             return "Error: " + e.getMessage();
         }
     }
+    public String updatePassword(String email, String newPassword) {
+        Optional<UserEntity> userOpt = userJPA.findByEmail(email);
 
-    public boolean deleteUser(int id) {
-        if (!userJPA.existsById(id)) {
-            return false;
+        if (userOpt.isEmpty()) {
+            return "Lỗi: Email không tồn tại!";
         }
-        try {
-            userJPA.deleteById(id);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
+
+        UserEntity user = userOpt.get();
+        
+        // Mã hóa mật khẩu trước khi lưu
+        user.setPassword(newPassword); // Nếu dùng BCrypt, hãy mã hóa trước khi lưu
+
+        userJPA.save(user);
+        return "Mật khẩu đã được cập nhật thành công!";
     }
+
+    
 
     private UserBean convertToBean(UserEntity entity) {
         return new UserBean(
