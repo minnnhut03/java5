@@ -1,28 +1,32 @@
 <header th:fragment="header">
 	<!-- Logo Bar -->
 	<div class="bg-light">
-    <div class="container d-flex justify-content-between align-items-center py-2">
-        <!-- Logo -->
-        <a href="#"> 
-            <img th:src="@{/images/Jordan.png}" alt="Nike Logo" height="24">
-        </a>
+		<div
+			class="container d-flex justify-content-between align-items-center py-2">
+			<!-- Logo -->
+			<a href="#"> <img th:src="@{/images/Jordan.png}" alt="Nike Logo"
+				height="24">
+			</a>
 
-        <!-- Menu điều hướng -->
-        <div class="d-flex align-items-center">
-		    <a href="/contact" class="text-dark text-decoration-none me-3">Tìm cửa hàng</a>
-		    <a href="/about" class="text-dark text-decoration-none me-3">Giới thiệu</a>
+			<!-- Menu điều hướng -->
+			<div class="d-flex align-items-center">
+				<a href="/contact" class="text-dark text-decoration-none me-3">Tìm
+					cửa hàng</a> <a href="/about"
+					class="text-dark text-decoration-none me-3">Giới thiệu</a>
 				<!-- Nếu có cookie, hiển thị "Đăng xuất" -->
-			<th:block th:if="${hasCookies}">
-			    <a href="/logout" class="text-dark text-decoration-none me-3">Đăng xuất</a>
-			</th:block>
-			
-			<th:block th:if="${!hasCookies}">
-			    <a href="/login" class="text-dark text-decoration-none me-3">Đăng nhập</a>
-			</th:block>
+				<th:block th:if="${hasCookies}">
+					<a href="/logout" class="text-dark text-decoration-none me-3">Đăng
+						xuất</a>
+				</th:block>
 
+				<th:block th:if="${!hasCookies}">
+					<a href="/login" class="text-dark text-decoration-none me-3">Đăng
+						nhập</a>
+				</th:block>
+
+			</div>
 		</div>
-    </div>
-</div>
+	</div>
 
 	<!-- Thanh Điều Hướng -->
 	<nav class="navbar navbar-expand-lg navbar-light bg-white">
@@ -39,11 +43,10 @@
 			<div class="collapse navbar-collapse" id="navbarNav">
 				<ul class="navbar-nav mx-auto fw-bold text-dark">
 					<!-- Menu Dropdown -->
-					<li class="nav-item dropdown position-static">
-					    <a class="nav-link no-arrow" href="/product" id="navbarDropdown">Danh mục</a>
-					    
-					</li>
-					
+					<li class="nav-item dropdown position-static"><a
+						class="nav-link no-arrow" href="/product" id="navbarDropdown">Danh
+							mục</a></li>
+
 					<!-- Mục Nam -->
 					<li class="nav-item dropdown position-static"><a
 						class="nav-link no-arrow" href="#" id="navbarDropdownMen">Nam</a>
@@ -267,28 +270,38 @@
 							</div>
 						</div></li>
 				</ul>
-			<div class="d-flex align-items-center">
-    <!-- Icon Yêu Thích (Trái Tim) -->
-    <a href="/user/" class="text-dark text-decoration-none mx-2">
-        <i class="fa-solid fa-heart fs-5"></i>
-    </a>
+				<div class="d-flex align-items-center">
+					<!-- Icon Yêu Thích (Trái Tim) -->
+					<a href="/user/" class="text-dark text-decoration-none mx-2"> <i
+						class="fa-solid fa-heart fs-5"></i>
+					</a>
 
-    <!-- Icon Giỏ Hàng -->
-    <a href="/user/cart" class="text-dark text-decoration-none mx-2">
-        <i class="fa-solid fa-shopping-cart fs-5"></i>
-    </a>
+					<!-- Icon Giỏ Hàng -->
+					<a href="/user/cart" class="text-dark text-decoration-none mx-2">
+						<i class="fa-solid fa-shopping-cart fs-5"></i>
+					</a>
 
-    <!-- Icon User -->
-    <a href="/user/profile" class="text-dark text-decoration-none mx-2">
-        <i class="fa-solid fa-user fs-5"></i>
-    </a>
+					<!-- Icon User -->
+					<div class="dropdown d-inline">
+						<a href="#" class="text-dark text-decoration-none mx-2"
+							id="userDropdown" data-bs-toggle="dropdown"> <i
+							class="fa-solid fa-gear fs-5"></i>
+						</a>
+						<ul class="dropdown-menu dropdown-menu-start"
+							aria-labelledby="userDropdown">
+							<li><a class="dropdown-item" href="/user/profile">Cập
+									nhật thông tin</a></li>
+							<li><a class="dropdown-item" href="/user/change-password">Đổi
+									mật khẩu</a></li>
+						</ul>
+					</div>
 
-    <!-- Ô tìm kiếm -->
-    <div class="search-box d-flex align-items-center ms-3">
-        <i class="fa-solid fa-magnifying-glass me-2"></i>
-        <input type="text" class="form-control" placeholder="Tìm kiếm" />
-    </div>
-</div>
+					<!-- Ô tìm kiếm -->
+					<div class="search-box d-flex align-items-center ms-3">
+						<i class="fa-solid fa-magnifying-glass me-2"></i> <input
+							type="text" class="form-control" placeholder="Tìm kiếm" />
+					</div>
+				</div>
 
 			</div>
 		</div>
