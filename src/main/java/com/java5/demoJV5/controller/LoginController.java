@@ -68,15 +68,15 @@ public class LoginController {
             saveCookie(response, "role", String.valueOf(user.getRole()), 60 * 60 * 2);
 
             // Đọc URL từ cookie requestedUrl
-            String requestedUrl = getCookieValue(request, "requestedUrl");
-
-            // Xóa cookie requestedUrl sau khi sử dụng
-            deleteCookie(response, "requestedUrl");
-
-            // Nếu có URL trước đó thì chuyển hướng đến URL đó
-            if (requestedUrl != null && !requestedUrl.isEmpty()) {
-                return "redirect:" + URLDecoder.decode(requestedUrl, StandardCharsets.UTF_8);
-            }
+//            String requestedUrl = getCookieValue(request, "requestedUrl");
+//
+//            // Xóa cookie requestedUrl sau khi sử dụng
+//            deleteCookie(response, "requestedUrl");
+//
+//            // Nếu có URL trước đó thì chuyển hướng đến URL đó
+//            if (requestedUrl != null && !requestedUrl.isEmpty()) {
+//                return "redirect:" + URLDecoder.decode(requestedUrl, StandardCharsets.UTF_8);
+//            }
 
             // Chuyển hướng theo quyền hạn
             if (user.getRole() == 1) {
