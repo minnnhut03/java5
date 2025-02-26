@@ -1,5 +1,6 @@
 package com.java5.demoJV5.service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -35,7 +36,31 @@ public class ProductService {
 	@Autowired
 	ImageService imageService;
 	
-	
+
+//    public List<ProductEntity> getProductsWithPriceInRange(BigDecimal minPrice, BigDecimal maxPrice) {
+//        return productJPA.getProductsWithPriceInRange(minPrice, maxPrice);
+//    }
+
+    public List<ProductEntity> findAll() {
+        return productJPA.findAll();
+    }
+
+    public ProductEntity findById(Integer id) {
+        return productJPA.findById(id).orElse(null);
+    }
+
+    public List<ProductEntity> getProductsByCategory(Integer categoryId) {
+        return productJPA.findByCategoryId(categoryId);
+    }
+    
+    public List<ProductEntity> searchProductsByName(String name) {
+        return productJPA.findByNameContainingIgnoreCase(name);
+    }
+
+    public List<ProductEntity> getProductsWithPriceInRange(long minPrice, long maxPrice) {
+        return productJPA.findByPriceBetweenOrderByPriceAsc(minPrice, maxPrice);
+    }
+
 	
 	public String insertProduct(ProductBean productBean) {
 		try {

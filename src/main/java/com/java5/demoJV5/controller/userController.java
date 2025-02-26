@@ -59,10 +59,10 @@ public class userController {
 		return "user/present.html";
 	}
 
-	@GetMapping("/product")
-	public String product() {
-		return "user/product.html";
-	}
+//	@GetMapping("/product")
+//	public String product() {
+//		return "user/product.html";
+//	}
 
 	@GetMapping("/product/detail")
 	public String productDetail() {

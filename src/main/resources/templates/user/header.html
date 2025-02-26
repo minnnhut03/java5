@@ -12,13 +12,13 @@
 		    <a href="/contact" class="text-dark text-decoration-none me-3">Tìm cửa hàng</a>
 		    <a href="/about" class="text-dark text-decoration-none me-3">Giới thiệu</a>
 				<!-- Nếu có cookie, hiển thị "Đăng xuất" -->
-<th:block th:if="${hasCookies}">
-    <a href="/logout" class="text-dark text-decoration-none me-3">Đăng xuất</a>
-</th:block>
-
-<th:block th:if="${!hasCookies}">
-    <a href="/login" class="text-dark text-decoration-none me-3">Đăng nhập</a>
-</th:block>
+			<th:block th:if="${hasCookies}">
+			    <a href="/logout" class="text-dark text-decoration-none me-3">Đăng xuất</a>
+			</th:block>
+			
+			<th:block th:if="${!hasCookies}">
+			    <a href="/login" class="text-dark text-decoration-none me-3">Đăng nhập</a>
+			</th:block>
 
 		</div>
     </div>
@@ -39,48 +39,11 @@
 			<div class="collapse navbar-collapse" id="navbarNav">
 				<ul class="navbar-nav mx-auto fw-bold text-dark">
 					<!-- Menu Dropdown -->
-					<li class="nav-item dropdown position-static"><a
-						class="nav-link no-arrow" href="#" id="navbarDropdown">Danh mục</a>
-						<div class="dropdown-menu custom-dropdown w-100"
-							aria-labelledby="navbarDropdown">
-							<div class="container">
-								<div class="row">
-									<div class="col-md-4">
-										<h6 class="dropdown-header">Nổi Bật</h6>
-										<a class="dropdown-item" href="#">Sản Phẩm Sắp Ra Mắt</a> <a
-											class="dropdown-item" href="#">Hàng Mới Về</a> <a
-											class="dropdown-item" href="#">Bán Chạy Nhất</a> <a
-											class="dropdown-item" href="#">Độc Quyền Cho Thành Viên</a> <a
-											class="dropdown-item" href="#">Tùy Chỉnh Với Nike By You</a>
-										<a class="dropdown-item" href="#">Xu Hướng Hiện Nay</a> <a
-											class="dropdown-item" href="#">Jordan</a>
-									</div>
-									<div class="col-md-4">
-										<h6 class="dropdown-header">Biểu Tượng</h6>
-										<a class="dropdown-item" href="#">Phong Cách Đời Thường</a> <a
-											class="dropdown-item" href="#">Air Force 1</a> <a
-											class="dropdown-item" href="#">Air Jordan 1</a> <a
-											class="dropdown-item" href="#">Air Max</a> <a
-											class="dropdown-item" href="#">Dunk</a> <a
-											class="dropdown-item" href="#">Cortez</a> <a
-											class="dropdown-item" href="#">Blazer</a> <a
-											class="dropdown-item" href="#">Pegasus</a> <a
-											class="dropdown-item" href="#">Vomero</a>
-									</div>
-									<div class="col-md-4">
-										<h6 class="dropdown-header">Mua Theo Môn Thể Thao</h6>
-										<a class="dropdown-item" href="#">Chạy Bộ</a> <a
-											class="dropdown-item" href="#">Bóng Rổ</a> <a
-											class="dropdown-item" href="#">Bóng Đá</a> <a
-											class="dropdown-item" href="#">Golf</a> <a
-											class="dropdown-item" href="#">Quần Vợt</a> <a
-											class="dropdown-item" href="#">Gym & Tập Luyện</a> <a
-											class="dropdown-item" href="#">Yoga</a> <a
-											class="dropdown-item" href="#">Trượt Ván</a>
-									</div>
-								</div>
-							</div>
-						</div></li>
+					<li class="nav-item dropdown position-static">
+					    <a class="nav-link no-arrow" href="/product" id="navbarDropdown">Danh mục</a>
+					    
+					</li>
+					
 					<!-- Mục Nam -->
 					<li class="nav-item dropdown position-static"><a
 						class="nav-link no-arrow" href="#" id="navbarDropdownMen">Nam</a>
