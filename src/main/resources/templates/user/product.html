@@ -80,7 +80,7 @@
                     <img th:if="${not #lists.isEmpty(product.images)}" th:src="@{'/images/' + ${product.images[0].name}}" th:alt="${product.name}" class="img-fluid"/>
                     <h5 th:text="${product.name}"></h5>
                     <p class="price fw-bold text-danger" th:text="${product.price} + ' VND'"></p>
-                    <a th:href="@{'/product/detail/' + ${product.id}}" class="btn btn-primary">Chi Tiết</a>
+                    <a th:href="@{'/product/detail?productId=' + ${product.id}}" class="btn btn-primary">Chi Tiết</a>
                 </div>
             </div>
         </div>

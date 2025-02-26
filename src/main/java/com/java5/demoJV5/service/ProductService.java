@@ -40,7 +40,7 @@ public class ProductService {
 //    public List<ProductEntity> getProductsWithPriceInRange(BigDecimal minPrice, BigDecimal maxPrice) {
 //        return productJPA.getProductsWithPriceInRange(minPrice, maxPrice);
 //    }
-
+	
     public List<ProductEntity> findAll() {
         return productJPA.findAll();
     }

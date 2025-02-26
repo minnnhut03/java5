@@ -41,4 +41,7 @@ public class UserEntity {
 
     @Column(name = "otp_expiry")
     private LocalDateTime otpExpiry;
+    
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private CartEntity cart;
 }
