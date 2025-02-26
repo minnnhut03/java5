@@ -67,4 +67,8 @@ public class userController {
 	public String productDetail() {
 		return "user/product-detail.html";
 	}
+	@GetMapping("/about")
+	public String About() {
+		return "user/introduce.html";
+	}
 }
