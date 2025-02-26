@@ -19,14 +19,17 @@ import com.java5.demoJV5.jpa.ImageJPA;
 public class ImageService {
 	@Autowired
 	ImageJPA imageJPA;
+	
 	public List<String> saveImages(List<MultipartFile> files) {
         List<String> fileNames = new ArrayList<>();
-
         try {
             Path filePath = Paths.get("images");
             Files.createDirectories(filePath);
 
             for (MultipartFile file : files) { 
+            	if (file.isEmpty()) {
+                    continue; 
+                }
                 String fileName = String.format("%s.%s", (new Date()).getTime(), file.getContentType().split("/")[1]);
 
                 Files.copy(file.getInputStream(), filePath.resolve(fileName));
@@ -53,4 +56,5 @@ public class ImageService {
 		}
 		return true;
 	}
+
 }

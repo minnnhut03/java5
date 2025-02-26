@@ -84,4 +84,61 @@ public class ProductService {
 		
 		return null;
 	}
+	public String UpdateProduct(ProductBean productBean) {
+		try {
+			List<String> fileNames = imageService.saveImages(productBean.getImages());
+			Optional<CategoryEntity> category = categoryJPA.findById(productBean.getCategory());
+			
+			ProductEntity product = new ProductEntity();
+			product.setId(productBean.getId().get());
+			product.setName(productBean.getName());
+			product.setDesc(productBean.getDesc());
+			product.setPrice(productBean.getPrice());
+			product.setQuantity(productBean.getQuantity());
+			product.setCategory(category.get());
+			product.setStatus(productBean.getStatus());
+			productJPA.save(product);
+			
+			try {				
+				if(fileNames.size() >= 1) {
+					System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaa");
+					imageJPA.deleteByProductID(product.getId()); 
+				}
+		    	
+		    } catch (Exception e) {
+		    	e.printStackTrace();
+		    }
+			
+			List<ImageEntity> images = new ArrayList<ImageEntity>();
+			for(String fileName : fileNames) {
+				ImageEntity image = new ImageEntity();
+				image.setName(fileName);
+				image.setProduct(product);
+				images.add(image);
+			}
+			
+			imageJPA.saveAll(images); 
+			
+			
+			
+			try {
+	            productSizeJPA.deleteByProductId(product.getId()); 
+	            System.out.println("Đã xóa size cũ thành công!");
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+			List<ProductSizeEntity> productSizes = new ArrayList<ProductSizeEntity>();
+			AddProductSize(productSizes, product, "38", productBean.getSize38());
+			AddProductSize(productSizes, product, "39", productBean.getSize39());
+			AddProductSize(productSizes, product, "40", productBean.getSize40());
+			AddProductSize(productSizes, product, "41", productBean.getSize41());
+			AddProductSize(productSizes, product, "42", productBean.getSize42());
+			AddProductSize(productSizes, product, "43", productBean.getSize43());
+			productSizeJPA.saveAll(productSizes);
+		
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
+		return null;
+	}
 }

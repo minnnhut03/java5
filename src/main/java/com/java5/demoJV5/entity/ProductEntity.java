@@ -45,6 +45,6 @@ public class ProductEntity {
     private List<ImageEntity> images;
     
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<ProductSizeEntity> products;
+    private List<ProductSizeEntity> productSizes;
 
 }

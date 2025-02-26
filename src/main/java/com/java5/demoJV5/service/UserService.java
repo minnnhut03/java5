@@ -1,6 +1,7 @@
 package com.java5.demoJV5.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -109,6 +110,21 @@ public class UserService {
         } catch (Exception e) {
             return "Error: " + e.getMessage();
         }
+    }
+    public String updatePassword(String email, String newPassword) {
+        Optional<UserEntity> userOpt = userJPA.findByEmail(email);
+
+        if (userOpt.isEmpty()) {
+            return "Lỗi: Email không tồn tại!";
+        }
+
+        UserEntity user = userOpt.get();
+        
+        // Mã hóa mật khẩu trước khi lưu
+        user.setPassword(newPassword); // Nếu dùng BCrypt, hãy mã hóa trước khi lưu
+
+        userJPA.save(user);
+        return "Mật khẩu đã được cập nhật thành công!";
     }
 
     
