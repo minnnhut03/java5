@@ -8,19 +8,18 @@
         </a>
 
         <!-- Menu điều hướng -->
-        <div class="d-flex align-items-center" xmlns:th="http://www.thymeleaf.org">
+        <div class="d-flex align-items-center">
 		    <a href="/contact" class="text-dark text-decoration-none me-3">Tìm cửa hàng</a>
 		    <a href="/about" class="text-dark text-decoration-none me-3">Giới thiệu</a>
-		
-		    <!-- Kiểm tra nếu user đã đăng nhập -->
-		    <th:block th:if="${request.session.getAttribute('loggedInUser') != null}">
-		        <a href="/logout" class="text-dark text-decoration-none me-3">Đăng xuất</a>
-		    </th:block>
-		
-		    <!-- Nếu user chưa đăng nhập thì hiển thị nút đăng nhập -->
-		    <th:block th:if="${request.session.getAttribute('loggedInUser') == null}">
-		        <a href="/login" class="text-dark text-decoration-none me-3">Đăng nhập</a>
-		    </th:block>
+				<!-- Nếu có cookie, hiển thị "Đăng xuất" -->
+<th:block th:if="${hasCookies}">
+    <a href="/logout" class="text-dark text-decoration-none me-3">Đăng xuất</a>
+</th:block>
+
+<th:block th:if="${!hasCookies}">
+    <a href="/login" class="text-dark text-decoration-none me-3">Đăng nhập</a>
+</th:block>
+
 		</div>
     </div>
 </div>

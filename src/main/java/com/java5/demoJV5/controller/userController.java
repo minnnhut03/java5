@@ -26,9 +26,8 @@ public class userController {
 	ServletContext context;
 
 	@GetMapping("/")
-	public String homePage(HttpServletRequest request, Model model) {
-	    model.addAttribute("request", request);
-	    return "user/index";
+	public String homePage() {
+		return "user/index";
 	}
 
 	@GetMapping("/user/cart")

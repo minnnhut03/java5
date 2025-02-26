@@ -67,7 +67,7 @@ public class LoginController {
             saveCookie(response, "email", user.getEmail(), 60 * 60 * 2);
             saveCookie(response, "role", String.valueOf(user.getRole()), 60 * 60 * 2);
 
-            // Đọc URL từ cookie requestedUrl
+//            // Đọc URL từ cookie requestedUrl
 //            String requestedUrl = getCookieValue(request, "requestedUrl");
 //
 //            // Xóa cookie requestedUrl sau khi sử dụng

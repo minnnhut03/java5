@@ -6,6 +6,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -62,12 +65,15 @@ public class PermissionComponent implements HandlerInterceptor{
 	 * Lưu URL mà người dùng muốn truy cập trước khi bị chuyển hướng đến trang login
 	 */
 	private void saveRequestedUrl(HttpServletRequest request, HttpServletResponse response) {
-	    String requestedUrl = request.getRequestURI();
-	    Cookie urlCookie = new Cookie("requestedUrl", requestedUrl);
-	    urlCookie.setMaxAge(60 * 5); // Lưu trong 5 phút
-	    urlCookie.setPath("/");
-	    response.addCookie(urlCookie);
+	    String requestedUrl = request.getRequestURI(); // Lấy URL mà user muốn truy cập
+	    Cookie cookie = new Cookie("requestedUrl", URLEncoder.encode(requestedUrl, StandardCharsets.UTF_8));
+	    cookie.setMaxAge(300); // Lưu trong 5 phút
+	    cookie.setPath("/");
+	    cookie.setHttpOnly(true);
+	    cookie.setSecure(true);
+	    response.addCookie(cookie);
 	}
+
 	
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
