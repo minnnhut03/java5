@@ -2,6 +2,7 @@ package com.java5.demoJV5.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import jakarta.servlet.ServletContext;
@@ -25,8 +26,9 @@ public class userController {
 	ServletContext context;
 
 	@GetMapping("/")
-	public String homePage() {
-		return "user/index.html";
+	public String homePage(HttpServletRequest request, Model model) {
+	    model.addAttribute("request", request);
+	    return "user/index";
 	}
 
 	@GetMapping("/user/cart")
