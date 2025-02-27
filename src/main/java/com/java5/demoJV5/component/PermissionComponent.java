@@ -51,12 +51,12 @@ public class PermissionComponent implements HandlerInterceptor{
 	        return false;
 	    }
 
-	    // Nếu truy cập trang /user/ nhưng chưa đăng nhập, lưu URL rồi chuyển hướng đến login
-	    if (path.startsWith("/user") && !isLoggedIn) {
-	        saveRequestedUrl(request, response);
-	        response.sendRedirect("/login");
-	        return false;
-	    }
+//	    // Nếu truy cập trang /user/ nhưng chưa đăng nhập, lưu URL rồi chuyển hướng đến login
+//	    if (path.startsWith("/user") && !isLoggedIn) {
+//	        saveRequestedUrl(request, response);
+//	        response.sendRedirect("/login");
+//	        return false;
+//	    }
 
 	    return true;
 	}

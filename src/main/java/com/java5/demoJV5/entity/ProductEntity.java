@@ -1,12 +1,10 @@
 package com.java5.demoJV5.entity;
-import java.math.BigDecimal;
+
 import java.util.List;
 
-import org.hibernate.annotations.ColumnDefault;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+
 import lombok.AllArgsConstructor;
 import lombok.*;
 
@@ -47,4 +45,6 @@ public class ProductEntity {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ProductSizeEntity> productSizes;
 
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<FavoriteEntity> favorites;
 }
