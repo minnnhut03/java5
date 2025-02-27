@@ -26,10 +26,13 @@ public class CartController {
         model.addAttribute("cartItems", cartItems);
         return "user/cart";
 	}
-	@PostMapping("/user/cart")
-	public String AddCart() {
-		
-		return null;
+	@PostMapping("/updateCart")
+	public String UpdateCart(@RequestParam(name="quantity") int quantity,
+			@RequestParam(name="productId") int productId,
+			@RequestParam(name="cartDetailId") int cartDetailId
+			, Model model) {
+		cartService.updateQuantityCartItem(cartDetailId, quantity, productId);
+		return "redirect:/user/cart";
 	}
 	@PostMapping("/deleteCart")
 	public String deleteCart(@RequestParam(name="cartDetailId") int id) {

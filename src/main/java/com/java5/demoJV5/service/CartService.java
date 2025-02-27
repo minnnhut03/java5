@@ -131,12 +131,14 @@ public class CartService {
         return true;
     }
 
-    public boolean updateQuantityCartItem(int cartItemId, int quantity){
+    public boolean updateQuantityCartItem(int cartItemId, int quantity, int prodId){
         try{
             Optional<CartDetail> cartItemOptional = cartDetailJPA.findById(cartItemId);
+            Optional<ProductEntity> productOptional = productJPA.findById(prodId);
             if(cartItemOptional.isPresent()){
                 CartDetail cartItemEntity = cartItemOptional.get();
                 cartItemEntity.setQuantity(quantity);
+                cartItemEntity.setUnitPrice(quantity*productOptional.get().getPrice());
                 cartDetailJPA.save(cartItemEntity);
             }
         }catch(Exception e){

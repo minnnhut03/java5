@@ -214,8 +214,8 @@
 					</tr>
 				</thead>
 				<tbody>
-				<th:block th:each="item : ${cartItems}">
-					<tr>
+				<th:block  th:each="item : ${cartItems}">
+					<tr th:if="${item.product.status}">
 						<td th:text="${item.id}"></td>
 						<td>
 	                    	
@@ -226,7 +226,21 @@
                 		<td th:text="${item.product.name}"></td>
                 		<td th:text="${item.size}"></td>
                 		<td th:text="${item.product.price}"></td>
-                		<td th:text="${item.quantity}"></td>
+                		<td>
+                			<form action="/updateCart" method="post" class="row g-2 align-items-center">
+							    <div class="col-auto">
+							        <input class="form-control" name="quantity" type="number" th:value="${item.quantity}" step="1" min="1" style="max-width: 80px;">
+							    </div>
+							    <input type="hidden" name="cartDetailId" th:value="${item.id}">
+							    <input type="hidden" name="productId" th:value="${item.product.id}">
+							    <div class="col-auto">
+							        <button type="submit" class="btn btn-primary">
+							            <i class="bi bi-arrow-repeat"></i> Cập nhật
+							        </button>
+							    </div>
+							</form>
+
+                		</td>
 						<td th:text="${item.unitPrice}"></td>
 	                    
 						<td>
