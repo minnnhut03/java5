@@ -257,43 +257,83 @@
 </head>
 
 <body>
-	<div th:insert="~{user/header :: header}"></div>
-    <div class="container my-4">
-        <h2 class="fw-bold text-center">Danh Sách Sản Phẩm</h2>
-        <div class="row mb-3">
-            <div class="col-md-4">
-                <input type="text" class="form-control" placeholder="Tìm kiếm sản phẩm..." id="searchBox">
-            </div>
-            <div class="col-md-4">
-                <select class="form-select" id="categoryFilter">
-                    <option value="">Tất cả danh mục</option>
-                    <option value="shoes">Giày</option>
-                    <option value="clothing">Quần áo</option>
-                    <option value="accessories">Phụ kiện</option>
-                </select>
-            </div>
-            <div class="col-md-4">
-                <select class="form-select" id="sortPrice">
-                    <option value="">Sắp xếp theo giá</option>
-                    <option value="asc">Thấp đến cao</option>
-                    <option value="desc">Cao đến thấp</option>
-                </select>
-            </div>
-        </div>
-        <div class="row" id="productList">
-            <div class="col-md-4 mb-4" th:each="product : ${products}">
-                <div class="product-card position-relative p-3">
-                    <i class="bi bi-heart favorite-icon" th:data-id="${product.id}"></i>
-                    <img th:src="${product.image}" th:alt="${product.name}">
-                    <h5 th:text="${product.name}"></h5>
-                    <p class="text-muted" th:text="${product.description}"></p>
-                    <p class="price fw-bold" th:text="${product.price} + '₫'"></p>
-                    <button class="btn btn-primary">Mua hàng</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div th:insert="~{user/footer :: footer}"></div>
+	<div class="container my-5">
+		<div class="row">
+			<!-- Sidebar -->
+			<aside class="col-md-2 sidebar">
+				<h5>Loại Giày</h5>
+				<ul>
+					<li><a href="#">Giày Thể Thao</a></li>
+					<li><a href="#">Giày Chạy Bộ</a></li>
+					<li><a href="#">Giày Thời Trang</a></li>
+				</ul>
+				<h5>Size Giày</h5>
+				<ul>
+					<li><a href="#">Size 38</a></li>
+					<li><a href="#">Size 39</a></li>
+					<li><a href="#">Size 40</a></li>
+					<li><a href="#">Size 41</a></li>
+				</ul>
+				<h5>Giá Tiền</h5>
+				<ul>
+					<li><a href="#">Dưới 1 triệu</a></li>
+					<li><a href="#">1 - 3 triệu</a></li>
+					<li><a href="#">Trên 3 triệu</a></li>
+				</ul>
+			</aside>
+
+			<!-- Main Content -->
+			<main class="col-md-10">
+				<h2 class="mb-4">Sản Phẩm</h2>
+				<div class="row">
+					<div class="col-md-4 mb-4">
+						<div class="products-container" id="productsContainer">
+							<div class="product-card">
+								<i class="bi bi-heart favorite-icon"></i> <img
+									src="image/Nike Air Force 1'07.png" alt="Nike Air Force 1">
+								<h5>Nike Air Force 1 '07</h5>
+								<p class="text-muted">Men's Shoes</p>
+								<p class="price">3,959,000₫</p>
+								<div class="product-actions">
+									<button class="btn btn-primary">Mua hàng</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4 mb-4">
+						<div class="products-container" id="productsContainer">
+							<div class="product-card">
+								<i class="bi bi-heart favorite-icon"></i> <img
+									src="image/Nike Air Force 1'07.png" alt="Nike Air Force 1">
+								<h5>Nike Air Force 1 '07</h5>
+								<p class="text-muted">Men's Shoes</p>
+								<p class="price">3,959,000₫</p>
+								<div class="product-actions">
+									<button class="btn btn-primary">Mua hàng</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4 mb-4">
+						<div class="products-container" id="productsContainer">
+							<div class="product-card">
+								<i class="bi bi-heart favorite-icon"></i> <img
+									src="image/Nike Air Force 1'07.png" alt="Nike Air Force 1">
+								<h5>Nike Air Force 1 '07</h5>
+								<p class="text-muted">Men's Shoes</p>
+								<p class="price">3,959,000₫</p>
+								<div class="product-actions">
+									<button class="btn btn-primary">Mua hàng</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</main>
+		</div>
+	</div>
+
+	<!-- Link JavaScript Bootstrap -->
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
