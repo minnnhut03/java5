@@ -17,28 +17,27 @@ import lombok.*;
 @NoArgsConstructor
 @Table(name = "cart_details")
 public class CartDetail {
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cart_detail_id", nullable = false)
     private Integer id;
 
-    @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cart_id", nullable = false)
     private CartEntity cart;
 
-    @NotNull
-    @ColumnDefault("1")
     @Column(name = "quantity", nullable = false)
-    private Integer quantity;
+    private int quantity;
 
-    @Size(max = 10)
-    @NotNull
     @Column(name = "\"size\"", nullable = false, length = 10)
     private String size;
 
-    @NotNull
     @Column(name = "unit_price", nullable = false, precision = 18, scale = 2)
-    private BigDecimal unitPrice;
+    private long unitPrice;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id", nullable = false)
+    private ProductEntity product;
 
 }

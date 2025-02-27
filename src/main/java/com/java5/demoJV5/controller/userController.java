@@ -30,10 +30,6 @@ public class userController {
 		return "user/index";
 	}
 
-	@GetMapping("/user/cart")
-	public String cart() {
-		return "user/cart.html";
-	}
 
 	@GetMapping("/contact")
 	public String contact() {
@@ -59,15 +55,7 @@ public class userController {
 		return "user/present.html";
 	}
 
-//	@GetMapping("/product")
-//	public String product() {
-//		return "user/product.html";
-//	}
-
-	@GetMapping("/product/detail")
-	public String productDetail() {
-		return "user/product-detail.html";
-	}
+	
 	@GetMapping("/about")
 	public String About() {
 		return "user/introduce.html";

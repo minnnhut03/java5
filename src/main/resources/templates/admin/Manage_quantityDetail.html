@@ -33,7 +33,9 @@
         <div class="container-fluid p-4">
             <h3 class="text-center">CHI TIẾT SỐ LƯỢNG SẢN PHẨM</h3>
             <hr>
-            <div class="alert alert-danger" style="display: none;" id="error-message"></div>
+            <a th:href="${'/admin/product'}">
+            	<button class="btn btn-primary btn-sm mb-2">Quay Lại</button>
+            </a> 
             <!-- Bảng chi tiết số lượng -->
             <table id="quantityTable" class="table table-striped table-bordered">
                 <thead>
