@@ -28,7 +28,7 @@ public class ChangePasswordController {
 
     @GetMapping("/change-password")
     public String showChangePasswordForm(Model model) {
-        model.addAttribute("changePasswordBean", new ChangePasswordBean()); // Thêm vào model
+        model.addAttribute("changePasswordBean", new ChangePasswordBean());
         return "user/ChangePassword"; 
     }
 
@@ -46,13 +46,15 @@ public class ChangePasswordController {
         }
 
         if (result.hasErrors()) {
-            return "user/ChangePassword"; // Nếu có lỗi validation, quay lại trang
+            model.addAttribute("changePasswordBean", changePasswordBean); // Quan trọng!
+            return "user/ChangePassword";
         }
 
         // Kiểm tra mật khẩu hiện tại
         Optional<UserEntity> userOpt = userJPA.findById(userId);
         if (userOpt.isEmpty()) {
             model.addAttribute("errorMessage", "Người dùng không tồn tại!");
+            model.addAttribute("changePasswordBean", changePasswordBean);
             return "user/ChangePassword";
         }
 
@@ -60,11 +62,13 @@ public class ChangePasswordController {
 
         if (!user.getPassword().equals(changePasswordBean.getCurrentPassword())) {
             model.addAttribute("errorMessage", "Mật khẩu hiện tại không đúng!");
+            model.addAttribute("changePasswordBean", changePasswordBean);
             return "user/ChangePassword";
         }
 
         if (!changePasswordBean.getNewPassword().equals(changePasswordBean.getConfirmPassword())) {
             model.addAttribute("errorMessage", "Mật khẩu xác nhận không khớp!");
+            model.addAttribute("changePasswordBean", changePasswordBean);
             return "user/ChangePassword";
         }
 
@@ -74,8 +78,9 @@ public class ChangePasswordController {
 
         model.addAttribute("successMessage", "Mật khẩu đã được thay đổi thành công!");
 
-        return "redirect:/user/change-password"; // Chuyển hướng về trang cá nhân
+        return "redirect:/user/change-password"; // Chuyển hướng về trang đổi mật khẩu
     }
+
 
     // Hàm lấy userId từ cookie
     private Integer getUserIdFromCookie(HttpServletRequest request) {
