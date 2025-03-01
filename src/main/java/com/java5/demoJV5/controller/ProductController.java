@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import com.java5.demoJV5.component.FavoriteComponent;
 import com.java5.demoJV5.entity.ImageEntity;
 import com.java5.demoJV5.entity.ProductEntity;
 import com.java5.demoJV5.entity.ProductSizeEntity;
@@ -13,6 +14,9 @@ import com.java5.demoJV5.jpa.ProductSizeJPA;
 import com.java5.demoJV5.service.CartService;
 import com.java5.demoJV5.service.CategoryService;
 import com.java5.demoJV5.service.ProductService;
+
+import jakarta.security.auth.message.callback.PrivateKeyCallback.Request;
+import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.List;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,13 +41,19 @@ public class ProductController {
     
     @Autowired
     CategoryService categoryService;
+    
+    @Autowired
+    private FavoriteComponent favoriteComponent;
+    
+    
 
     @GetMapping("")
     public String showProducts(
             @RequestParam(required = false) Integer categoryId,
             @RequestParam(required = false) String search,
             @RequestParam(required = false) String sortPrice,
-            Model model) {
+            Model model,
+            HttpServletRequest request) {
 
         List<ProductEntity> products;
 
@@ -63,6 +73,8 @@ public class ProductController {
 
         model.addAttribute("products", products);
         model.addAttribute("categories", categoryService.getAllCategories());
+        
+        favoriteComponent.addFavoriteAttributes(model, request);
         return "user/product.html";
     }
 
