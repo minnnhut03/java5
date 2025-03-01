@@ -1,9 +1,11 @@
 package com.java5.demoJV5.service;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -56,11 +58,26 @@ public class ProductService {
     public List<ProductEntity> searchProductsByName(String name) {
         return productJPA.findByNameContainingIgnoreCase(name);
     }
+    
+    public List<ProductEntity> findAllSortedByPrice(List<ProductEntity> products, String sortOrder) {
+        if (products == null || products.isEmpty()) {
+            return Collections.emptyList();
+        }
 
-    public List<ProductEntity> getProductsWithPriceInRange(long minPrice, long maxPrice) {
-        return productJPA.findByPriceBetweenOrderByPriceAsc(minPrice, maxPrice);
+        if ("asc".equalsIgnoreCase(sortOrder)) {
+            products.sort(Comparator.comparing(ProductEntity::getPrice));
+        } else if ("desc".equalsIgnoreCase(sortOrder)) {
+            products.sort(Comparator.comparing(ProductEntity::getPrice).reversed());
+        }
+
+        return products;
     }
-
+    
+    public List<ProductEntity> searchProductsByName(List<ProductEntity> products, String search) {
+        return products.stream()
+                .filter(product -> product.getName().toLowerCase().contains(search.toLowerCase()))
+                .collect(Collectors.toList());
+    }
 	
 	public String insertProduct(ProductBean productBean) {
 		try {

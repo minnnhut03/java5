@@ -38,38 +38,47 @@ public class ProductController {
     @Autowired
     CategoryService categoryService;
 
-    // Hiển thị danh sách sản phẩm + lọc theo danh mục + tìm kiếm theo tên
     @GetMapping("")
     public String showProducts(
             @RequestParam(required = false) Integer categoryId,
             @RequestParam(required = false) String search,
+            @RequestParam(required = false) String sortPrice,
             Model model) {
-        
+
         List<ProductEntity> products;
-        
+
         if (categoryId != null) {
             products = productService.getProductsByCategory(categoryId);
-        } else if (search != null && !search.isEmpty()) {
-            products = productService.searchProductsByName(search);
         } else {
             products = productService.findAll();
         }
+
+        // Tìm kiếm theo chuỗi (nếu có)
+        if (search != null && !search.isEmpty()) {
+            products = productService.searchProductsByName(products, search);
+        }
+
+        // Sắp xếp theo giá (nếu có)
+        products = productService.findAllSortedByPrice(products, sortPrice);
 
         model.addAttribute("products", products);
         model.addAttribute("categories", categoryService.getAllCategories());
         return "user/product.html";
     }
 
+
+
+
     // Lọc sản phẩm theo khoảng giá
-    @GetMapping("/price")
-    public String showProductsByPrice(
-            @RequestParam long minPrice, 
-            @RequestParam long maxPrice, 
-            Model model) {
-        List<ProductEntity> products = productService.getProductsWithPriceInRange(minPrice, maxPrice);
-        model.addAttribute("products", products);
-        return "user/product.html";
-    }
+//    @GetMapping("/price")
+//    public String showProductsByPrice(
+//            @RequestParam long minPrice, 
+//            @RequestParam long maxPrice, 
+//            Model model) {
+//        List<ProductEntity> products = productService.getProductsWithPriceInRange(minPrice, maxPrice);
+//        model.addAttribute("products", products);
+//        return "user/product.html";
+//    }
 
     @GetMapping("/detail")
     public String showProductDetail(@RequestParam("productId") Integer productId, Model model) {
