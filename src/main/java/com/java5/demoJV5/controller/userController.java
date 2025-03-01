@@ -5,6 +5,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import com.java5.demoJV5.jpa.ImageJPA;
+import com.java5.demoJV5.jpa.ProductSizeJPA;
+import com.java5.demoJV5.service.CartService;
+import com.java5.demoJV5.service.CategoryService;
+import com.java5.demoJV5.service.ProductService;
+
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -24,9 +30,25 @@ public class userController {
 
 	@Autowired
 	ServletContext context;
+	
+    @Autowired
+    ProductService productService;
+    
+    @Autowired
+    ProductSizeJPA productSizeJPA;
+    
+    @Autowired
+    ImageJPA imageJPA;
+    
+    @Autowired
+    CartService cartService;
+    
+    @Autowired
+    CategoryService categoryService;
 
 	@GetMapping("/")
-	public String homePage() {
+	public String homePage(Model model) {
+		 model.addAttribute("products", productService.findAll());
 		return "user/index";
 	}
 

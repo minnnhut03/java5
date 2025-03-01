@@ -47,7 +47,7 @@ public class PermissionComponent implements HandlerInterceptor{
 
 	    // Nếu truy cập trang admin nhưng không phải admin, cấm truy cập
 	    if (path.startsWith("/admin") && role != 1) {
-	        response.sendRedirect("/403");
+	        response.sendRedirect("/login");
 	        return false;
 	    }
 
