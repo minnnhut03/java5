@@ -80,9 +80,16 @@
 			        
 			        <img th:if="${not #lists.isEmpty(product.images)}" th:src="@{'/images/' + ${product.images[0].name}}" th:alt="${product.name}" class="img-fluid"/>
 			        <h5 th:text="${product.name}"></h5>
-			        <p class="price fw-bold text-danger" th:text="${product.price} + ' VND'"></p>
+			        <p th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT')} + ' VND'"></p>
 			        <a th:href="@{'/product/detail?productId=' + ${product.id}}" class="btn btn-primary">Chi Tiết</a>
-			        <a class="bi bi-heart favorite-icon" th:href="@{/favorite/add/{id}(id=${product.id})}"></a>
+			   <a th:href="${#lists.contains(favoriteProductIds, product.id) 
+              ? '/favorite/remove/' + product.id 
+              : '/favorite/add/' + product.id}"
+   th:classappend="${#lists.contains(favoriteProductIds, product.id)} 
+                   ? 'bi bi-heart-fill text-danger' 
+                   : 'bi bi-heart'">
+</a>
+
 			    </div>
 			</div>
         </div>
