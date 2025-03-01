@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.java5.demoJV5.bean.CategoryBean;
 import com.java5.demoJV5.entity.CategoryEntity;
 import com.java5.demoJV5.jpa.CategoryJPA;
 
@@ -26,14 +27,17 @@ public class CategoryService {
         return categoryJPA.findByName(name).isPresent();
     }
 
-    public boolean saveCategory(CategoryEntity category) {
-        Optional<CategoryEntity> existingCategory = categoryJPA.findByName(category.getName());
+    public boolean saveCategory(CategoryBean categoryBean) {
+        Optional<CategoryEntity> existingCategory = categoryJPA.findByName(categoryBean.getName());
         
         // Nếu danh mục đã tồn tại và không phải là danh mục đang cập nhật -> báo lỗi
-        if (existingCategory.isPresent() && !existingCategory.get().getId().equals(category.getId())) {
+        if (existingCategory.isPresent() && !existingCategory.get().getId().equals(categoryBean.getId())) {
             return false;
         }
 
+        CategoryEntity category = new CategoryEntity();
+        category.setName(categoryBean.getName());
+        category.setStatus(categoryBean.getStatus());
         categoryJPA.save(category);
         return true;
     }
@@ -43,4 +47,3 @@ public class CategoryService {
         categoryJPA.deleteById(id);
     }
 }
-
