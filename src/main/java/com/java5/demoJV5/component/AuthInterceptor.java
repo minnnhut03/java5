@@ -31,7 +31,7 @@ public class AuthInterceptor implements HandlerInterceptor {
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) {
         if (modelAndView != null) {
-            modelAndView.addObject("hasCookies", request.getAttribute("hasCookies"));
+           // modelAndView.addObject("hasCookies", request.getAttribute("hasCookies"));
         }
     }
 }

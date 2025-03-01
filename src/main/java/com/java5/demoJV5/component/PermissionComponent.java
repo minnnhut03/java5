@@ -47,16 +47,16 @@ public class PermissionComponent implements HandlerInterceptor{
 
 	    // Nếu truy cập trang admin nhưng không phải admin, cấm truy cập
 	    if (path.startsWith("/admin") && role != 1) {
-	        response.sendRedirect("/403");
-	        return false;
-	    }
-
-	    // Nếu truy cập trang /user/ nhưng chưa đăng nhập, lưu URL rồi chuyển hướng đến login
-	    if (path.startsWith("/user") && !isLoggedIn) {
-	        saveRequestedUrl(request, response);
 	        response.sendRedirect("/login");
 	        return false;
 	    }
+
+//	    // Nếu truy cập trang /user/ nhưng chưa đăng nhập, lưu URL rồi chuyển hướng đến login
+//	    if (path.startsWith("/user") && !isLoggedIn) {
+//	        saveRequestedUrl(request, response);
+//	        response.sendRedirect("/login");
+//	        return false;
+//	    }
 
 	    return true;
 	}

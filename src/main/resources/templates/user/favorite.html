@@ -212,52 +212,31 @@
 <body>
 	<div th:insert="~{user/header :: header}"></div>
 	<main>
-		 <div class="container my-2">
-            <h3 class="text-center mb-4">Sản Phẩm Yêu Thích</h3>
-            <div class="row" id="productsContainer">
-                <div class="col-md-3 col-sm-6 mb-4">
-                    <div class="product-card text-center">
-                        <i class="bi bi-heart favorite-icon"></i>
-                        <img src="image/Nike Air Force 1'07.png" alt="Nike Air Force 1" class="img-fluid">
-                        <h5 class="mt-2">Nike Air Force 1 '07</h5>
-                        <p class="text-muted">Men's Shoes</p>
-                        <p class="price-product  font-weight-bold">3,959,000₫</p>
-                        <button class="btn btn-primary btn-sm">Mua hàng</button>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6 mb-4">
-                    <div class="product-card text-center">
-                        <i class="bi bi-heart favorite-icon"></i>
-                        <img src="image/Nike Air Force 1'07.png" alt="Nike Dunk Low" class="img-fluid">
-                        <h5 class="mt-2">Nike Dunk Low</h5>
-                        <p class="text-muted">Men's Shoes</p>
-                        <p class="price-product  font-weight-bold">3,199,000₫</p>
-                        <button class="btn btn-primary btn-sm">Mua hàng</button>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6 mb-4">
-                    <div class="product-card text-center">
-                        <i class="bi bi-heart favorite-icon"></i>
-                        <img src="image/Nike Air Force 1'07.png" alt="Nike SB Zoom" class="img-fluid">
-                        <h5 class="mt-2">Nike SB Zoom Pogo Plus</h5>
-                        <p class="text-muted">Women's Skate Shoes</p>
-                        <p class="price-product  font-weight-bold">2,499,000₫</p>
-                        <button class="btn btn-primary btn-sm">Mua hàng</button>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6 mb-4">
-                    <div class="product-card text-center">
-                        <i class="bi bi-heart favorite-icon"></i>
-                        <img src="image/Nike Air Force 1'07.png" alt="Air Jordan 1" class="img-fluid">
-                        <h5 class="mt-2">Air Jordan 1 Low</h5>
-                        <p class="text-muted">Women's Shoes</p>
-                        <p class="price-product  font-weight-bold">4,109,000₫</p>
-                        <button class="btn btn-primary btn-sm">Mua hàng</button>
-                    </div>
+    <div class="container my-2">
+        <h3 class="text-center mb-4">Sản Phẩm Yêu Thích</h3>
+        <div class="row g-3" id="productsContainer">
+            <div class="col-lg-3 col-md-4 col-sm-6 col-12" th:each="favorite : ${favorites}">
+                <div class="product-card position-relative p-3 text-center">
+                    <!-- Nút xóa sản phẩm khỏi danh sách yêu thích -->
+                    <a class="bi bi-heart-fill text-danger favorite-icon" th:href="@{/favorite/remove/{id}(id=${favorite.product.id})}"></a>
+
+                    <!-- Kiểm tra nếu sản phẩm có ảnh -->
+                    <img th:if="${not #lists.isEmpty(favorite.product.images)}" 
+                         th:src="@{'/images/' + ${favorite.product.images[0].name}}" 
+                         th:alt="${favorite.product.name}" 
+                         class="img-fluid"/>
+
+                    <h5 class="mt-2" th:text="${favorite.product.name}"></h5>
+
+                    <p class="price fw-bold text-danger" th:text="${#numbers.formatDecimal(favorite.product.price, 0, 2)} + ' VNĐ'"></p>
+
+                    <a th:href="@{'/product/detail?productId=' + ${favorite.product.id}}" class="btn btn-primary btn-sm">Chi Tiết</a>
                 </div>
             </div>
         </div>
-	</main>
+    </div>
+</main>
+
 	<div th:insert="~{user/footer :: footer}"></div>
 	<!-- Bootstrap JavaScript Libraries -->
 		<script

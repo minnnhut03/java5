@@ -321,7 +321,23 @@
 						</button>
 					</div>
 				</div>
-				<!-- Danh sách sản phẩm -->
+				
+				
+				<div class="row g-3" id="productList">
+            <div class="col-lg-3 col-md-4 col-sm-6 col-12" th:each="product : ${products}" th:if="${product.status}">
+			    <div class="product-card position-relative p-3 text-center">
+			   
+			        <img th:if="${not #lists.isEmpty(product.images)}" th:src="@{'/images/' + ${product.images[0].name}}" th:alt="${product.name}" class="img-fluid"/>
+			        <h5 th:text="${product.name}"></h5>
+			        <p class="price fw-bold text-danger" th:text="${product.price} + ' VND'"></p>
+			        <a th:href="@{'/product/detail?productId=' + ${product.id}}" class="btn btn-primary">Chi Tiết</a>
+			        <a class="bi bi-heart favorite-icon" th:href="@{/favorite/add/{id}(id=${product.id})}"></a>
+			    </div>
+			</div>
+        </div>
+				
+				
+<!-- 				Danh sách sản phẩm
 				<div class="products-container" id="productsContainer">
 					<div class="product-card">
 						<i class="bi bi-heart favorite-icon"></i> <img
@@ -333,7 +349,7 @@
 							<button class="btn btn-primary">Mua hàng</button>
 						</div>
 					</div>
-				</div>
+				</div> -->
 			</div>
 			<div class="container mt-4">
 				<h2 class="fw-bold">Trending Now: Espresso</h2>

@@ -70,7 +70,7 @@
 		      </thead>
 		      <tbody>
 		      <th:block th:each="item: ${users}">
-		        <tr>
+		        <tr th:if="${item.role != 1}">
 		          <td th:text="${item.id}"></td>
 		          <td th:text="${item.name}"></td>
 		          <td th:text="${item.email}"></td>
