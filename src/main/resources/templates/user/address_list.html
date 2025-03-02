@@ -17,7 +17,8 @@
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
 	rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 <style>
 /* Hiển thị dropdown khi hover vào nav-item */
 .nav-item.dropdown:hover .custom-dropdown {
@@ -155,6 +156,7 @@
 	font-size: 1.5rem;
 	font-weight: bold;
 }
+
 .footer {
 	background-color: #333;
 	color: #fff;
@@ -194,49 +196,67 @@
 </head>
 
 <body>
- <div th:insert="~{user/header :: header}"></div>
-    
-    <div class="container mt-4">
-        <h2>Danh Sách Địa Chỉ</h2>
-        <a href="/user/address/add" class="btn btn-primary mb-3">Thêm Địa Chỉ</a>
-        
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Tên Khách Hàng</th>
-                    <th>Số Điện Thoại</th>
-                    <th>Địa Chỉ</th>
-                    <th>Hành Động</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="address : ${addresses}">
-                    <td th:text="${address.customerName}"></td>
-                    <td th:text="${address.phoneNumber}"></td>
-                    <td th:text="${address.address}"></td>
-                    <td>
-                        <a th:href="@{/user/address/edit/{id}(id=${address.id})}" class="btn btn-warning btn-sm">Sửa</a>
-                        <form th:action="@{/user/address/delete/{id}(id=${address.id})}" method="post" style="display:inline;">
-                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Bạn có chắc chắn muốn xóa?')">Xóa</button>
-                        </form>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+	<div th:insert="~{user/header :: header}"></div>
 
-    <div th:insert="~{user/footer :: footer}"></div>
+	<div class="container mt-4">
+		<h2 class="text-center">Danh Sách Địa Chỉ</h2>
+		<div class="mb-3">
+			<a href="/user/address/add" class="btn btn-primary"> <i
+				class="bi bi-plus-circle"></i> Thêm Địa Chỉ
+			</a>
+		</div>
+
+		<div class="table-responsive">
+			<table
+				class="table table-bordered table-hover text-center align-middle">
+				<thead class="table-dark">
+					<tr>
+						<th>Tên Khách Hàng</th>
+						<th>Số Điện Thoại</th>
+						<th>Địa Chỉ</th>
+						<th>Hành Động</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="address : ${addresses}">
+						<td th:text="${address.customerName}"></td>
+						<td th:text="${address.phoneNumber}"></td>
+						<td th:text="${address.address}"></td>
+						<td>
+							<div class="d-flex justify-content-center gap-2">
+								<a th:href="@{/user/address/edit/{id}(id=${address.id})}"
+									class="btn btn-warning btn-sm"> <i class="bi bi-pencil"></i>
+									Sửa
+								</a>
+								<form th:action="@{/user/address/delete/{id}(id=${address.id})}"
+									method="post"
+									onsubmit="return confirm('Bạn có chắc chắn muốn xóa?')">
+									<button type="submit" class="btn btn-danger btn-sm">
+										<i class="bi bi-trash"></i> Xóa
+									</button>
+								</form>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	<div th:insert="~{user/footer :: footer}"></div>
 
 	<!-- Bootstrap JavaScript Libraries -->
 	<script
 		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
 		integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-		crossorigin="anonymous">	
+		crossorigin="anonymous">
+		
 	</script>
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
 		integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
 		crossorigin="anonymous">
+		
 	</script>
 </body>
 

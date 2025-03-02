@@ -17,7 +17,8 @@
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
 	rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 <style>
 /* Hiển thị dropdown khi hover vào nav-item */
 .nav-item.dropdown:hover .custom-dropdown {
@@ -155,6 +156,7 @@
 	font-size: 1.5rem;
 	font-weight: bold;
 }
+
 .footer {
 	background-color: #333;
 	color: #fff;
@@ -196,100 +198,89 @@
 <body>
 	<div th:insert="~{user/header :: header}"></div>
 	<main class="container my-5">
-		<h2 class="text-center mb-4">Giỏ Hàng của Bạn</h2>
+		<h2 class="text-center mb-4">Giỏ Hàng</h2>
 		<div class="row">
-		    <div class="row">
-		    	<div class="col-12 cart-item">
-		       <table id="productTable" class="table table-striped table-bordered">
-				<thead>
-					<tr>
-						<th>ID</th>
-						<th>Hình ảnh</th>
-						<th>Tên sản phẩm</th>
-						<th>Size</th>
-						<th>Giá</th>
-						<th>Số lượng</th>
-						<th>Tổng giá</th>
-						<th>Hành động</th>
-					</tr>
-				</thead>
-				<tbody>
-				<th:block  th:each="item : ${cartItems}">
-					<tr th:if="${item.product.status}">
-						<td th:text="${item.id}"></td>
-						<td>
-	                    	
-							<img alt="Product Image" th:src="@{'/images/' + ${item.product.images[0].name}}" style="width: 50px; height: 50px;">
+			<div class="row">
+				<div class="col-12 cart-item">
+					<table id="productTable" class="table table-striped table-bordered">
+						<thead>
+							<tr>
+								<th>ID</th>
+								<th>Hình ảnh</th>
+								<th>Tên sản phẩm</th>
+								<th>Size</th>
+								<th>Giá</th>
+								<th>Số lượng</th>
+								<th>Tổng giá</th>
+								<th>Hành động</th>
+							</tr>
+						</thead>
+						<tbody>
+							<th:block th:each="item : ${cartItems}">
+								<tr th:if="${item.product.status}">
+									<td th:text="${item.id}"></td>
+									<td><img alt="Product Image"
+										th:src="@{'/images/' + ${item.product.images[0].name}}"
+										style="width: 50px; height: 50px;"></td>
+									<td th:text="${item.product.name}"></td>
+									<td th:text="${item.size}"></td>
+									<td th:text="${#numbers.formatDecimal(item.product.price, 0, 'COMMA', 0, 'POINT')} + ' VND'"></td>
+									<td>
+										<form action="/updateCart" method="post"
+											class="row g-2 align-items-center">
 
-							
-	                    </td>
-                		<td th:text="${item.product.name}"></td>
-                		<td th:text="${item.size}"></td>
-                		<td th:text="${item.product.price}"></td>
-                		<td>
-                			<form action="/updateCart" method="post" class="row g-2 align-items-center">
-                										
-							    
-							    <div class="col-auto">
-							        <input class="form-control" name="quantity" type="number" th:value="${item.quantity}" step="1" min="1" style="max-width: 80px;">
-							    </div>
-							    
-							    <input type="hidden" name="cartDetailId" th:value="${item.id}">
-							     
-							    <input type="hidden" name="productId" th:value="${item.product.id}">							   								   
-							    <div class="col-auto">
-							        <button type="submit" class="btn btn-primary">
-							            <i class="bi bi-arrow-repeat"></i> Cập nhật
-							        </button>
-							    </div>
-							    
-                				 
-							    
+
+											<div class="col-auto">
+												<input class="form-control" name="quantity" type="number"
+													th:value="${item.quantity}" step="1" min="1"
+													style="max-width: 80px;">
+											</div>
+
+											<input type="hidden" name="cartDetailId"
+												th:value="${item.id}"> <input type="hidden"
+												name="productId" th:value="${item.product.id}">
+											<div class="col-auto">
+												<button type="submit" class="btn btn-primary update-btn"
+													style="display: none;">
+													<i class="bi bi-arrow-repeat"></i> Cập nhật
+												</button>
+											</div>
+
+
+										</form>
+
+									</td>
+									<td th:text="${#numbers.formatDecimal(item.unitPrice, 0, 'COMMA', 0, 'POINT')} + ' VND'"></td>
+
+									<td>
+										<div class="d-flex gap-2">
+											<!-- Nút Xóa -->
+											<form action="/deleteCart" method="post"
+												onsubmit="return confirmDelete()">
+												<input type="hidden" name="cartDetailId"
+													th:value="${item.id}">
+												<button type="submit" class="btn btn-danger">Xóa</button>
+												<td><input type="checkbox" class="select-item"
+													name="selectedItems" th:value="${item.id}"></td>
+											</form>
+										</div>
+									</td>
+								</tr>
+							</th:block>
+						</tbody>
+					</table>
+					<td>
+						<div class="d-flex justify-content-end">
+							<form id="checkoutForm" action="/user/order" method="get">
+								<input type="hidden" name="selectedItems"
+									id="selectedItemsInput">
+								<button type="submit" class="btn btn-success">Mua ngay</button>
 							</form>
-
-                		</td>
-						<td th:text="${item.unitPrice}"></td>
-	                    
-						<td>
-						    <div class="d-flex gap-2">
-						        <!-- Nút Xóa -->
-						        <form action="/deleteCart" method="post" onsubmit="return confirmDelete()">
-						            <input type="hidden" name="cartDetailId" th:value="${item.id}">
-						            <button type="submit" class="btn btn-danger">Xóa</button>
-						            <td>
-                				 		<input type="checkbox" class="select-item" name="selectedItems" th:value="${item.id}">	
-                				 
-                				 </td>
-						        </form>
-						
-						       
-
-						    </div>
-						</td>
-						
-
-					</tr>				
-				</th:block>
-				
-
-				</tbody>
-				
-				</table>
-				<td>
-		    <div class="d-flex justify-content-end">
-    <form id="checkoutForm" action="/user/order" method="get">
-        <input type="hidden" name="selectedItems" id="selectedItemsInput">
-        <button type="submit" class="btn btn-success">Mua ngay</button>
-    </form>
-</div>
-
-</td>
-
-		        </div> 
-		    </div>
-`		</div>
-
-		
+						</div>
+					</td>
+				</div>
+			</div>
+		</div>
 	</main>
 	<div th:insert="~{user/footer :: footer}"></div>
 
@@ -311,9 +302,6 @@
 		    return confirm("Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng?");
 		}
 		
-		
-		
-		
 	    document.addEventListener("DOMContentLoaded", function () {
 	        const checkboxes = document.querySelectorAll(".select-item");
 	        const checkoutForm = document.getElementById("checkoutForm");
@@ -334,7 +322,16 @@
 	        });
 	    });
 	
+	    document.addEventListener("DOMContentLoaded", function () {
+	        const quantityInputs = document.querySelectorAll('input[name="quantity"]');
 
+	        quantityInputs.forEach(input => {
+	            input.addEventListener("change", function () {
+	                // Tìm form chứa input hiện tại và tự động submit
+	                this.closest("form").submit();
+	            });
+	        });
+	    });
 	</script>
 </body>
 
