@@ -361,8 +361,7 @@
 	                
 		                <label for="modalSizeSelect">Chọn size:</label>
 		                <select name="size" class="form-select" id="modalSizeSelect">
-		                    <option value="-1">Chọn size</option>
-		                    <th:block th:each="item : ${productSizeEntity}">
+				                    <th:block th:each="item : ${productSizeEntity}">
 		                        <option th:value="${item.size}" th:text="${item.size}"></option>
 		                    </th:block>
 		                </select>
@@ -440,7 +439,17 @@
                 }
             }
         }
-        
+        document.addEventListener("DOMContentLoaded", function () {
+            let sizeSelect = document.getElementById("modalSizeSelect");
+
+            // Khi mở modal, nếu chưa chọn size thì mặc định là 38
+            document.getElementById("addToCartModal").addEventListener("show.bs.modal", function () {
+                if (sizeSelect.value === "") {
+                    sizeSelect.value = "38";
+                }
+            });
+        });
+
 
     </script>
     

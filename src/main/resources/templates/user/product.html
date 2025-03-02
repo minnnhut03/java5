@@ -82,15 +82,13 @@
 			        <h5 th:text="${product.name}"></h5>
 			        <p th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT')} + ' VND'"></p>
 			        <a th:href="@{'/product/detail?productId=' + ${product.id}}" class="btn btn-primary">Chi Tiết</a>
-<i class="favorite-icon"
-   th:data-product-id="${product.id}"
-   th:classappend="${#lists.contains(favoriteProductIds, product.id)} 
-                   ? 'bi bi-heart-fill text-danger' 
-                   : 'bi bi-heart'"
-   onclick="toggleFavorite(this)">
-</i>
-
-
+                    <i class="favorite-icon"
+                    th:data-product-id="${product.id}"
+                    th:classappend="${#lists.contains(favoriteProductIds, product.id)} 
+                                    ? 'bi bi-heart-fill text-danger' 
+                                    : 'bi bi-heart'"
+                    onclick="toggleFavorite(this)">
+                    </i>
 			    </div>
 			</div>
         </div>

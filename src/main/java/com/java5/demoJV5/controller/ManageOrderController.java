@@ -26,6 +26,8 @@ public class ManageOrderController {
 	@Autowired
 	OrderDetailJPA orderDetailJPA;
 	
+	
+	
 	 @GetMapping("")
 	    public String listOrder(Model model) {
 	        List<OrderEntity> orders = orderService.getAllOrder();

@@ -33,8 +33,8 @@ public class LoginController {
     public String loginPage(HttpServletRequest request, HttpServletResponse response, Model model) {
         String referer = request.getHeader("Referer"); // Lấy URL trước đó
         if (referer != null && !referer.contains("/login")) {
-            String encodedUrl = URLEncoder.encode(referer, StandardCharsets.UTF_8);
-            saveCookie(response, "requestedUrl", encodedUrl, 300); // Lưu trong 5 phút
+//            String encodedUrl = URLEncoder.encode(referer, StandardCharsets.UTF_8);
+//            saveCookie(response, "requestedUrl", encodedUrl, 300); // Lưu trong 5 phút
         }
         model.addAttribute("loginBean", new LoginBean());
         return "user/login";
@@ -67,16 +67,16 @@ public class LoginController {
             saveCookie(response, "email", user.getEmail(), 60 * 60 * 2);
             saveCookie(response, "role", String.valueOf(user.getRole()), 60 * 60 * 2);
 
-            // Đọc URL từ cookie requestedUrl
-            String requestedUrl = getCookieValue(request, "requestedUrl");
-
-            // Xóa cookie requestedUrl sau khi sử dụng
-            deleteCookie(response, "requestedUrl");
-
-            // Kiểm tra requestedUrl có hợp lệ không (chỉ cho phép URL nội bộ)
-            if (requestedUrl != null && !requestedUrl.isEmpty() && requestedUrl.startsWith("/")) {
-                return "redirect:" + requestedUrl;
-            }
+//            // Đọc URL từ cookie requestedUrl
+//            String requestedUrl = getCookieValue(request, "requestedUrl");
+//
+//            // Xóa cookie requestedUrl sau khi sử dụng
+//            deleteCookie(response, "requestedUrl");
+//
+//            // Kiểm tra requestedUrl có hợp lệ không (chỉ cho phép URL nội bộ)
+//            if (requestedUrl != null && !requestedUrl.isEmpty() && requestedUrl.startsWith("/")) {
+//                return "redirect:" + requestedUrl;
+//            }
 
             // Chuyển hướng theo quyền hạn
             return user.getRole() == 1 ? "redirect:/admin" : "redirect:/";

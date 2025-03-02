@@ -24,7 +24,6 @@ public class OrderDetailEntity {
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-
     @JoinColumn(name = "order_id", nullable = false)
     private OrderEntity order;
 
@@ -36,13 +35,12 @@ public class OrderDetailEntity {
     @Column(name = "quantity", nullable = false)
     private Integer quantity;
 
-    @Size(max = 10)
     @NotNull
-    @Column(name = "\"size\"", nullable = false, length = 10)
+    @Column(name = "size", nullable = false)
     private String size;
 
     @NotNull
-    @Column(name = "unit_price", nullable = false, precision = 18, scale = 2)
+    @Column(name = "unit_price", nullable = false)
     private BigDecimal unitPrice;
 
 }

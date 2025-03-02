@@ -20,7 +20,7 @@ public class PermissionComponent implements HandlerInterceptor{
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
 	    Cookie[] cookies = request.getCookies();
 	    if (cookies == null) {
-	        saveRequestedUrl(request, response); // Lưu trang người dùng muốn vào
+	       // saveRequestedUrl(request, response); // Lưu trang người dùng muốn vào
 	        response.sendRedirect("/login");
 	        return false;
 	    }
@@ -33,7 +33,7 @@ public class PermissionComponent implements HandlerInterceptor{
 	            try {
 	                role = Integer.parseInt(cookie.getValue());
 	            } catch (NumberFormatException e) {
-	                saveRequestedUrl(request, response);
+	              //  saveRequestedUrl(request, response);
 	                response.sendRedirect("/login");
 	                return false;
 	            }
@@ -53,7 +53,7 @@ public class PermissionComponent implements HandlerInterceptor{
 
 	    // Nếu truy cập trang /user/ nhưng chưa đăng nhập, lưu URL rồi chuyển hướng đến login
 	    if (path.startsWith("/user") && !isLoggedIn) {
-	        saveRequestedUrl(request, response);
+	      //  saveRequestedUrl(request, response);
 	        response.sendRedirect("/login");
 	        return false;
 	    }

@@ -1,17 +1,17 @@
 package com.java5.demoJV5.bean;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 public class OrderBean {
+	
 	private Integer orderId;
 	
     private Integer userId;
     
+    private int status;
     
-    private Integer status;
+    private LocalDateTime orderDate;
     
-    private Date orderDate;
+    private long totalAmount;
     
-    private double totalAmount;
-    
-    private String shippingAddress;
+    private Integer shippingAddress;
 }

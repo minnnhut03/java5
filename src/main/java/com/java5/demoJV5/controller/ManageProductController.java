@@ -100,7 +100,7 @@ public class ManageProductController {
             model.addAttribute("errorName", "Tên sản phẩm đã tồn tại!");
             List<CategoryEntity> categories = categoryJPA.findAll();
 			model.addAttribute("category",categories);
-            return "admin/form/product_form.html"; // Quay lại trang form
+            return "admin/form/product_form.html"; 
         }
 		
 		if(errors.hasErrors()) {
