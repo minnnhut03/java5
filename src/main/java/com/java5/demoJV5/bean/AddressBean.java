@@ -9,19 +9,17 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AddressBean {
-
+	private Integer id;
+	
     @NotBlank(message = "Tên không được để trống")
     @Size(min = 6, max = 50, message = "Tên phải từ 6 đến 50 ký tự")
-    private String customer_name;
+    private String customerName; 
 
     @NotBlank(message = "Số điện thoại không được để trống")
-    @Pattern(regexp = "^\\d{10,13}$", message = "Số điện thoại phải có từ 10 đến 13 chữ số")
-    private String phone_number;
+    @Pattern(regexp = "^(0[3|5|7|8|9])+([0-9]{8})$", message = "Số điện thoại không hợp lệ")
+    private String phoneNumber;
 
     @NotBlank(message = "Địa chỉ không được để trống")
     @Size(min = 6, max = 300, message = "Địa chỉ không được quá 300 ký tự")
     private String address;
-
-    @NotNull(message = "User ID không được bỏ trống")
-    private Integer user_id;
 }

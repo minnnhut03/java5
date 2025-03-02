@@ -28,8 +28,8 @@ public class UserService {
         return userJPA.findAll();
     }
 
-    public UserBean getUserById(int userId) {
-        return userJPA.findById(userId).map(this::convertToBean).orElse(null);
+    public Optional<UserEntity> getUserEntityById(int userId) {
+        return userJPA.findById(userId);
     }
 
     public String saveUser(UserBean userBean) {

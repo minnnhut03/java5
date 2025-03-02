@@ -20,10 +20,10 @@ public class ProductEntity {
     @Column(name = "product_id")
     private int id;
 
-    @Column(name = "product_name", columnDefinition = "VARCHAR(100)", nullable = false)
+    @Column(name = "product_name", columnDefinition = "NVARCHAR(100)", nullable = false)
     private String name;
 
-    @Column(name = "description", columnDefinition = "TEXT", nullable = false)
+    @Column(name = "description", columnDefinition = "NVARCHAR(300)", nullable = false)
     private String desc;
 
     @Column(name = "price", nullable = false)

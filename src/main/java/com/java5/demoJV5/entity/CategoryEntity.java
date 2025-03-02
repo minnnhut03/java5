@@ -18,7 +18,7 @@ public class CategoryEntity {
     @Column(name = "category_id", nullable = false)
     private Integer id;
 
-    @Column(name = "category_name", nullable = false, length = 100)
+    @Column(name = "category_name", nullable = false, length = 100, columnDefinition = "NVARCHAR(50)")
     private String name;
 
     @Column(name = "status", nullable = false)

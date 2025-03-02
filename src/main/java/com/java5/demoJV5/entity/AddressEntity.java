@@ -23,8 +23,7 @@ public class AddressEntity {
     private Integer id;
 
     @NotNull
-    @Lob
-    @Column(name = "customer_name", nullable = false)
+    @Column(name = "customer_name", nullable = false, columnDefinition = "NVARCHAR(50)")
     private String customerName;
 
     @Size(max = 14)
@@ -33,8 +32,7 @@ public class AddressEntity {
     private String phoneNumber;
 
     @NotNull
-    @Lob
-    @Column(name = "address", nullable = false)
+    @Column(name = "address", nullable = false, columnDefinition = "NVARCHAR(300)")
     private String address;
 
     @NotNull
@@ -42,7 +40,6 @@ public class AddressEntity {
     @JoinColumn(name = "user_id", nullable = false)
     private UserEntity user;
 
-    @OneToMany(mappedBy = "address" , fetch = FetchType.LAZY)
-    List<OrderEntity> orders;
-
+    @OneToMany(mappedBy = "address", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<OrderEntity> orders;
 }

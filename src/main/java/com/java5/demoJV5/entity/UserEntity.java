@@ -22,13 +22,13 @@ public class UserEntity {
     @Column(name = "password", nullable = false, length = 100)
     private String password;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", nullable = false, columnDefinition = "NVARCHAR(50)")
     private String name;
 
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-    @Column(name = "address", nullable = false)
+    @Column(name = "address", nullable = false, columnDefinition = "NVARCHAR(250)")
     private String address;
 
     @Column(name = "role", nullable = false)
