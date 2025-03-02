@@ -62,37 +62,42 @@
 		</div>
 	</div>
 
-	<div class="modal fade" id="categoryModal" tabindex="-1" aria-labelledby="categoryModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="categoryModalLabel">Thêm/Sửa Danh Mục</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="categoryForm" method="post" th:action="@{/admin/category/insert}" th:object="${categoryBean}">
-                        <input type="hidden" id="id" name="id" th:field="*{id}">
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Tên danh mục</label>
-                            <input type="text" class="form-control" id="name" name="name" th:field="*{name}">
-                            <div class = "text-danger" th:errors = "*{name}"></div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="status" class="form-label">Trạng thái</label>
-                            <select class="form-control" id="status" name="status" th:field="*{status}">
-                                <option value="true">Active</option>
-                                <option value="false">Inactive</option>
-                            </select>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                    <button type="submit" class="btn btn-primary" onclick="submitCategory()">Lưu</button>
-                </div>
-            </div>
-        </div>
-    </div>
+	<!-- Modal Thêm/Sửa Danh Mục -->
+	<div class="modal fade" id="categoryModal" tabindex="-1"
+		aria-labelledby="categoryModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="categoryModalLabel">Thêm/Sửa Danh
+						Mục</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<form id="categoryForm" method="post">
+						<input type="hidden" id="id" name="id">
+						<div class="mb-3">
+							<label for="name" class="form-label">Tên danh mục</label> <input
+								type="text" class="form-control" id="name" name="name" required>
+						</div>
+						<div class="mb-3">
+							<label for="status" class="form-label">Trạng thái</label> <select
+								class="form-control" id="status" name="status">
+								<option value="true">Active</option>
+								<option value="false">Inactive</option>
+							</select>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-bs-dismiss="modal">Đóng</button>
+					<button type="submit" class="btn btn-primary"
+						onclick="submitCategory()">Lưu</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<script>
 		$(document).ready(function() {

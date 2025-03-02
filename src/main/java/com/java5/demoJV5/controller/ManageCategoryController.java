@@ -1,6 +1,5 @@
 package com.java5.demoJV5.controller;
 
-import com.java5.demoJV5.bean.CategoryBean;
 import com.java5.demoJV5.entity.CategoryEntity;
 import com.java5.demoJV5.service.CategoryService;
 
@@ -19,13 +18,12 @@ import java.util.List;
 public class ManageCategoryController {
 
     @Autowired
-    private CategoryService categoryService;
+    CategoryService categoryService;
 
     @GetMapping("")
     public String listCategories(Model model) {
         List<CategoryEntity> categories = categoryService.getAllCategories();
         model.addAttribute("categories", categories);
-        model.addAttribute("categoryBean", new CategoryBean()); // Thêm object để binding form
         return "admin/manage_category";
     }
 
@@ -35,55 +33,36 @@ public class ManageCategoryController {
         if (category == null) {
             return "redirect:/admin/category";
         }
-
-        // Chuyển đổi từ CategoryEntity sang CategoryBean
-        CategoryBean categoryBean = new CategoryBean();
-        categoryBean.setId(category.getId());
-        categoryBean.setName(category.getName());
-        categoryBean.setStatus(category.getStatus());
-
-        model.addAttribute("categoryBean", categoryBean);
+        model.addAttribute("category", category);
         model.addAttribute("isEditing", true);
         return "admin/manage_category"; 
     }
 
+
     @PostMapping("/insert")
-    public String insertCategory(@ModelAttribute("categoryBean") @Valid CategoryBean categoryBean, 
+    public String insertCategory(@ModelAttribute("category") @Valid CategoryEntity category, 
                                  BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("error", "Dữ liệu nhập không hợp lệ!");
-            return listCategories(model);
+            return "admin/manage_category";
         }
 
-        String saveResult = categoryService.saveCategory(categoryBean);
-        if (!saveResult.equals("Lưu danh mục thành công!")) {
-            model.addAttribute("error", saveResult);
+        if (!categoryService.saveCategory(category)) {
+            model.addAttribute("error", "Tên danh mục đã tồn tại!");
             return listCategories(model);
         }
 
         return "redirect:/admin/category";
     }
+
+
 
     @PostMapping("/update")
-    public String updateCategory(@ModelAttribute("categoryBean") @Valid CategoryBean categoryBean, 
-                                 BindingResult result, Model model) {
-        if (result.hasErrors()) {
-            model.addAttribute("error", "Dữ liệu nhập không hợp lệ!");
+    public String updateCategory(@ModelAttribute CategoryEntity category, Model model) {
+        if (!categoryService.saveCategory(category)) {
+            model.addAttribute("error", "Tên danh mục đã tồn tại!");
             return listCategories(model);
         }
-
-        String saveResult = categoryService.saveCategory(categoryBean);
-        if (!saveResult.equals("Lưu danh mục thành công!")) {
-            model.addAttribute("error", saveResult);
-            return listCategories(model);
-        }
-
-        return "redirect:/admin/category";
-    }
-
-    @GetMapping("/delete/{id}")
-    public String deleteCategory(@PathVariable("id") int id) {
-        categoryService.deleteCategory(id);
         return "redirect:/admin/category";
     }
 }
