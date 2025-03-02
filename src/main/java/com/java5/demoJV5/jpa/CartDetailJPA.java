@@ -1,5 +1,6 @@
 package com.java5.demoJV5.jpa;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,4 +19,7 @@ public interface CartDetailJPA extends JpaRepository<CartDetail, Integer> {
 	  
 	  @Query(value = "SELECT * FROM cart_details WHERE cart_id=?1 AND product_id=?2 AND size = ?3", nativeQuery = true)
 	  Optional<CartDetail> findByCartIdAndProdIdAndSize(int cartId, int  productId, String size);
+	  
+		/* List<CartDetail> findAllById(List<Integer> ids); */
+	  List<CartDetail> findByIdIn(List<Long> ids);
 }
