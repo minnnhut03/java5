@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import com.java5.demoJV5.component.FavoriteComponent;
 import com.java5.demoJV5.jpa.ImageJPA;
 import com.java5.demoJV5.jpa.ProductSizeJPA;
 import com.java5.demoJV5.service.CartService;
@@ -45,10 +46,14 @@ public class userController {
     
     @Autowired
     CategoryService categoryService;
+    
+    @Autowired
+    private FavoriteComponent favoriteComponent;
 
 	@GetMapping("/")
-	public String homePage(Model model) {
+	public String homePage(Model model,  HttpServletRequest request) {
 		 model.addAttribute("products", productService.findAll());
+		 favoriteComponent.addFavoriteAttributes(model, request);
 		return "user/index";
 	}
 

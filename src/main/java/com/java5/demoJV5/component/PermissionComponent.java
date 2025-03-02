@@ -51,12 +51,12 @@ public class PermissionComponent implements HandlerInterceptor{
 	        return false;
 	    }
 
-//	    // Nếu truy cập trang /user/ nhưng chưa đăng nhập, lưu URL rồi chuyển hướng đến login
-//	    if (path.startsWith("/user") && !isLoggedIn) {
-//	        saveRequestedUrl(request, response);
-//	        response.sendRedirect("/login");
-//	        return false;
-//	    }
+	    // Nếu truy cập trang /user/ nhưng chưa đăng nhập, lưu URL rồi chuyển hướng đến login
+	    if (path.startsWith("/user") && !isLoggedIn) {
+	        saveRequestedUrl(request, response);
+	        response.sendRedirect("/login");
+	        return false;
+	    }
 
 	    return true;
 	}
@@ -65,7 +65,13 @@ public class PermissionComponent implements HandlerInterceptor{
 	 * Lưu URL mà người dùng muốn truy cập trước khi bị chuyển hướng đến trang login
 	 */
 	private void saveRequestedUrl(HttpServletRequest request, HttpServletResponse response) {
-	    String requestedUrl = request.getRequestURI(); // Lấy URL mà user muốn truy cập
+	    String requestedUrl = request.getRequestURI();
+	    
+	    // Chỉ lưu nếu URL bắt đầu với "/user" hoặc "/admin"
+	    if (!requestedUrl.startsWith("/user") && !requestedUrl.startsWith("/admin")) {
+	        return;
+	    }
+
 	    Cookie cookie = new Cookie("requestedUrl", URLEncoder.encode(requestedUrl, StandardCharsets.UTF_8));
 	    cookie.setMaxAge(300); // Lưu trong 5 phút
 	    cookie.setPath("/");
@@ -73,6 +79,7 @@ public class PermissionComponent implements HandlerInterceptor{
 	    cookie.setSecure(true);
 	    response.addCookie(cookie);
 	}
+
 
 	
 	@Override

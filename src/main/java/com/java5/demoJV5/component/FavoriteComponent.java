@@ -48,10 +48,11 @@ public class FavoriteComponent {
         if (cookies != null) {
             for (Cookie cookie : cookies) {
                 if ("id".equals(cookie.getName())) {
-                    return cookie.getValue();
+                    return cookie.getValue(); 
                 }
             }
         }
-        return null;
-    }
+        return null; 
+     }
+
 }

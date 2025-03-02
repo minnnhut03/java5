@@ -67,28 +67,25 @@ public class LoginController {
             saveCookie(response, "email", user.getEmail(), 60 * 60 * 2);
             saveCookie(response, "role", String.valueOf(user.getRole()), 60 * 60 * 2);
 
-//            // Đọc URL từ cookie requestedUrl
-//            String requestedUrl = getCookieValue(request, "requestedUrl");
-//
-//            // Xóa cookie requestedUrl sau khi sử dụng
-//            deleteCookie(response, "requestedUrl");
-//
-//            // Nếu có URL trước đó thì chuyển hướng đến URL đó
-//            if (requestedUrl != null && !requestedUrl.isEmpty()) {
-//                return "redirect:" + URLDecoder.decode(requestedUrl, StandardCharsets.UTF_8);
-//            }
+            // Đọc URL từ cookie requestedUrl
+            String requestedUrl = getCookieValue(request, "requestedUrl");
+
+            // Xóa cookie requestedUrl sau khi sử dụng
+            deleteCookie(response, "requestedUrl");
+
+            // Kiểm tra requestedUrl có hợp lệ không (chỉ cho phép URL nội bộ)
+            if (requestedUrl != null && !requestedUrl.isEmpty() && requestedUrl.startsWith("/")) {
+                return "redirect:" + requestedUrl;
+            }
 
             // Chuyển hướng theo quyền hạn
-            if (user.getRole() == 1) {
-                return "redirect:/admin";
-            } else {
-                return "redirect:/";
-            }
+            return user.getRole() == 1 ? "redirect:/admin" : "redirect:/";
         }
 
         model.addAttribute("error", "Email hoặc mật khẩu không đúng");
         return "user/login";
     }
+
 
 
     @GetMapping("/logout")

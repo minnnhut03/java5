@@ -16,7 +16,7 @@ public class PermissionConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(permissionComponent)
                 .addPathPatterns("/**")
-                .excludePathPatterns("/login", "/product", "/product/detail", "/contact", "/forgot-password", "/present", "/contact", "/");
+                .excludePathPatterns("/login", "/product", "/product/detail", "/contact","/register", "/forgot-password", "/present", "/");
     }
 }
 

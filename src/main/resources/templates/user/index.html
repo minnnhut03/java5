@@ -331,7 +331,13 @@
 			        <h5 th:text="${product.name}"></h5>
 			        <p th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT')} + ' VND'"></p>
 			        <a th:href="@{'/product/detail?productId=' + ${product.id}}" class="btn btn-primary">Chi Tiết</a>
-			        <a class="bi bi-heart favorite-icon" th:href="@{/favorite/add/{id}(id=${product.id})}"></a>
+			        <i class="favorite-icon"
+					   th:data-product-id="${product.id}"
+					   th:classappend="${#lists.contains(favoriteProductIds, product.id)} 
+					                   ? 'bi bi-heart-fill text-danger' 
+					                   : 'bi bi-heart'"
+					   onclick="toggleFavorite(this)">
+					</i>
 			    </div>
 			</div>
         </div>
@@ -524,5 +530,24 @@
 		    });
 		  });
 		});
+	function toggleFavorite(icon) {
+        let productId = icon.getAttribute("data-product-id");
+        let isFavorite = icon.classList.contains("bi-heart-fill");
+
+        let url = isFavorite ? `/user/favorite/remove/${productId}` : `/user/favorite/add/${productId}`;
+
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    icon.classList.toggle("bi-heart-fill");
+                    icon.classList.toggle("bi-heart");
+                    icon.classList.toggle("text-danger");
+                } else {
+                    alert(data.message);
+                }
+            })
+            .catch(error => console.error("Lỗi:", error));
+    }
 </script>
 </html>

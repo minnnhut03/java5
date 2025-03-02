@@ -79,19 +79,34 @@ public class FavoriteService {
     // Xóa sản phẩm khỏi yêu thích
     public boolean removeFromFavorite(int productId) {
         try {
-        	UserEntity user = getUserEntity();
+            UserEntity user = getUserEntity();
             Optional<ProductEntity> productOptional = productJPA.findById(productId);
 
-            if (user == null || productOptional.isEmpty()) {
+            if (user == null) {
+                System.out.println("❌ Lỗi: User chưa đăng nhập!");
+                return false;
+            }
+            if (productOptional.isEmpty()) {
+                System.out.println("❌ Lỗi: Không tìm thấy sản phẩm có ID: " + productId);
                 return false;
             }
 
             ProductEntity product = productOptional.get();
-            favoriteJPA.deleteByUserAndProduct(user, product);
-            return true;
+            Optional<FavoriteEntity> existingFavorite = favoriteJPA.findByUserAndProduct(user, product);
+
+            if (existingFavorite.isPresent()) {
+                favoriteJPA.deleteByUserAndProduct(user, product);
+                System.out.println("✅ Xóa thành công sản phẩm yêu thích ID: " + productId);
+                return true;
+            } else {
+                System.out.println("⚠️ Cảnh báo: Sản phẩm không tồn tại trong danh sách yêu thích!");
+                return false;
+            }
         } catch (Exception e) {
+            e.printStackTrace(); // Hiển thị lỗi chi tiết trong console
             return false;
         }
     }
+
 }
 

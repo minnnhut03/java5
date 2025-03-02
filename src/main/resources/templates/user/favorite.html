@@ -217,8 +217,10 @@
         <div class="row g-3" id="productsContainer">
             <div class="col-lg-3 col-md-4 col-sm-6 col-12" th:each="favorite : ${favorites}">
                 <div class="product-card position-relative p-3 text-center">
-                    <!-- Nút xóa sản phẩm khỏi danh sách yêu thích -->
-                    <a class="bi bi-heart-fill text-danger favorite-icon" th:href="@{/favorite/remove/{id}(id=${favorite.product.id})}"></a>
+                    <a class="bi bi-heart-fill text-danger favorite-icon"
+   th:data-product-id="${favorite.product.id}"
+   onclick="removeFavorite(this)"></a>
+
 
                     <!-- Kiểm tra nếu sản phẩm có ảnh -->
                     <img th:if="${not #lists.isEmpty(favorite.product.images)}" 
@@ -251,6 +253,23 @@
         });
       });
     });
+        function removeFavorite(icon) {
+            let productId = icon.getAttribute("data-product-id");
+            
+            fetch(`/user/favorite/remove/${productId}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Xóa sản phẩm khỏi giao diện
+                        let productCard = icon.closest(".product-card");
+                        productCard.remove();
+                    } else {
+                        alert(data.message);
+                    }
+                })
+                .catch(error => console.error("Lỗi:", error));
+        }
+
     </script>
 </body>
 
