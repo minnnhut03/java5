@@ -72,11 +72,15 @@ public class CartService {
         }
     }
 
-
+    public List<CartDetail> getCartItemsByIds(List<Integer> cartDetailIds) {
+        return cartDetailJPA.findAllById(cartDetailIds);
+    }
     public List<CartDetail> getCartItem(){
         CartEntity cartEntity = this.getCart();
         return cartEntity != null ? cartEntity.getCartDetails() : new ArrayList<>();
     }
+    
+
 
     public boolean addToCart(int prodId, int quantity, String size) {
         try {

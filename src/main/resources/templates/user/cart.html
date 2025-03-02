@@ -228,32 +228,63 @@
                 		<td th:text="${item.product.price}"></td>
                 		<td>
                 			<form action="/updateCart" method="post" class="row g-2 align-items-center">
+                										
+							    
 							    <div class="col-auto">
 							        <input class="form-control" name="quantity" type="number" th:value="${item.quantity}" step="1" min="1" style="max-width: 80px;">
 							    </div>
+							    
 							    <input type="hidden" name="cartDetailId" th:value="${item.id}">
-							    <input type="hidden" name="productId" th:value="${item.product.id}">
+							     
+							    <input type="hidden" name="productId" th:value="${item.product.id}">							   								   
 							    <div class="col-auto">
 							        <button type="submit" class="btn btn-primary">
 							            <i class="bi bi-arrow-repeat"></i> Cập nhật
 							        </button>
 							    </div>
+							    
+                				 
+							    
 							</form>
 
                 		</td>
 						<td th:text="${item.unitPrice}"></td>
 	                    
 						<td>
-							<form action="/deleteCart" method="post" onsubmit="return confirmDelete()">
-								<input type="hidden" name="cartDetailId" th:value="${item.id}">
-								<button type="submit" class="btn btn-danger">Xóa</button>
-							</form>
-							
+						    <div class="d-flex gap-2">
+						        <!-- Nút Xóa -->
+						        <form action="/deleteCart" method="post" onsubmit="return confirmDelete()">
+						            <input type="hidden" name="cartDetailId" th:value="${item.id}">
+						            <button type="submit" class="btn btn-danger">Xóa</button>
+						            <td>
+                				 		<input type="checkbox" class="select-item" name="selectedItems" th:value="${item.id}">	
+                				 
+                				 </td>
+						        </form>
+						
+						       
+
+						    </div>
 						</td>
-					</tr>
+						
+
+					</tr>				
 				</th:block>
+				
+
 				</tbody>
+				
 				</table>
+				<td>
+		    <div class="d-flex justify-content-end">
+    <form id="checkoutForm" action="/order_history" method="get">
+        <input type="hidden" name="selectedItems" id="selectedItemsInput">
+        <button type="submit" class="btn btn-success">Mua ngay</button>
+    </form>
+</div>
+
+</td>
+
 		        </div> 
 		    </div>
 `		</div>
@@ -279,6 +310,31 @@
 		function confirmDelete() {
 		    return confirm("Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng?");
 		}
+		
+		
+		
+		
+	    document.addEventListener("DOMContentLoaded", function () {
+	        const checkboxes = document.querySelectorAll(".select-item");
+	        const checkoutForm = document.getElementById("checkoutForm");
+	        const selectedItemsInput = document.getElementById("selectedItemsInput");
+
+	        checkoutForm.addEventListener("submit", function (event) {
+	            const selectedItems = Array.from(checkboxes)
+	                .filter(checkbox => checkbox.checked)
+	                .map(checkbox => checkbox.value)
+	                .join(",");
+
+	            if (!selectedItems) {
+	                alert("Vui lòng chọn ít nhất một sản phẩm để mua.");
+	                event.preventDefault(); // Ngăn form submit nếu không có sản phẩm nào được chọn
+	            } else {
+	                selectedItemsInput.value = selectedItems;
+	            }
+	        });
+	    });
+	
+
 	</script>
 </body>
 

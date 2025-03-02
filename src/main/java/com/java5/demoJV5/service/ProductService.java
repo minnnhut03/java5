@@ -43,6 +43,8 @@ public class ProductService {
 //        return productJPA.getProductsWithPriceInRange(minPrice, maxPrice);
 //    }
 	
+	
+	
     public List<ProductEntity> findAll() {
         return productJPA.findAll();
     }
