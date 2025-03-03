@@ -187,7 +187,8 @@
 				<thead class="table-dark text-center">
 					<tr>
 						<th>Tên sản phẩm</th>
-						<th>Số lượng</th>
+						<th>size</th>
+						<th>Số lượng</th>					
 						<th>Giá</th>
 						<th>Tổng</th>
 					</tr>
@@ -196,6 +197,7 @@
 					<tr th:each="item : ${selectedCartItems}"
 						class="align-middle text-center">
 						<td th:text="${item.product.name}"></td>
+						<td th:text="${item.size}"></td>
 						<td th:text="${item.quantity}"></td>
 						<td
 							th:text="${#numbers.formatDecimal(item.product.price, 0, 'COMMA', 0, 'POINT')} + ' VND'"></td>
@@ -213,6 +215,7 @@
 		</div>
 		<form action="/checkout" method="post" class="mt-4">
 			<h4 class="mb-3 text-center fw-bold">Chọn Địa Chỉ Giao Hàng</h4>
+			
 			<div class="mb-3">
 				<label for="address" class="form-label fw-semibold">Địa chỉ
 					của bạn:</label>

@@ -41,6 +41,6 @@ public class OrderDetailEntity {
 
     @NotNull
     @Column(name = "unit_price", nullable = false)
-    private BigDecimal unitPrice;
+    private long unitPrice;
 
 }

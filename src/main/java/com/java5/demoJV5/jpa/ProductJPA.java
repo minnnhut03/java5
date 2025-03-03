@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 import com.java5.demoJV5.entity.ProductEntity;
+import com.java5.demoJV5.entity.ProductSizeEntity;
 
 public interface ProductJPA extends JpaRepository<ProductEntity, Integer> {
     
@@ -20,5 +21,6 @@ public interface ProductJPA extends JpaRepository<ProductEntity, Integer> {
 
     // Tìm sản phẩm theo danh mục
     List<ProductEntity> findByCategoryId(Integer categoryId);
+    
 }
 

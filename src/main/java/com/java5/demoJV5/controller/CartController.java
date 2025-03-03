@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.java5.demoJV5.entity.CartDetail;
+import com.java5.demoJV5.entity.AddressEntity;
+import com.java5.demoJV5.entity.CartDetailEntity;
+import com.java5.demoJV5.jpa.AddressJPA;
 import com.java5.demoJV5.jpa.CartDetailJPA;
 import com.java5.demoJV5.service.CartService;
 
@@ -29,6 +31,9 @@ public class CartController {
 	CartDetailJPA cartDetailJPA;
 	
 	@Autowired
+	AddressJPA addressJPA;
+	
+	@Autowired
 	HttpServletRequest request;
 	
 	@GetMapping("/user/cart")
@@ -44,8 +49,11 @@ public class CartController {
 			
 		}
 		
-		List<CartDetail> cartItems = cartDetailJPA.findByUserId(Integer.parseInt(id));
+		List<CartDetailEntity> cartItems = cartDetailJPA.findByUserId(Integer.parseInt(id));
         model.addAttribute("cartItems", cartItems);
+        model.addAttribute("id", id);
+        model.addAttribute("myAddress", addressJPA.findByUser_Id(Integer.valueOf(id)));
+       
         return "user/cart";
 	}
 	@PostMapping("/updateCart")

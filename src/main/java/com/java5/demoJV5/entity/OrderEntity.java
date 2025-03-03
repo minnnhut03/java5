@@ -45,7 +45,7 @@ public class OrderEntity {
 
     @NotNull
     @Column(name = "total_amount", nullable = false, precision = 18, scale = 2)
-    private BigDecimal totalAmount;
+    private long totalAmount;
 
     @PrePersist
     protected void onCreate() {

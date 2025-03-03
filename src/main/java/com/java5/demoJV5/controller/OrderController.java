@@ -1,72 +1,84 @@
 package com.java5.demoJV5.controller;
 
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.Arrays;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpHeaders;
+
+import com.java5.demoJV5.bean.OrderDetailRequest;
+import com.java5.demoJV5.bean.OrderRequest;
+import com.java5.demoJV5.jpa.CartDetailJPA;
+import com.java5.demoJV5.service.CartDetailService;
+import com.java5.demoJV5.service.CartService;
+import com.java5.demoJV5.service.OrderService;
+
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import com.java5.demoJV5.entity.AddressEntity;
-import com.java5.demoJV5.entity.CartDetail;
-import com.java5.demoJV5.service.AddressService;
-import com.java5.demoJV5.service.CartService;
 
-@Controller
+@RestController
 @RequestMapping("/user/order")
 public class OrderController {
 
     @Autowired
-    private CartService cartService;
+    private OrderService orderService;
     
     @Autowired
-    private AddressService addressService;
+    private CartDetailJPA cartDetailJPA;
+    
+    @Autowired
+    private CartService cartService;
+    
+	@Autowired
+	HttpServletRequest request;
+	
 
-    @GetMapping("")
-    public String orders(@RequestParam(name = "selectedItems", required = false) String selectedItems, 
-                         Model model, HttpServletRequest request) {
-        // ✅ Lấy userId từ cookie
-        Integer userId = getUserIdFromCookies(request);
+    @PostMapping
+    public ResponseEntity<Void> createOrder(
+            @RequestParam("userId") String userId,
+            @RequestParam("addressId") String addressId) {
+        List<OrderDetailRequest> cartItems = cartDetailJPA.findByUserId(Integer.valueOf(userId))
+            .stream()
+            .map(item -> {
+                OrderDetailRequest detail = new OrderDetailRequest();
+                detail.setProductId(item.getProduct().getId());
+                detail.setQuantity(item.getQuantity());
+                detail.setSize(item.getSize());
+                detail.setUnitPrice(item.getUnitPrice());
+                return detail;
+            })
+            .toList();
 
-        if (userId != null) {
-            // ✅ Lấy danh sách địa chỉ từ database dựa vào userId
-            List<AddressEntity> addressList = addressService.getAddressesByUserId(userId);
-            model.addAttribute("addressList", addressList);
-        }
+        OrderRequest orderRequest = new OrderRequest();
+        orderRequest.setUserId(Integer.valueOf(userId));
+        orderRequest.setAddressId(Integer.valueOf(addressId));
+        orderRequest.setOrderDetails(cartItems);
 
-        if (selectedItems != null && !selectedItems.isEmpty()) {
-            List<Integer> selectedIds = Arrays.stream(selectedItems.split(","))
-                                              .map(Integer::parseInt)
-                                              .collect(Collectors.toList());
+        orderService.createOrder(orderRequest); 
+        
+        cartService.clearCart();
 
-            List<CartDetail> selectedCartItems = cartService.getCartItemsByIds(selectedIds);
+        // Tạo Header HTTP cho chuyển hướng
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Location", "/"); // Chuyển hướng về trang chủ
 
-            // ✅ Tính tổng tiền
-            double totalPrice = selectedCartItems.stream()
-                .mapToDouble(item -> item.getQuantity() * item.getProduct().getPrice())
-                .sum();
-
-            // ✅ Đưa vào model để Thymeleaf sử dụng
-            model.addAttribute("selectedCartItems", selectedCartItems);
-            model.addAttribute("totalPrice", totalPrice);
-        }
-        return "user/order";
+        return new ResponseEntity<>(headers, HttpStatus.FOUND); // 302 Found
+    }
+    
+    public String getCookieUserId() {
+    	String id = null;
+		
+		Cookie[] cookies = request.getCookies();
+		for(Cookie cookie : cookies) {
+			if(cookie.getName().equals("id")) {
+				id = cookie.getValue();
+				break;
+			}	
+		}
+		return id;
     }
 
-    // ✅ Hàm lấy userId từ cookie
-    private Integer getUserIdFromCookies(HttpServletRequest request) {
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if ("id".equals(cookie.getName())) {
-                    return Integer.parseInt(cookie.getValue());
-                }
-            }
-        }
-        return null;
-    }
+
 }

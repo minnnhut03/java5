@@ -7,7 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.java5.demoJV5.entity.CartDetail;
+import com.java5.demoJV5.entity.CartDetailEntity;
 import com.java5.demoJV5.entity.CartEntity;
 import com.java5.demoJV5.entity.ProductEntity;
 import com.java5.demoJV5.entity.UserEntity;
@@ -36,6 +36,21 @@ public class CartService {
     @Autowired
     ProductJPA productJPA;
 
+    public boolean clearCart() {
+        try {
+            CartEntity cartEntity = this.getCart();
+            if (cartEntity == null) {
+                return false;
+            }
+            cartDetailJPA.clearByCartId(cartEntity.getId());  // Đổi từ getUser().getId() thành getId()
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    
     private UserEntity getUserEntity(){
     	Cookie[] cookies = request.getCookies();
 
@@ -72,10 +87,10 @@ public class CartService {
         }
     }
 
-    public List<CartDetail> getCartItemsByIds(List<Integer> cartDetailIds) {
+    public List<CartDetailEntity> getCartItemsByIds(List<Integer> cartDetailIds) {
         return cartDetailJPA.findAllById(cartDetailIds);
     }
-    public List<CartDetail> getCartItem(){
+    public List<CartDetailEntity> getCartItem(){
         CartEntity cartEntity = this.getCart();
         return cartEntity != null ? cartEntity.getCartDetails() : new ArrayList<>();
     }
@@ -89,12 +104,12 @@ public class CartService {
                 return false;
             }
 
-            Optional<CartDetail> cartItemOptional = cartDetailJPA.findByCartIdAndProdIdAndSize(cartEntity.getId(), prodId, size);
+            Optional<CartDetailEntity> cartItemOptional = cartDetailJPA.findByCartIdAndProdIdAndSize(cartEntity.getId(), prodId, size);
 
             if (cartItemOptional.isPresent()) {
             	Optional<ProductEntity> productOptional = productJPA.findById(prodId);
             	
-                CartDetail cartDetail = cartItemOptional.get();
+                CartDetailEntity cartDetail = cartItemOptional.get();
                 cartDetail.setQuantity(cartDetail.getQuantity() + quantity);
                 cartDetail.setUnitPrice((cartDetail.getQuantity() + quantity)*productOptional.get().getPrice());
                 cartDetailJPA.save(cartDetail);
@@ -103,7 +118,7 @@ public class CartService {
                 if (productOptional.isEmpty()) {
                     return false;
                 }
-                CartDetail cartItemEntity = new CartDetail();
+                CartDetailEntity cartItemEntity = new CartDetailEntity();
                 cartItemEntity.setQuantity(quantity);
                 cartItemEntity.setCart(cartEntity);
                 cartItemEntity.setSize(size);
@@ -123,7 +138,7 @@ public class CartService {
     public boolean deleteCartItem(int cartItemId){
         try{
             CartEntity cartEntity = this.getCart();
-            Optional<CartDetail> cartItemOptional = cartDetailJPA.findByCartIdAndId(cartEntity.getId(), cartItemId);
+            Optional<CartDetailEntity> cartItemOptional = cartDetailJPA.findByCartIdAndId(cartEntity.getId(), cartItemId);
 
             if(cartItemOptional.isPresent()){
                 cartDetailJPA.deleteById(cartItemId);
@@ -137,10 +152,10 @@ public class CartService {
 
     public boolean updateQuantityCartItem(int cartItemId, int quantity, int prodId){
         try{
-            Optional<CartDetail> cartItemOptional = cartDetailJPA.findById(cartItemId);
+            Optional<CartDetailEntity> cartItemOptional = cartDetailJPA.findById(cartItemId);
             Optional<ProductEntity> productOptional = productJPA.findById(prodId);
             if(cartItemOptional.isPresent()){
-                CartDetail cartItemEntity = cartItemOptional.get();
+                CartDetailEntity cartItemEntity = cartItemOptional.get();
                 cartItemEntity.setQuantity(quantity);
                 cartItemEntity.setUnitPrice(quantity*productOptional.get().getPrice());
                 cartDetailJPA.save(cartItemEntity);

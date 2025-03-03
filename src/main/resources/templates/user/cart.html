@@ -206,7 +206,7 @@
 						class="table table-hover table-bordered align-middle text-center">
 						<thead class="table-dark">
 							<tr>
-								<th><input type="checkbox" id="selectAll"></th>
+								
 								<th>ID</th>
 								<th>Hình ảnh</th>
 								<th>Tên sản phẩm</th>
@@ -220,9 +220,7 @@
 						<tbody>
 							<th:block th:each="item : ${cartItems}">
 								<tr th:if="${item.product.status}">
-									<td><input type="checkbox"
-										class="form-check-input select-item" name="selectedItems"
-										th:value="${item.id}"></td>
+									
 									<td th:text="${item.id}"></td>
 									<td><img alt="Product Image" class="img-thumbnail"
 										th:src="@{'/images/' + ${item.product.images[0].name}}"
@@ -262,14 +260,24 @@
 						</tbody>
 					</table>
 					<td>
-						<div class="d-flex justify-content-end">
-							<form id="checkoutForm" action="/user/order" method="get">
-								<input type="hidden" name="selectedItems"
-									id="selectedItemsInput">
-								<button type="submit" class="btn btn-success">Mua ngay</button>
-							</form>
-						</div>
-					</td>
+    <div class="d-flex justify-content-end">
+        <form id="checkoutForm" action="/user/order" method="post">
+            <input type="hidden" name="userId" th:value="${id}">
+            
+            <!-- Dropdown chọn địa chỉ -->
+            <select name="addressId" class="form-select">
+                <option value="" disabled selected>Chọn địa chỉ giao hàng</option>
+                <option th:each="address : ${myAddress}" 
+				        th:value="${address.id}" 
+				        th:text="${address.customerName + ' - ' + address.phoneNumber + ' - ' + address.address}">
+				</option>
+            </select>
+            
+            <button type="submit" class="btn btn-success mt-2">Mua ngay</button>
+        </form>
+    </div>
+</td>
+
 				</div>
 			</div>
 		</div>
@@ -282,26 +290,7 @@
 		function confirmDelete() {
 		    return confirm("Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng?");
 		}
-		
-	    document.addEventListener("DOMContentLoaded", function () {
-	        const checkboxes = document.querySelectorAll(".select-item");
-	        const checkoutForm = document.getElementById("checkoutForm");
-	        const selectedItemsInput = document.getElementById("selectedItemsInput");
 
-	        checkoutForm.addEventListener("submit", function (event) {
-	            const selectedItems = Array.from(checkboxes)
-	                .filter(checkbox => checkbox.checked)
-	                .map(checkbox => checkbox.value)
-	                .join(",");
-
-	            if (!selectedItems) {
-	                alert("Vui lòng chọn ít nhất một sản phẩm để mua.");
-	                event.preventDefault(); // Ngăn form submit nếu không có sản phẩm nào được chọn
-	            } else {
-	                selectedItemsInput.value = selectedItems;
-	            }
-	        });
-	    });
 	
 	    document.addEventListener("DOMContentLoaded", function () {
 	        const quantityInputs = document.querySelectorAll('input[name="quantity"]');

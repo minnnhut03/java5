@@ -28,6 +28,6 @@ public class CartEntity {
     private UserEntity user;
 
     @OneToMany(mappedBy = "cart", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<CartDetail> cartDetails;
+    private List<CartDetailEntity> cartDetails;
 
 }
