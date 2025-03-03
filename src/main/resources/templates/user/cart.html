@@ -202,9 +202,11 @@
 		<div class="row">
 			<div class="row">
 				<div class="col-12 cart-item">
-					<table id="productTable" class="table table-striped table-bordered">
-						<thead>
+					<table id="productTable"
+						class="table table-hover table-bordered align-middle text-center">
+						<thead class="table-dark">
 							<tr>
+								<th><input type="checkbox" id="selectAll"></th>
 								<th>ID</th>
 								<th>Hình ảnh</th>
 								<th>Tên sản phẩm</th>
@@ -218,50 +220,40 @@
 						<tbody>
 							<th:block th:each="item : ${cartItems}">
 								<tr th:if="${item.product.status}">
+									<td><input type="checkbox"
+										class="form-check-input select-item" name="selectedItems"
+										th:value="${item.id}"></td>
 									<td th:text="${item.id}"></td>
-									<td><img alt="Product Image"
+									<td><img alt="Product Image" class="img-thumbnail"
 										th:src="@{'/images/' + ${item.product.images[0].name}}"
-										style="width: 50px; height: 50px;"></td>
+										style="width: 60px; height: 60px;"></td>
 									<td th:text="${item.product.name}"></td>
 									<td th:text="${item.size}"></td>
-									<td th:text="${#numbers.formatDecimal(item.product.price, 0, 'COMMA', 0, 'POINT')} + ' VND'"></td>
+									<td class="fw-bold"
+										th:text="${#numbers.formatDecimal(item.product.price, 0, 'COMMA', 0, 'POINT')} + ' VND'">
+									</td>
 									<td>
 										<form action="/updateCart" method="post"
-											class="row g-2 align-items-center">
-
-
-											<div class="col-auto">
-												<input class="form-control" name="quantity" type="number"
-													th:value="${item.quantity}" step="1" min="1"
-													style="max-width: 80px;">
-											</div>
-
-											<input type="hidden" name="cartDetailId"
-												th:value="${item.id}"> <input type="hidden"
-												name="productId" th:value="${item.product.id}">
-											<div class="col-auto">
-												<button type="submit" class="btn btn-primary update-btn"
-													style="display: none;">
-													<i class="bi bi-arrow-repeat"></i> Cập nhật
-												</button>
-											</div>
-
-
+											class="d-flex align-items-center justify-content-center">
+											<input class="form-control text-center mx-2" name="quantity"
+												type="number" th:value="${item.quantity}" step="1" min="1"
+												style="width: 70px;"> <input type="hidden"
+												name="cartDetailId" th:value="${item.id}"> <input
+												type="hidden" name="productId" th:value="${item.product.id}">
 										</form>
-
 									</td>
-									<td th:text="${#numbers.formatDecimal(item.unitPrice, 0, 'COMMA', 0, 'POINT')} + ' VND'"></td>
-
+									<td class="fw-bold text-danger"
+										th:text="${#numbers.formatDecimal(item.unitPrice, 0, 'COMMA', 0, 'POINT')} + ' VND'">
+									</td>
 									<td>
-										<div class="d-flex gap-2">
-											<!-- Nút Xóa -->
+										<div class="d-flex justify-content-center gap-2">
 											<form action="/deleteCart" method="post"
 												onsubmit="return confirmDelete()">
 												<input type="hidden" name="cartDetailId"
 													th:value="${item.id}">
-												<button type="submit" class="btn btn-danger">Xóa</button>
-												<td><input type="checkbox" class="select-item"
-													name="selectedItems" th:value="${item.id}"></td>
+												<button type="submit" class="btn btn-sm btn-danger">
+													<i class="bi bi-trash">Xóa</i>
+												</button>
 											</form>
 										</div>
 									</td>
@@ -283,21 +275,10 @@
 		</div>
 	</main>
 	<div th:insert="~{user/footer :: footer}"></div>
-
-	<!-- Bootstrap JavaScript Libraries -->
 	<script
-		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-		integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-		crossorigin="anonymous">
-		
-	</script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
-		integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
-		crossorigin="anonymous">
-		
-	</script>
-	<script>
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+<script>
 		function confirmDelete() {
 		    return confirm("Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng?");
 		}
@@ -332,7 +313,9 @@
 	            });
 	        });
 	    });
+	    document.getElementById("selectAll").addEventListener("change", function () {
+	        const checkboxes = document.querySelectorAll(".select-item");
+	        checkboxes.forEach(checkbox => checkbox.checked = this.checked);
+	    });
 	</script>
-</body>
-
 </html>
