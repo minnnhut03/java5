@@ -15,37 +15,17 @@ import java.util.Properties;
 
 @Service
 public class EmailRegisterService {
-
-    @Autowired
-    private UserJPA userJPA;
-
-    private static final String CHARACTERS = "0123456789";
-    private static final int OTP_LENGTH = 6;
-
-    private String generateOTP() {
-        SecureRandom random = new SecureRandom();
-        StringBuilder otp = new StringBuilder();
-        for (int i = 0; i < OTP_LENGTH; i++) {
-            otp.append(CHARACTERS.charAt(random.nextInt(CHARACTERS.length())));
-        }
-        return otp.toString();
-    }
-
-    public void sendOtpEmail(String recipient, HttpServletResponse response) throws MessagingException {
+	public void sendEmail(String recipient, String subject, String content) throws MessagingException {
         final String senderEmail = "trankhanhbang.010105@gmail.com";
         final String senderPassword = "uyqo qiay qjhn ndnm";
 
-        if (userJPA.existsByEmail(recipient)) {
-            throw new IllegalArgumentException("Email đã tồn tại!");
-        }
-
-        String otp = generateOTP();
-
         Properties props = new Properties();
         props.put("mail.smtp.host", "smtp.gmail.com");
-        props.put("mail.smtp.port", "465");
+        props.put("mail.smtp.port", "587"); // Dùng 587 thay vì 465
         props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.ssl.enable", "true");
+        props.put("mail.smtp.starttls.enable", "true"); // Bật TLS
+        props.put("mail.smtp.ssl.protocols", "TLSv1.2");
+
 
         Session mailSession = Session.getInstance(props, new Authenticator() {
             @Override
@@ -57,14 +37,9 @@ public class EmailRegisterService {
         Message message = new MimeMessage(mailSession);
         message.setFrom(new InternetAddress(senderEmail));
         message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipient));
-        message.setSubject("Xác nhận đăng ký tài khoản");
-        message.setText("Mã OTP của bạn là: " + otp);
+        message.setSubject(subject);
+        message.setText(content);
 
         Transport.send(message);
-
-        Cookie otpCookie = new Cookie("otpRegister", otp);
-        otpCookie.setMaxAge(5 * 60);
-        otpCookie.setPath("/");
-        response.addCookie(otpCookie);
     }
 }

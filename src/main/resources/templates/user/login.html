@@ -123,26 +123,25 @@
 		    <span th:text="${error}"></span>
 		</div>
 
-        <form action="/login/check" method="POST">
-            <!-- Email -->
-            <div class="mb-3">
-                <label for="email" class="form-label">Email</label>
-                <input type="text" class="form-control" id="email" name="email" placeholder="Nhập email của bạn"
-                    >
-            </div>
+        <form action="/login/check" method="POST" th:object="${loginBean}">
+    <!-- Email -->
+    <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input type="text" class="form-control" id="email" th:field="*{email}" placeholder="Nhập email của bạn" />
+    </div>
 
-            <!-- Mật khẩu -->
-            <div class="mb-3">
-                <label for="password" class="form-label">Mật khẩu</label>
-                <input type="password" class="form-control" id="password" name="password" placeholder="Nhập mật khẩu"
-                    >
-            </div>
+    <!-- Mật khẩu -->
+    <div class="mb-3">
+        <label for="password" class="form-label">Mật khẩu</label>
+        <input type="password" class="form-control" id="password" th:field="*{password}" placeholder="Nhập mật khẩu" />
+    </div>
 
-            <!-- Nút Đăng nhập -->
-            <div class="d-grid">
-                <button type="submit" class="btn btn-dark">Đăng Nhập</button>
-            </div>
-        </form>
+    <!-- Nút Đăng nhập -->
+    <div class="d-grid">
+        <button type="submit" class="btn btn-dark">Đăng Nhập</button>
+    </div>
+</form>
+
 
         <!-- Liên kết khác -->
         <div class="mt-3 text-center">
@@ -150,7 +149,7 @@
                 <a href="/forgot-password" class="text-secondary text-decoration-underline">Quên mật khẩu?</a>
             </p>
             <p>
-                Chưa có tài khoản? <a href="/register" class="text-secondary text-decoration-underline">Đăng ký
+                Chưa có tài khoản? <a href="/register/otp" class="text-secondary text-decoration-underline">Đăng ký
                     ngay</a>.
             </p>
         </div>

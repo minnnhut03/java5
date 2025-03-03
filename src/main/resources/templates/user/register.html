@@ -64,7 +64,7 @@
             <!-- Email -->
             <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
-                <input th:field="*{email}" type="email" class="form-control" id="email" name="email" placeholder="Nhập email của bạn" >
+                <input th:value="${verifiedEmail}" type="email" class="form-control" id="email" name="email" placeholder="Nhập email của bạn" readonly>
                 <div class = "text-danger" th:errors = "*{email}"></div>
                 <div class = "text-danger" th:if="${errorEmail != null}" th:text="${errorEmail}"></div>
             </div>
