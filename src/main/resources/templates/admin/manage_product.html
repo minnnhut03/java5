@@ -97,7 +97,7 @@
 								style="width: 50px; height: 50px;"></td>
 							<td th:text="${item.name}"></td>
 							<td th:text="${item.desc}"></td>
-							<td th:text="${item.price}"></td>
+							<td th:text="${#numbers.formatDecimal(item.price, 0, 'COMMA', 0, 'POINT')} + ' VND'"></td>
 							<td th:text="${item.quantity}"></td>
 							<td><span
 								th:class="${item.status ? 'badge bg-success' : 'badge bg-danger'}"
@@ -106,7 +106,7 @@
 
 							<td class=""><a style="text-decoration: none;"
 								th:href="${'/admin/product/form?productId='+item.id}">
-									<button class="btn btn-primary btn-sm ">Sửa</button>
+									<button class="btn btn-warning btn-sm ">Sửa</button>
 							</a> <a style="text-decoration: none;"
 								th:href="${'/admin/product/image?productId='+ item.id}">
 									<button class="btn btn-secondary btn-sm">Xem ảnh</button>

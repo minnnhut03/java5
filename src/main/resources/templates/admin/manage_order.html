@@ -103,12 +103,10 @@
 								</form>
 							</td>
 							<td th:text="${item.dateCreated}"></td>
-							<td th:text="${item.totalAmount}"></td>
+							<td th:text="${#numbers.formatDecimal(item.totalAmount, 0, 'COMMA', 0, 'POINT')} + ' VND'"></td>
 							<td th:text="${item.address.address}"></td>
-
 							<td><a th:href="@{/admin/order/detail(orderId=${item.id})}"
-								class="btn btn-success btn-sm">Chi tiết</a></td>
-
+								class="btn btn-primary btn-sm">Chi tiết</a></td>
 						</tr>
 					</th:block>
 				</tbody>

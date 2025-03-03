@@ -1,238 +1,240 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chi Tiết Sản Phẩm</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-    /* Hiển thị dropdown khi hover vào nav-item */
-        .nav-item.dropdown:hover .custom-dropdown {
-            display: block;
-            opacity: 1;
-            transform: translateY(0);
-            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chi Tiết Sản Phẩm</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<style>
+/* Hiển thị dropdown khi hover vào nav-item */
+.nav-item.dropdown:hover .custom-dropdown {
+	display: block;
+	opacity: 1;
+	transform: translateY(0);
+	transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
 
-        /* Đảm bảo dropdown không bị ẩn khi rê chuột vào dropdown */
-        .custom-dropdown {
-            position: absolute;
-            left: 0;
-            width: 100vw;
-            top: 100%;
-            background: white;
-            padding: 20px;
-            opacity: 0;
-            display: none;
-            transform: translateY(10px);
-            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
-            z-index: 1000;
-            border: none;
-        }
+/* Đảm bảo dropdown không bị ẩn khi rê chuột vào dropdown */
+.custom-dropdown {
+	position: absolute;
+	left: 0;
+	width: 100vw;
+	top: 100%;
+	background: white;
+	padding: 20px;
+	opacity: 0;
+	display: none;
+	transform: translateY(10px);
+	transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+	z-index: 1000;
+	border: none;
+}
 
-        /* Khi hover vào dropdown thì không bị ẩn */
-        .nav-item.dropdown:hover .custom-dropdown,
-        .custom-dropdown:hover {
-            display: block;
-            opacity: 1;
-            transform: translateY(0);
-        }
+/* Khi hover vào dropdown thì không bị ẩn */
+.nav-item.dropdown:hover .custom-dropdown, .custom-dropdown:hover {
+	display: block;
+	opacity: 1;
+	transform: translateY(0);
+}
 
-        .custom-dropdown .dropdown-header {
-            font-weight: bold;
-            color: black;
-        }
+.custom-dropdown .dropdown-header {
+	font-weight: bold;
+	color: black;
+}
 
-        .custom-dropdown .dropdown-item {
-            color: #555;
-            font-size: 14px;
-        }
+.custom-dropdown .dropdown-item {
+	color: #555;
+	font-size: 14px;
+}
 
-        .custom-dropdown .dropdown-item:hover {
-            color: black;
-            background: #f8f9fa;
-        }
+.custom-dropdown .dropdown-item:hover {
+	color: black;
+	background: #f8f9fa;
+}
 
-        /* Bỏ mũi tên trên dropdown */
-        .navbar .nav-item .nav-link.no-arrow::after {
-            display: none !important;
-        }
+/* Bỏ mũi tên trên dropdown */
+.navbar .nav-item .nav-link.no-arrow::after {
+	display: none !important;
+}
 
-        /* Gạch chân khi hover */
-        .navbar .nav-item .nav-link:hover {
-            text-decoration: underline;
-        }
+/* Gạch chân khi hover */
+.navbar .nav-item .nav-link:hover {
+	text-decoration: underline;
+}
 
-        .search-box {
-            display: flex;
-            align-items: center;
-            border: 1px solid #e0e0e0;
-            /* Nhẹ hơn cho cảm giác hiện đại */
-            border-radius: 30px;
-            /* Tạo góc bo tròn mềm mại */
-            padding: 6px 12px;
-            /* Tạo khoảng cách gọn gàng */
-            width: 200px;
-            /* Kích thước phù hợp */
-            background-color: #f9f9f9;
-            /* Màu nền nhẹ nhàng */
-        }
+.search-box {
+	display: flex;
+	align-items: center;
+	border: 1px solid #e0e0e0;
+	/* Nhẹ hơn cho cảm giác hiện đại */
+	border-radius: 30px;
+	/* Tạo góc bo tròn mềm mại */
+	padding: 6px 12px;
+	/* Tạo khoảng cách gọn gàng */
+	width: 200px;
+	/* Kích thước phù hợp */
+	background-color: #f9f9f9;
+	/* Màu nền nhẹ nhàng */
+}
 
-        .search-box i {
-            color: #888;
-            /* Màu biểu tượng trung tính */
-            font-size: 1.2rem;
-            /* Biểu tượng kính lúp rõ hơn */
-            margin-right: 8px;
-        }
+.search-box i {
+	color: #888;
+	/* Màu biểu tượng trung tính */
+	font-size: 1.2rem;
+	/* Biểu tượng kính lúp rõ hơn */
+	margin-right: 8px;
+}
 
-        .search-box input {
-            border: none;
-            outline: none;
-            flex-grow: 1;
-            /* Cho phép ô nhập liệu co giãn */
-            font-size: 0.9rem;
-            /* Font nhỏ, tinh tế */
-            background-color: transparent;
-            /* Đồng nhất màu nền */
-        }
+.search-box input {
+	border: none;
+	outline: none;
+	flex-grow: 1;
+	/* Cho phép ô nhập liệu co giãn */
+	font-size: 0.9rem;
+	/* Font nhỏ, tinh tế */
+	background-color: transparent;
+	/* Đồng nhất màu nền */
+}
 
-        .search-box input::placeholder {
-            color: #aaa;
-            /* Màu placeholder nhẹ hơn */
-        }
+.search-box input::placeholder {
+	color: #aaa;
+	/* Màu placeholder nhẹ hơn */
+}
 
-        .search-box:hover {
-            border-color: #c5c5c5;
-            /* Tạo hiệu ứng khi hover */
-        }
+.search-box:hover {
+	border-color: #c5c5c5;
+	/* Tạo hiệu ứng khi hover */
+}
 
-        .search-box i,
-        .navbar a i {
-            color: #555;
-            /* Màu xám đậm, phù hợp với header */
-            transition: color 0.3s ease;
-            /* Hiệu ứng mượt */
-        }
+.search-box i, .navbar a i {
+	color: #555;
+	/* Màu xám đậm, phù hợp với header */
+	transition: color 0.3s ease;
+	/* Hiệu ứng mượt */
+}
 
-        .search-box:hover i,
-        .navbar a:hover i {
-            color: #333;
-            /* Màu đen nhạt khi hover */
-        }
-        .product-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-top: 50px;
-        }
-        .product-image img {
-            width: 400px;
-            cursor: pointer;
-            border-radius: 10px 10px;
-            
-        }
+.search-box:hover i, .navbar a:hover i {
+	color: #333;
+	/* Màu đen nhạt khi hover */
+}
 
-        .product-info {
-            padding-left: 20px;
-        }
+.product-container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-top: 50px;
+}
 
-        .price {
-            font-size: 24px;
-            font-weight: bold;
-            color: red;
-        }
+.product-image img {
+	width: 400px;
+	cursor: pointer;
+	border-radius: 10px 10px;
+}
 
-        .old-price {
-            text-decoration: line-through;
-            color: gray;
-            margin-left: 10px;
-        }
+.product-info {
+	padding-left: 20px;
+}
 
-        .btn-custom {
-            width: 48%;
-            font-size: 18px;
-        }
-        
-        
-        .navbar-brand img {
-            height: 30px;
-        }
+.price {
+	font-size: 24px;
+	font-weight: bold;
+	/* color: red; */
+}
 
-        .btn-custom {
-            width: 48%;
-            font-size: 18px;
-        }
+.old-price {
+	text-decoration: line-through;
+	color: gray;
+	margin-left: 10px;
+}
 
-        .quantity-controls {
-            display: flex;
-            align-items: center;
-        }
+.btn-custom {
+	width: 48%;
+	font-size: 18px;
+}
 
-        .quantity-controls button {
-            width: 30px;
-            height: 38px;
-            border: 1px solid #ced4da;
-            background-color: #f8f9fa;
-        }
+.navbar-brand img {
+	height: 30px;
+}
 
-        .quantity-controls input {
-            text-align: center;
-            width: 50px;
-        }
-        .thumbnail-container img {
-            width: 80px; /* Điều chỉnh kích thước ảnh nhỏ */
-            height: auto;
-            cursor: pointer;
-            border-radius: 5px;
-            border: 2px solid transparent;
-            transition: border 0.3s ease;
-        }
+.btn-custom {
+	width: 48%;
+	font-size: 18px;
+}
 
-        .thumbnail-container img:hover {
-            border: 2px solid #000;
-        }
-      
-        .product-card {
-      width: 300px;
-      flex: 0 0 auto;
-      margin-right: 20px;
-      text-align: center;
-    }
+.quantity-controls {
+	display: flex;
+	align-items: center;
+}
 
-    .product-card img {
-      width: 100%;
-      border-radius: 10px;
-    }
+.quantity-controls button {
+	width: 30px;
+	height: 38px;
+	border: 1px solid #ced4da;
+	background-color: #f8f9fa;
+}
 
-    .product-card h5 {
-      margin-top: 10px;
-    }
+.quantity-controls input {
+	text-align: center;
+	width: 50px;
+}
 
-    .price-product {
-      font-weight: bold;
-    }
+.thumbnail-container img {
+	width: 80px; /* Điều chỉnh kích thước ảnh nhỏ */
+	height: auto;
+	cursor: pointer;
+	border-radius: 5px;
+	border: 2px solid transparent;
+	transition: border 0.3s ease;
+}
 
-    .favorite-icon {
-      font-size: 1.5rem;
-      color: gray;
-      cursor: pointer;
-      position: absolute;
-      /* top: 10px; */
-      right: 10px;
-      transition: color 0.3s ease-in-out;
-    }
+.thumbnail-container img:hover {
+	border: 2px solid #000;
+}
 
-    .favorite-icon.active {
-      color: red;
-    }
+.product-card {
+	width: 300px;
+	flex: 0 0 auto;
+	margin-right: 20px;
+	text-align: center;
+}
 
-    .product-card {
-      position: relative;
-    }
- 
+.product-card img {
+	width: 100%;
+	border-radius: 10px;
+}
+
+.product-card h5 {
+	margin-top: 10px;
+}
+
+.price-product {
+	font-weight: bold;
+}
+
+.favorite-icon {
+	font-size: 1.5rem;
+	color: gray;
+	cursor: pointer;
+	position: absolute;
+	/* top: 10px; */
+	right: 10px;
+	transition: color 0.3s ease-in-out;
+}
+
+.favorite-icon.active {
+	color: red;
+}
+
+.product-card {
+	position: relative;
+}
+
 .footer {
 	background-color: #333;
 	color: #fff;
@@ -268,124 +270,150 @@
 	font-size: 14px;
 	margin-bottom: 10px;
 }
-    </style>
+
+.main-image {
+	max-height: 400px;
+	object-fit: contain;
+}
+</style>
 </head>
 <body>
 	<div th:insert="~{user/header :: header}"></div>
-    <div class="container mt-3">
-        <div class="row product-container">
-            <div class="col-md-5 product-image text-center">
-                <img th:src="${'/images/'+imageEntities.get(0).name}" alt="Giày Adidas Alphabounce" class="img-fluid main-image" id="mainImage">
-	            <div class="thumbnail-container d-flex justify-content-center mt-3">
-	            	<th:block th:each="item : ${imageEntities}">
-	                    <img th:src="${'/images/'+item.name}" class="img-thumbnail mx-2" onclick="changeImage(this.src)">
-	                </th:block> 
-	            </div>
-            </div>
-            
-            <div class="col-md-6 product-info">
-               	<h2 th:text="${product.name}"></h2>
-                <p class="price" th:text="${product.price}+' VNĐ'"></p>          
-                <p class="text-primary" th:text="${product.desc}"></p>
-                <p class="text-muted">Bạn cần tìm size/màu khác? Liên hệ Bele ngay nhé!</p>
-                <div class="d-flex justify-content-between">
-                    <button class="btn btn-dark btn-custom" onclick="openCartModal()" th:data-id="${product.id}" th:data-name="${product.name}" th:data-price="${product.price}">
-					    🛒 Thêm vào giỏ hàng
-					</button>
+	<div class="container mt-3">
+		<div class="row product-container">
+			<div class="col-md-5 product-image text-center">
+				<img th:src="${'/images/'+imageEntities.get(0).name}"
+					alt="Giày Adidas Alphabounce" class="img-fluid main-image"
+					id="mainImage">
+				<div class="thumbnail-container d-flex justify-content-center mt-3">
+					<th:block th:each="item : ${imageEntities}">
+						<img th:src="${'/images/'+item.name}" class="img-thumbnail mx-2"
+							onclick="changeImage(this.src)">
+					</th:block>
+				</div>
+			</div>
 
-                    <button class="btn btn-danger btn-custom">⚡ Mua ngay</button>
-                </div>
+			<div class="col-md-6 product-info">
+				<h2 th:text="${product.name}"></h2>
+				<p class="price"
+					th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT')} + ' VND'"></p>
+				<p class="text-dark" th:text="${product.desc}"></p>
+				<p class="text-muted">Bạn cần tìm size/màu khác? Liên hệ Bele
+					ngay nhé!</p>
+				<div class="d-flex justify-content-between">
+					<button class="btn btn-dark btn-custom" onclick="openCartModal()"
+						th:data-id="${product.id}" th:data-name="${product.name}"
+						th:data-price="${product.price}">🛒 Thêm vào giỏ hàng</button>
+
+					<button class="btn btn-danger btn-custom">⚡ Mua ngay</button>
+				</div>
+			</div>
+		</div>
+		<div class="container my-5">
+			<hr>
+			<h3 class="text-center mb-4">Sản phẩm liên quan</h3>
+			<div class="row" id="productsContainer">
+				<div class="col-md-3 col-sm-6 mb-4">
+					<div class="product-card text-center">
+						<i class="bi bi-heart favorite-icon"></i> <img
+							src="image/Nike Air Force 1'07.png" alt="Nike Air Force 1"
+							class="img-fluid">
+						<h5 class="mt-2">Nike Air Force 1 '07</h5>
+						<p class="text-muted">Men's Shoes</p>
+						<p class="price-product  font-weight-bold">3,959,000₫</p>
+						<button class="btn btn-primary btn-sm">Mua hàng</button>
+					</div>
+				</div>
+				<div class="col-md-3 col-sm-6 mb-4">
+					<div class="product-card text-center">
+						<i class="bi bi-heart favorite-icon"></i> <img
+							src="image/Nike Air Force 1'07.png" alt="Nike Dunk Low"
+							class="img-fluid">
+						<h5 class="mt-2">Nike Dunk Low</h5>
+						<p class="text-muted">Men's Shoes</p>
+						<p class="price-product  font-weight-bold">3,199,000₫</p>
+						<button class="btn btn-primary btn-sm">Mua hàng</button>
+					</div>
+				</div>
+				<div class="col-md-3 col-sm-6 mb-4">
+					<div class="product-card text-center">
+						<i class="bi bi-heart favorite-icon"></i> <img
+							src="image/Nike Air Force 1'07.png" alt="Nike SB Zoom"
+							class="img-fluid">
+						<h5 class="mt-2">Nike SB Zoom Pogo Plus</h5>
+						<p class="text-muted">Women's Skate Shoes</p>
+						<p class="price-product  font-weight-bold">2,499,000₫</p>
+						<button class="btn btn-primary btn-sm">Mua hàng</button>
+					</div>
+				</div>
+				<div class="col-md-3 col-sm-6 mb-4">
+					<div class="product-card text-center">
+						<i class="bi bi-heart favorite-icon"></i> <img
+							src="image/Nike Air Force 1'07.png" alt="Air Jordan 1"
+							class="img-fluid">
+						<h5 class="mt-2">Air Jordan 1 Low</h5>
+						<p class="text-muted">Women's Shoes</p>
+						<p class="price-product  font-weight-bold">4,109,000₫</p>
+						<button class="btn btn-primary btn-sm">Mua hàng</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Modal Thêm Vào Giỏ Hàng -->
+<div class="modal fade" id="addToCartModal" tabindex="-1" aria-labelledby="addToCartLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+           <div class="modal-header bg-gradient bg-dark text-white border-0 d-flex justify-content-between align-items-center">
+                <h5 class="modal-title fw-bold w-100 text-center" id="addToCartLabel">Thêm Vào Giỏ Hàng</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-        </div>
-        <div class="container my-5">
-            <hr>
-            <h3 class="text-center mb-4">Sản phẩm liên quan</h3>
-            <div class="row" id="productsContainer">
-                <div class="col-md-3 col-sm-6 mb-4">
-                    <div class="product-card text-center">
-                        <i class="bi bi-heart favorite-icon"></i>
-                        <img src="image/Nike Air Force 1'07.png" alt="Nike Air Force 1" class="img-fluid">
-                        <h5 class="mt-2">Nike Air Force 1 '07</h5>
-                        <p class="text-muted">Men's Shoes</p>
-                        <p class="price-product  font-weight-bold">3,959,000₫</p>
-                        <button class="btn btn-primary btn-sm">Mua hàng</button>
+            <div class="modal-body p-4">
+                <form action="/product/cart/add" method="post">
+                    <input type="hidden" id="modalProductId" name="productId">
+                    
+                    <div class="mb-3">
+                        <p class="mb-1 text-muted"><strong>Sản phẩm:</strong> <span id="modalProductName" class="fw-semibold text-dark"></span></p>
+                        <p class="mb-1 text-muted"><strong>Giá:</strong> <span id="modalProductPrice" class="fw-bold text-dark"></span></p>
                     </div>
-                </div>
-                <div class="col-md-3 col-sm-6 mb-4">
-                    <div class="product-card text-center">
-                        <i class="bi bi-heart favorite-icon"></i>
-                        <img src="image/Nike Air Force 1'07.png" alt="Nike Dunk Low" class="img-fluid">
-                        <h5 class="mt-2">Nike Dunk Low</h5>
-                        <p class="text-muted">Men's Shoes</p>
-                        <p class="price-product  font-weight-bold">3,199,000₫</p>
-                        <button class="btn btn-primary btn-sm">Mua hàng</button>
+                    
+                    <div class="mb-3">
+                        <label for="modalSizeSelect" class="form-label fw-semibold">Chọn size:</label>
+                        <select name="size" class="form-select rounded-3" id="modalSizeSelect">
+                            <th:block th:each="item : ${productSizeEntity}">
+                                <option th:value="${item.size}" th:text="${item.size}"></option>
+                            </th:block>
+                        </select>
                     </div>
-                </div>
-                <div class="col-md-3 col-sm-6 mb-4">
-                    <div class="product-card text-center">
-                        <i class="bi bi-heart favorite-icon"></i>
-                        <img src="image/Nike Air Force 1'07.png" alt="Nike SB Zoom" class="img-fluid">
-                        <h5 class="mt-2">Nike SB Zoom Pogo Plus</h5>
-                        <p class="text-muted">Women's Skate Shoes</p>
-                        <p class="price-product  font-weight-bold">2,499,000₫</p>
-                        <button class="btn btn-primary btn-sm">Mua hàng</button>
+                    
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Số lượng:</label>
+                        <div class="input-group">
+                            <button type="button" class="btn btn-outline-dark fw-bold" onclick="changeModalQuantity(-1)">-</button>
+                            <input type="number" id="modalQuantity" name="quantity" class="form-control text-center" value="1" min="1">
+                            <button type="button" class="btn btn-outline-dark fw-bold" onclick="changeModalQuantity(1)">+</button>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-3 col-sm-6 mb-4">
-                    <div class="product-card text-center">
-                        <i class="bi bi-heart favorite-icon"></i>
-                        <img src="image/Nike Air Force 1'07.png" alt="Air Jordan 1" class="img-fluid">
-                        <h5 class="mt-2">Air Jordan 1 Low</h5>
-                        <p class="text-muted">Women's Shoes</p>
-                        <p class="price-product  font-weight-bold">4,109,000₫</p>
-                        <button class="btn btn-primary btn-sm">Mua hàng</button>
+                    
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary btn-sm w-50 py-2 fw-bold " onclick="addToCart()">
+                             Thêm vào giỏ hàng
+                        </button>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>
-    
-	<!-- Modal Thêm Vào Giỏ Hàng -->
-	<div class="modal fade" id="addToCartModal" tabindex="-1" aria-labelledby="addToCartLabel" aria-hidden="true">
-	    <div class="modal-dialog">
-	        <div class="modal-content">
-	            <div class="modal-header">
-	                <h5 class="modal-title" id="addToCartLabel">Thêm vào giỏ hàng</h5>
-	                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-	            </div>
-	            <div class="modal-body">
-	            	<form action="/product/cart/add" method="post">
-	            		<input type="hidden" id="modalProductId" name="productId">
-	            		<p><strong>Sản phẩm:</strong> <span id="modalProductName"></span></p>
-	                	<p><strong>Giá:</strong> <span id="modalProductPrice"></span></p>
-	                
-		                <label for="modalSizeSelect">Chọn size:</label>
-		                <select name="size" class="form-select" id="modalSizeSelect">
-				                    <th:block th:each="item : ${productSizeEntity}">
-		                        <option th:value="${item.size}" th:text="${item.size}"></option>
-		                    </th:block>
-		                </select>
-		                
-		                <label class="mt-3">Số lượng:</label>
-		                <div class="quantity-controls">
-		                    <button type="button" onclick="changeModalQuantity(-1)">-</button>
-		                    <input type="number" id="modalQuantity" name="quantity" class="form-control" value="1" min="1">
-		                    <button type="button" onclick="changeModalQuantity(1)">+</button>
-		                </div>
-			            <div class=" text-center">
-			                <button type="submit" class="btn btn-dark" onclick="addToCart()">Thêm vào giỏ hàng</button>
-			            </div>
-	            	</form>
-	            </div> 
-	        </div>
-	    </div>
-	</div>
+</div>
 
-    
+
+
 	<div th:insert="~{user/footer :: footer}"></div>
-	
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
+
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+	<script>
         function changeQuantity(amount) {
             let quantityInput = document.getElementById('quantity');
             let currentValue = parseInt(quantityInput.value);
@@ -418,7 +446,8 @@
 
             // Gán thông tin vào modal
             document.getElementById("modalProductName").innerText = productName;
-            document.getElementById("modalProductPrice").innerText = productPrice + " VNĐ";
+            document.getElementById("modalProductPrice").innerText = 
+                new Intl.NumberFormat('vi-VN').format(productPrice) + " VNĐ";
             document.getElementById("modalSizeSelect").value = "-1";
             document.getElementById("modalQuantity").value = "1";
 
@@ -452,6 +481,6 @@
 
 
     </script>
-    
+
 </body>
 </html>

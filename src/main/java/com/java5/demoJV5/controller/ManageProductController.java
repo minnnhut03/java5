@@ -96,7 +96,7 @@ public class ManageProductController {
 			Errors errors,
 			Model model) 
 	{
-		if (productJPA.existsByName(productBean.getName()) && !productBean.getId().isPresent()) {
+		if (productJPA.existsByName(productBean.getName())) {
             model.addAttribute("errorName", "Tên sản phẩm đã tồn tại!");
             List<CategoryEntity> categories = categoryJPA.findAll();
 			model.addAttribute("category",categories);
@@ -109,7 +109,14 @@ public class ManageProductController {
 			
 			return "admin/form/product_form.html";
 		}
+		
 		if(productBean.getId() != null && productBean.getId().isPresent()) {
+			if (productJPA.existsByName(productBean.getName())) {
+	            model.addAttribute("errorName", "Tên sản phẩm đã tồn tại!");
+	            List<CategoryEntity> categories = categoryJPA.findAll();
+				model.addAttribute("category",categories);
+	            return "admin/form/product_form.html"; 
+	        }
 			productService.UpdateProduct(productBean);
 		} else {
 			if(productBean.validateImageFiles() != null) {
