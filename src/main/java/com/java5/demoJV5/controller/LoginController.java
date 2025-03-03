@@ -31,11 +31,11 @@ public class LoginController {
     
     @GetMapping("/login")
     public String loginPage(HttpServletRequest request, HttpServletResponse response, Model model) {
-//        String referer = request.getHeader("Referer"); // Lấy URL trước đó
-  //      if (referer != null && !referer.contains("/login")) {
+        String referer = request.getHeader("Referer"); // Lấy URL trước đó
+        if (referer != null && !referer.contains("/login")) {
 //            String encodedUrl = URLEncoder.encode(referer, StandardCharsets.UTF_8);
 //            saveCookie(response, "requestedUrl", encodedUrl, 300); // Lưu trong 5 phút
-//        }
+        }
         model.addAttribute("loginBean", new LoginBean());
         return "user/login";
     }

@@ -41,6 +41,7 @@ public class CartController {
 				id = cookie.getValue();
 				break;
 			}
+			
 		}
 		
 		List<CartDetail> cartItems = cartDetailJPA.findByUserId(Integer.parseInt(id));
