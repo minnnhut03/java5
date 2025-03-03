@@ -235,42 +235,42 @@
 }
 
 .product-card {
-      width: 300px;
-      flex: 0 0 auto;
-      margin-right: 20px;
-      text-align: center;
-    }
+	width: 300px;
+	flex: 0 0 auto;
+	margin-right: 20px;
+	text-align: center;
+}
 
-    .product-card img {
-      width: 100%;
-      border-radius: 10px;
-    }
+.product-card img {
+	width: 100%;
+	border-radius: 10px;
+}
 
-    .product-card h5 {
-      margin-top: 10px;
-    }
+.product-card h5 {
+	margin-top: 10px;
+}
 
-    .price-product {
-      font-weight: bold;
-    }
+.price-product {
+	font-weight: bold;
+}
 
-    .favorite-icon {
-      font-size: 1.5rem;
-      color: gray;
-      cursor: pointer;
-      position: absolute;
-      /* top: 10px; */
-      right: 10px;
-      transition: color 0.3s ease-in-out;
-    }
+.favorite-icon {
+	font-size: 1.5rem;
+	color: gray;
+	cursor: pointer;
+	position: absolute;
+	/* top: 10px; */
+	right: 10px;
+	transition: color 0.3s ease-in-out;
+}
 
-    .favorite-icon.active {
-      color: red;
-    }
+.favorite-icon.active {
+	color: red;
+}
 
-    .product-card {
-      position: relative;
-    }
+.product-card {
+	position: relative;
+}
 
 .footer {
 	background-color: #333;
@@ -333,11 +333,9 @@
 						</button>
 					</div>
 				</div>
-
-
-				<div class="row g-3" id="productList">
-					<div class="col-md-3 col-sm-6 mb-4"
-						th:each="product : ${products}" th:if="${product.status}">
+				<div class="products-container" id="productsContainer">
+					<div class="col-md-3 col-sm-6 mb-4" th:each="product : ${products}"
+						th:if="${product.status}">
 						<div class="product-card text-center">
 							<i class="favorite-icon" th:data-product-id="${product.id}"
 								th:classappend="${#lists.contains(favoriteProductIds, product.id)} 
@@ -355,19 +353,6 @@
 						</div>
 					</div>
 				</div>
-				<!-- 				Danh sách sản phẩm
-				<div class="products-container" id="productsContainer">
-					<div class="product-card">
-						<i class="bi bi-heart favorite-icon"></i> <img
-							src="image/Nike Air Force 1'07.png" alt="Nike Air Force 1">
-						<h5>Nike Air Force 1 '07</h5>
-						<p class="text-muted">Men's Shoes</p>
-						<p class="price">3,959,000₫</p>
-						<div class="product-actions">
-							<button class="btn btn-primary">Mua hàng</button>
-						</div>
-					</div>
-				</div> -->
 			</div>
 			<!-- <div class="container mt-4">
 				<h2 class="fw-bold">Trending Now: Espresso</h2>
@@ -398,30 +383,32 @@
 					<!-- Danh sách các môn thể thao -->
 					<div class="products-container" id="sportsContainer">
 						<div class="product-card">
-							<img src="image/running.webp" class="card-img-top" alt="Running">
+							<img th:src="@{/images/Running.jpg}" class="card-img-top"
+								alt="Running">
 							<button class="sport-btn">Running</button>
 						</div>
 						<div class="product-card">
-							<img src="image/Football.avif" class="card-img-top"
+							<img th:src="@{/images/Football.jpg}" class="card-img-top"
 								alt="Football">
 							<button class="sport-btn">Football</button>
 						</div>
 						<div class="product-card">
-							<img src="image/Basketball.avif" class="card-img-top"
+							<img th:src="@{/images/Basketball.jpg}" class="card-img-top"
 								alt="Basketball">
 							<button class="sport-btn">Basketball</button>
 						</div>
 						<div class="product-card">
-							<img src="image/Training & Gym.avif" class="card-img-top"
+							<img th:src="@{/images/Training & Gym.jpg}" class="card-img-top"
 								alt="Basketball">
 							<button class="sport-btn">Training & Gym</button>
 						</div>
 						<div class="product-card">
-							<img th:src="@{/images/Tennis.jpg}" class="card-img-top" alt="Basketball">
+							<img th:src="@{/images/Tennis.jpg}" class="card-img-top"
+								alt="Basketball">
 							<button class="sport-btn">Tennis</button>
 						</div>
 						<div class="product-card">
-							<img src="image/Yoga.webp" class="card-img-top" alt="Basketball">
+							<img th:src="@{/images/Yoga.jpg}" class="card-img-top" alt="Basketball">
 							<button class="sport-btn">Yoga</button>
 						</div>
 					</div>
@@ -480,6 +467,14 @@
 
 						updateButtonState();
 					});
+	
+	document.getElementById("productsContainer").addEventListener("wheel", function(event) {
+	    if (Math.abs(event.deltaY) > Math.abs(event.deltaX)) { 
+	        event.preventDefault();  // Chỉ chặn nếu đang cuộn theo chiều dọc
+	        this.scrollLeft += event.deltaY * 1.5;  // Điều chỉnh tốc độ cuộn
+	    }
+	});
+	
 	document
 			.addEventListener(
 					"DOMContentLoaded",
@@ -528,11 +523,14 @@
 
 						updateButtonState();
 					});
-	document.getElementById("productsContainer").addEventListener("wheel",
-			function(event) {
-				event.preventDefault();
-				this.scrollLeft += event.deltaY;
-			});
+	
+	document.getElementById("sportsContainer").addEventListener("wheel", function(event) {
+	    if (Math.abs(event.deltaY) > Math.abs(event.deltaX)) { 
+	        event.preventDefault();  // Chỉ chặn nếu đang cuộn theo chiều dọc
+	        this.scrollLeft += event.deltaY * 1.5;  // Điều chỉnh tốc độ cuộn
+	    }
+	});
+	
 	document.addEventListener("DOMContentLoaded", function () {
 		  const favoriteIcons = document.querySelectorAll(".favorite-icon");
 
