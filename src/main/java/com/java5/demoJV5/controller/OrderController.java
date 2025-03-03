@@ -5,18 +5,26 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpHeaders;
 
+import com.java5.demoJV5.bean.LoginBean;
 import com.java5.demoJV5.bean.OrderDetailRequest;
 import com.java5.demoJV5.bean.OrderRequest;
 import com.java5.demoJV5.jpa.CartDetailJPA;
+import com.java5.demoJV5.jpa.OrderJPA;
 import com.java5.demoJV5.service.CartDetailService;
 import com.java5.demoJV5.service.CartService;
 import com.java5.demoJV5.service.OrderService;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @RestController
 @RequestMapping("/user/order")
@@ -30,7 +38,7 @@ public class OrderController {
     
     @Autowired
     private CartService cartService;
-    
+  
 	@Autowired
 	HttpServletRequest request;
 	
@@ -66,19 +74,5 @@ public class OrderController {
 
         return new ResponseEntity<>(headers, HttpStatus.FOUND); // 302 Found
     }
-    
-    public String getCookieUserId() {
-    	String id = null;
-		
-		Cookie[] cookies = request.getCookies();
-		for(Cookie cookie : cookies) {
-			if(cookie.getName().equals("id")) {
-				id = cookie.getValue();
-				break;
-			}	
-		}
-		return id;
-    }
-
 
 }
