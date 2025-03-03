@@ -206,7 +206,7 @@
 						class="table table-hover table-bordered align-middle text-center">
 						<thead class="table-dark">
 							<tr>
-								
+
 								<th>ID</th>
 								<th>Hình ảnh</th>
 								<th>Tên sản phẩm</th>
@@ -220,7 +220,7 @@
 						<tbody>
 							<th:block th:each="item : ${cartItems}">
 								<tr th:if="${item.product.status}">
-									
+
 									<td th:text="${item.id}"></td>
 									<td><img alt="Product Image" class="img-thumbnail"
 										th:src="@{'/images/' + ${item.product.images[0].name}}"
@@ -260,23 +260,27 @@
 						</tbody>
 					</table>
 					<td>
-    <div class="d-flex justify-content-end">
-        <form id="checkoutForm" action="/user/order" method="post">
-            <input type="hidden" name="userId" th:value="${id}">
-            
-            <!-- Dropdown chọn địa chỉ -->
-            <select name="addressId" class="form-select">
-                <option value="" disabled selected>Chọn địa chỉ giao hàng</option>
-                <option th:each="address : ${myAddress}" 
-				        th:value="${address.id}" 
-				        th:text="${address.customerName + ' - ' + address.phoneNumber + ' - ' + address.address}">
-				</option>
-            </select>
-            
-            <button type="submit" class="btn btn-success mt-2">Mua ngay</button>
-        </form>
-    </div>
-</td>
+						<div class="d-flex justify-content-end">
+							<form id="checkoutForm" action="/user/order" method="post"
+								class="d-flex align-items-center gap-3">
+								<input type="hidden" name="userId" th:value="${id}">
+
+								<!-- Dropdown chọn địa chỉ -->
+								<select name="addressId" class="form-select w-auto">
+									<option value="" disabled selected>Chọn địa chỉ giao
+										hàng</option>
+									<option th:each="address : ${myAddress}"
+										th:value="${address.id}"
+										th:text="${address.customerName + ' - ' + address.phoneNumber + ' - ' + address.address}">
+									</option>
+								</select>
+
+								<!-- Nút mua ngay -->
+								<button type="submit" class="btn btn-primary">Mua ngay</button>
+							</form>
+						</div>
+
+					</td>
 
 				</div>
 			</div>
