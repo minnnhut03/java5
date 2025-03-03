@@ -19,11 +19,11 @@ public class PermissionComponent implements HandlerInterceptor{
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
 	    Cookie[] cookies = request.getCookies();
-	    if (cookies == null) {
-	       // saveRequestedUrl(request, response); // Lưu trang người dùng muốn vào
-	        response.sendRedirect("/login");
-	        return false;
-	    }
+//	    if (cookies == null) {
+//	       // saveRequestedUrl(request, response); // Lưu trang người dùng muốn vào
+//	        response.sendRedirect("/login");
+//	        return false;
+//	    }
 
 	    int role = -1;
 	    boolean isLoggedIn = false;
