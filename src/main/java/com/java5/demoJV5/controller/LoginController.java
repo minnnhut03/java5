@@ -36,7 +36,6 @@ public class LoginController {
 //            String encodedUrl = URLEncoder.encode(referer, StandardCharsets.UTF_8);
 //            saveCookie(response, "requestedUrl", encodedUrl, 300); // Lưu trong 5 phút
         }
-        model.addAttribute("loginBean", new LoginBean());
         return "user/login";
     }
 
