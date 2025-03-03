@@ -35,7 +35,7 @@ public class LoginController {
   //      if (referer != null && !referer.contains("/login")) {
 //            String encodedUrl = URLEncoder.encode(referer, StandardCharsets.UTF_8);
 //            saveCookie(response, "requestedUrl", encodedUrl, 300); // Lưu trong 5 phút
-        }
+       
 
         return "user/login";
     }
