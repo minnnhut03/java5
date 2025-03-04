@@ -347,7 +347,7 @@
 								th:alt="${product.name}" class="img-fluid" />
 							<h5 th:text="${product.name}"></h5>
 							<p
-								th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT')} + ' VND'"></p>
+								th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT')} + ' VND'" th:class="text-danger"></p>
 							<a th:href="@{'/product/detail?productId=' + ${product.id}}"
 								class="btn btn-primary">Chi Tiết</a>
 						</div>

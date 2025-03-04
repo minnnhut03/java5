@@ -296,7 +296,7 @@
 			<div class="col-md-6 product-info">
 				<h2 th:text="${product.name}"></h2>
 				<p class="price"
-					th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT')} + ' VND'"></p>
+					th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT')} + ' VND'" th:class="text-danger"></p>
 				<p class="text-dark" th:text="${product.desc}"></p>
 				<p class="text-muted">Bạn cần tìm size/màu khác? Liên hệ Bele
 					ngay nhé!</p>
@@ -316,47 +316,43 @@
 				<div class="col-md-3 col-sm-6 mb-4">
 					<div class="product-card text-center">
 						<i class="bi bi-heart favorite-icon"></i> <img
-							src="image/Nike Air Force 1'07.png" alt="Nike Air Force 1"
+							th:src="@{/images/Nike Air Force 1 '07 Essential.png}" alt="Nike Air Force 1"
 							class="img-fluid">
-						<h5 class="mt-2">Nike Air Force 1 '07</h5>
-						<p class="text-muted">Men's Shoes</p>
-						<p class="price-product  font-weight-bold">3,959,000₫</p>
-						<button class="btn btn-primary btn-sm">Mua hàng</button>
+						<h5 class="mt-2">Nike Air Force 1 '07 Essential</h5>
+						<p class="price-product  font-weight-bold text-danger">3,200,000 VND</p>
+						<button class="btn btn-primary btn-sm">Chi Tiết</button>
 					</div>
 				</div>
 				<div class="col-md-3 col-sm-6 mb-4">
 					<div class="product-card text-center">
 						<i class="bi bi-heart favorite-icon"></i> <img
-							src="image/Nike Air Force 1'07.png" alt="Nike Dunk Low"
+							th:src="@{/images/Jordan 1 Mid RM EasyOn.png}" alt="Nike Air Force 1"
 							class="img-fluid">
-						<h5 class="mt-2">Nike Dunk Low</h5>
-						<p class="text-muted">Men's Shoes</p>
-						<p class="price-product  font-weight-bold">3,199,000₫</p>
-						<button class="btn btn-primary btn-sm">Mua hàng</button>
+						<h5 class="mt-2">Jordan 1 Mid RM EasyOn</h5>
+						<p class="price-product  font-weight-bold text-danger">2,200,000 VND</p>
+						<button class="btn btn-primary btn-sm">Chi Tiết</button>
 					</div>
 				</div>
 				<div class="col-md-3 col-sm-6 mb-4">
 					<div class="product-card text-center">
 						<i class="bi bi-heart favorite-icon"></i> <img
-							src="image/Nike Air Force 1'07.png" alt="Nike SB Zoom"
+							th:src="@{/images/Nike Air Force 1 '07 LX.png}" alt="Nike Air Force 1"
 							class="img-fluid">
-						<h5 class="mt-2">Nike SB Zoom Pogo Plus</h5>
-						<p class="text-muted">Women's Skate Shoes</p>
-						<p class="price-product  font-weight-bold">2,499,000₫</p>
-						<button class="btn btn-primary btn-sm">Mua hàng</button>
+						<h5 class="mt-2">Nike Air Force 1 '07 LX</h5>
+						<p class="price-product  font-weight-bold text-danger">2,800,000 VND</p>
+						<button class="btn btn-primary btn-sm">Chi Tiết</button>
 					</div>
 				</div>
-				<div class="col-md-3 col-sm-6 mb-4">
+<!-- 				<div class="col-md-3 col-sm-6 mb-4">
 					<div class="product-card text-center">
 						<i class="bi bi-heart favorite-icon"></i> <img
-							src="image/Nike Air Force 1'07.png" alt="Air Jordan 1"
+							th:src="@{/images/Nike Air Force 1 Mid By You.png}" alt="Nike Air Force 1"
 							class="img-fluid">
-						<h5 class="mt-2">Air Jordan 1 Low</h5>
-						<p class="text-muted">Women's Shoes</p>
-						<p class="price-product  font-weight-bold">4,109,000₫</p>
-						<button class="btn btn-primary btn-sm">Mua hàng</button>
+						<h5 class="mt-2">Nike Air Force 1 Mid By You</h5>
+						<p class="price-product  font-weight-bold">3,800,000 VND</p>
+						<button class="btn btn-primary btn-sm">Chi Tiết</button>
 					</div>
-				</div>
+				</div> -->
 			</div>
 		</div>
 	</div>
@@ -375,7 +371,7 @@
                     
                     <div class="mb-3">
                         <p class="mb-1 text-muted"><strong>Sản phẩm:</strong> <span id="modalProductName" class="fw-semibold text-dark"></span></p>
-                        <p class="mb-1 text-muted"><strong>Giá:</strong> <span id="modalProductPrice" class="fw-bold text-dark"></span></p>
+                        <p class="mb-1 text-muted"><strong>Giá:</strong> <span id="modalProductPrice" class="fw-bold text-danger"></span></p>
                     </div>
                     
                     <div class="mb-3">
