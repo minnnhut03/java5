@@ -2,8 +2,14 @@ package com.java5.demoJV5.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import com.java5.demoJV5.jpa.OrderJPA;
+import com.java5.demoJV5.jpa.ProductJPA;
+import com.java5.demoJV5.jpa.UserJPA;
+
+import jakarta.persistence.criteria.Order;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -22,9 +28,21 @@ public class adminController {
 
 	@Autowired
 	ServletContext context;
+	
+	@Autowired
+	ProductJPA prJPA;
+	
+	@Autowired
+	UserJPA userJPA;
+	
+	@Autowired
+	OrderJPA orderJPA;
 
 	@GetMapping("/admin")
-	public String admin() {
+	public String admin(Model model) {
+		model.addAttribute("pr", prJPA.findAll().size());
+		model.addAttribute("user", userJPA.findAll().size()-1);
+		model.addAttribute("order", orderJPA.findAll().size());
 		return "admin/manage_dashboard.html";
 	}
 	
