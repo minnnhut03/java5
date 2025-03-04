@@ -19,27 +19,24 @@ public class PermissionComponent implements HandlerInterceptor{
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
 	    Cookie[] cookies = request.getCookies();
-//	    if (cookies == null) {
-//	       // saveRequestedUrl(request, response); // Lưu trang người dùng muốn vào
-//	        response.sendRedirect("/login");
-//	        return false;
-//	    }
-
+	    
 	    int role = -1;
 	    boolean isLoggedIn = false;
 
-	    for (Cookie cookie : cookies) {
-	        if ("role".equals(cookie.getName())) {
-	            try {
-	                role = Integer.parseInt(cookie.getValue());
-	            } catch (NumberFormatException e) {
-	              //  saveRequestedUrl(request, response);
-	                response.sendRedirect("/login");
-	                return false;
+	    // Kiểm tra nếu cookies != null trước khi lặp
+	    if (cookies != null) {
+	        for (Cookie cookie : cookies) {
+	            if ("role".equals(cookie.getName())) {
+	                try {
+	                    role = Integer.parseInt(cookie.getValue());
+	                } catch (NumberFormatException e) {
+	                    response.sendRedirect("/login");
+	                    return false;
+	                }
 	            }
-	        }
-	        if ("id".equals(cookie.getName()) || "email".equals(cookie.getName())) {
-	            isLoggedIn = true;
+	            if ("id".equals(cookie.getName()) || "email".equals(cookie.getName())) {
+	                isLoggedIn = true;
+	            }
 	        }
 	    }
 
@@ -53,13 +50,13 @@ public class PermissionComponent implements HandlerInterceptor{
 
 	    // Nếu truy cập trang /user/ nhưng chưa đăng nhập, lưu URL rồi chuyển hướng đến login
 	    if (path.startsWith("/user") && !isLoggedIn) {
-	      //  saveRequestedUrl(request, response);
 	        response.sendRedirect("/login");
 	        return false;
 	    }
 
 	    return true;
 	}
+
 
 	/**
 	 * Lưu URL mà người dùng muốn truy cập trước khi bị chuyển hướng đến trang login
