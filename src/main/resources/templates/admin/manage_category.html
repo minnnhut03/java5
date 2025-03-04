@@ -20,36 +20,38 @@
 
 <style>
 .list-group-item {
-  transition: all 0.3s ease-in-out;
-  border: none;
-  border-left: 4px solid transparent;
+	transition: all 0.3s ease-in-out;
+	border: none;
+	border-left: 4px solid transparent;
 }
 
 .list-group-item:hover {
-  background-color: rgba(0, 123, 255, 0.1);
-  border-left: 4px solid #007bff;
-  transform: scale(1.02);
+	background-color: rgba(0, 123, 255, 0.1);
+	border-left: 4px solid #007bff;
+	transform: scale(1.02);
 }
-.nav-item,
-.nav > li {
-  margin-bottom: 10px; /* Khoảng cách giữa các mục */
+
+.nav-item, .nav>li {
+	margin-bottom: 10px; /* Khoảng cách giữa các mục */
 }
 
 .nav-link {
-  transition: all 0.3s ease-in-out;
+	transition: all 0.3s ease-in-out;
 }
 
 .nav-link:hover {
-  background-color: rgba(0, 123, 255, 0.1);
-  border-left: 4px solid #007bff;
-  transform: scale(1.02);
+	background-color: rgba(0, 123, 255, 0.1);
+	border-left: 4px solid #007bff;
+	transform: scale(1.02);
 }
+
 .nav-link.active {
-    background-color: transparent !important; /* Xóa màu nền xanh */
-    color: white !important; /* Giữ màu chữ trắng */
+	background-color: transparent !important; /* Xóa màu nền xanh */
+	color: white !important; /* Giữ màu chữ trắng */
 }
+
 .nav-pills .nav-link {
-    padding: 12px 15px; /* Tăng padding cho liên kết */
+	padding: 12px 15px; /* Tăng padding cho liên kết */
 }
 </style>
 </head>
@@ -116,7 +118,8 @@
 						<input type="hidden" id="id" name="id">
 						<div class="mb-3">
 							<label for="name" class="form-label">Tên danh mục</label> <input
-								type="text" class="form-control" id="name" name="name" required>
+								type="text" class="form-control" id="name" name="name">
+							<div id="nameError" class="text-danger mt-1"></div>
 						</div>
 						<div class="mb-3">
 							<label for="status" class="form-label">Trạng thái</label> <select
@@ -152,6 +155,28 @@
 
 		function submitCategory() {
 			document.getElementById('categoryForm').submit();
+		}
+
+		function validateCategoryForm() {
+			let name = document.getElementById("name").value.trim();
+			let nameError = document.getElementById("nameError");
+			let isValid = true;
+
+			// Reset lỗi trước
+			nameError.textContent = "";
+
+			if (name === "") {
+				nameError.textContent = "Tên danh mục không được để trống.";
+				isValid = false;
+			}
+
+			return isValid; // Trả về true nếu hợp lệ, false nếu có lỗi
+		}
+
+		function submitCategory() {
+			if (validateCategoryForm()) {
+				document.getElementById("categoryForm").submit();
+			}
 		}
 	</script>
 
