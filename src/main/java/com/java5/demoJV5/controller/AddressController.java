@@ -68,7 +68,7 @@ public class AddressController {
                              Model model) {
         if (result.hasErrors()) {
             model.addAttribute("address", addressBean);
-            return "user/address_form"; // Quay lại form nếu có lỗi
+            return "user/address_form"; 
         }
 
         Integer userId = getUserIdFromCookie(request);
