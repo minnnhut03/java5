@@ -266,7 +266,6 @@
 
 								<!-- Dropdown chọn địa chỉ -->
 								<select name="addressId" class="form-select w-auto">
-									
 									<option th:each="address : ${myAddress}"
 										th:value="${address.id}"
 										th:text="${address.customerName + ' - ' + address.phoneNumber + ' - ' + address.address}">
