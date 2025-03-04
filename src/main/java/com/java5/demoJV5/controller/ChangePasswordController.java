@@ -46,7 +46,7 @@ public class ChangePasswordController {
         }
 
         if (result.hasErrors()) {
-            model.addAttribute("changePasswordBean", changePasswordBean); // Quan trọng!
+            model.addAttribute("changePasswordBean", changePasswordBean);
             return "user/ChangePassword";
         }
 
@@ -78,7 +78,7 @@ public class ChangePasswordController {
 
         model.addAttribute("successMessage", "Mật khẩu đã được thay đổi thành công!");
 
-        return "redirect:/user/change-password"; // Chuyển hướng về trang đổi mật khẩu
+        return "user/ChangePassword";  // Chuyển hướng về trang đổi mật khẩu
     }
 
 
