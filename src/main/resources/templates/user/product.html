@@ -238,25 +238,24 @@
 			</div>
 		</div>
 		<div class="row g-3" id="productList">
-			<div class="col-md-3 col-sm-6 mb-4" th:each="product : ${products}"
-				th:if="${product.status}">
-				<div class="product-card text-center">
-					<i class="favorite-icon" th:data-product-id="${product.id}"
-						th:classappend="${#lists.contains(favoriteProductIds, product.id)} 
-                                    ? 'bi bi-heart-fill text-danger' 
-                                    : 'bi bi-heart'"
-						onclick="toggleFavorite(this)"> </i>
-						 <img
-						th:if="${not #lists.isEmpty(product.images)}"
-						th:src="@{'/images/' + ${product.images[0].name}}"
-						th:alt="${product.name}" class="img-fluid" />
-					<h5 th:text="${product.name}"></h5>
-					<p
-						th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT')} + ' VND'"></p>
-					<a th:href="@{'/product/detail?productId=' + ${product.id}}"
-						class="btn btn-primary btn-sm">Chi Tiết</a>
-				</div>
-			</div>
+		    <div class="col-md-3 col-sm-6 mb-4" 
+		         th:each="product : ${products}" 
+		         th:if="${product.status} and ${product.category.status}">
+		        <div class="product-card text-center">
+		            <i class="favorite-icon" th:data-product-id="${product.id}"
+		                th:classappend="${#lists.contains(favoriteProductIds, product.id)} 
+		                                ? 'bi bi-heart-fill text-danger' 
+		                                : 'bi bi-heart'"
+		                onclick="toggleFavorite(this)"> 
+		            </i>
+		            <img th:if="${not #lists.isEmpty(product.images)}"
+		                 th:src="@{'/images/' + ${product.images[0].name}}"
+		                 th:alt="${product.name}" class="img-fluid" />
+		            <h5 th:text="${product.name}"></h5>
+		            <p th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT')} + ' VND'"></p>
+		            <a th:href="@{'/product/detail?productId=' + ${product.id}}" class="btn btn-primary btn-sm">Chi Tiết</a>
+		        </div>
+		    </div>
 		</div>
 	</div>
 	<div th:insert="~{user/footer :: footer}"></div>
