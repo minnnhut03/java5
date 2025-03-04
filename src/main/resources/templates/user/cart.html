@@ -218,48 +218,47 @@
 							</tr>
 						</thead>
 						<tbody>
-							<th:block th:each="item : ${cartItems}">
-								<tr th:if="${item.product.status}">
-
-									<td th:text="${item.id}"></td>
-									<td><img alt="Product Image" class="img-thumbnail"
-										th:src="@{'/images/' + ${item.product.images[0].name}}"
-										style="width: 60px; height: 60px;"></td>
-									<td th:text="${item.product.name}"></td>
-									<td th:text="${item.size}"></td>
-									<td class="fw-bold"
-										th:text="${#numbers.formatDecimal(item.product.price, 0, 'COMMA', 0, 'POINT')} + ' VND'">
-									</td>
-									<td>
-										<form action="/updateCart" method="post"
-											class="d-flex align-items-center justify-content-center">
-											<input class="form-control text-center mx-2" name="quantity"
-												type="number" th:value="${item.quantity}" step="1" min="1"
-												style="width: 70px;"> <input type="hidden"
-												name="cartDetailId" th:value="${item.id}"> <input
-												type="hidden" name="productId" th:value="${item.product.id}">
-										</form>
-									</td>
-									<td class="fw-bold text-danger"
-										th:text="${#numbers.formatDecimal(item.unitPrice, 0, 'COMMA', 0, 'POINT')} + ' VND'">
-									</td>
-									<td>
-										<div class="d-flex justify-content-center gap-2">
-											<form action="/deleteCart" method="post"
-												onsubmit="return confirmDelete()">
-												<input type="hidden" name="cartDetailId"
-													th:value="${item.id}">
-												<button type="submit" class="btn btn-sm btn-danger">
-													<i class="bi bi-trash">Xóa</i>
-												</button>
-											</form>
-										</div>
-									</td>
-								</tr>
-							</th:block>
+						    <th:block th:each="item, iterStat : ${cartItems}">
+						        <tr th:if="${item.product.status}">
+						            <td th:text="${iterStat.index + 1}"></td> <!-- Số thứ tự -->
+						            <td><img alt="Product Image" class="img-thumbnail"
+						                th:src="@{'/images/' + ${item.product.images[0].name}}"
+						                style="width: 60px; height: 60px;"></td>
+						            <td th:text="${item.product.name}"></td>
+						            <td th:text="${item.size}"></td>
+						            <td class="fw-bold"
+						                th:text="${#numbers.formatDecimal(item.product.price, 0, 'COMMA', 0, 'POINT')} + ' VND'">
+						            </td>
+						            <td>
+						                <form action="/updateCart" method="post"
+						                    class="d-flex align-items-center justify-content-center">
+						                    <input class="form-control text-center mx-2" name="quantity"
+						                        type="number" th:value="${item.quantity}" step="1" min="1"
+						                        style="width: 70px;">
+						                    <input type="hidden" name="cartDetailId" th:value="${item.id}">
+						                    <input type="hidden" name="productId" th:value="${item.product.id}">
+						                </form>
+						            </td>
+						            <td class="fw-bold text-danger"
+						                th:text="${#numbers.formatDecimal(item.unitPrice, 0, 'COMMA', 0, 'POINT')} + ' VND'">
+						            </td>
+						            <td>
+						                <div class="d-flex justify-content-center gap-2">
+						                    <form action="/deleteCart" method="post"
+						                        onsubmit="return confirmDelete()">
+						                        <input type="hidden" name="cartDetailId"
+						                            th:value="${item.id}">
+						                        <button type="submit" class="btn btn-sm btn-danger">
+						                            <i class="bi bi-trash">Xóa</i>
+						                        </button>
+						                    </form>
+						                </div>
+						            </td>
+						        </tr>
+						    </th:block>
 						</tbody>
+
 					</table>
-					<td>
 						<div class="d-flex justify-content-end">
 							<form id="checkoutForm" action="/user/order" method="post"
 								class="d-flex align-items-center gap-3">
@@ -267,13 +266,16 @@
 
 								<!-- Dropdown chọn địa chỉ -->
 								<select name="addressId" class="form-select w-auto">
-									<option value="" disabled selected>Chọn địa chỉ giao
-										hàng</option>
+									
 									<option th:each="address : ${myAddress}"
 										th:value="${address.id}"
 										th:text="${address.customerName + ' - ' + address.phoneNumber + ' - ' + address.address}">
 									</option>
 								</select>
+									 <a href="/user/address/add" class="btn btn-primary">➕ Thêm Địa
+						Chỉ</a>
+								
+								
 
 								<!-- Nút mua ngay -->
 								<button type="submit" class="btn btn-primary">Mua ngay</button>
