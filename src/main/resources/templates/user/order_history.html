@@ -315,7 +315,7 @@
 				<tr th:each="order : ${MyOrder}">
 					<td th:text="${order.id}"></td>
 					<td th:text="${order.dateCreated}"></td>
-					<td th:text="${#numbers.formatDecimal(order.totalAmount, 0, 'COMMA', 0, 'POINT')} + ' VND'"></td>
+					<td th:text="${#numbers.formatDecimal(order.totalAmount, 0, 'COMMA', 0, 'POINT')} + ' VND'" th:class="text-danger"></td>
 					<td><span th:switch="${order.status}"> <span
 							th:case="0" th:class="'text-warning'">Chưa duyệt</span> <span
 							th:case="1" th:class="'text-primary'">Đã duyệt</span> <span

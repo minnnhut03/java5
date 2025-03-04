@@ -24,7 +24,7 @@ public class ProductBean {
 	@NotBlank(message = "Tên không được bỏ trống")
 	private String name;
 	
-	@Length(min = 20, max = 200, message = "Mô tả sản phẩm phải từ 20 đến 200 ký tự")
+	@Length(min = 20, max = 500, message = "Mô tả sản phẩm phải từ 20 đến 500 ký tự")
 	private String desc;
 	
 	@Min(value = 10000, message = "Giá tiền phải lớn hơn hoặc bằng 10000")
