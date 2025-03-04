@@ -152,7 +152,5 @@ public class CartService {
         return true;
     }
 
-    public List<CartDetail> getCartItems() {
-        return cartDetailJPA.findAll(); 
-    }
+    
 }

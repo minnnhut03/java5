@@ -1,5 +1,6 @@
 package com.java5.demoJV5.controller;
 
+import java.net.CookieHandler;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.java5.demoJV5.entity.CartDetail;
+import com.java5.demoJV5.jpa.CartDetailJPA;
 import com.java5.demoJV5.service.CartService;
+
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 
 
 @Controller
@@ -20,9 +25,26 @@ public class CartController {
 	@Autowired
 	CartService cartService;
 	
+	@Autowired
+	CartDetailJPA cartDetailJPA;
+	
+	@Autowired
+	HttpServletRequest request;
+	
 	@GetMapping("/user/cart")
 	public String cart(Model model) {
-		List<CartDetail> cartItems = cartService.getCartItems();
+		String id = null;
+		
+		Cookie[] cookies = request.getCookies();
+		for(Cookie cookie : cookies) {
+			if(cookie.getName().equals("id")) {
+				id = cookie.getValue();
+				break;
+			}
+			
+		}
+		
+		List<CartDetail> cartItems = cartDetailJPA.findByUserId(Integer.parseInt(id));
         model.addAttribute("cartItems", cartItems);
         return "user/cart";
 	}

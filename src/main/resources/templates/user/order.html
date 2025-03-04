@@ -88,10 +88,12 @@
             text-decoration: none;
         }
     </style>
+
 </head>
 <body>
-    <div class="container mt-5">
-        <h2 class="mb-4 text-center">🛒 Đơn hàng của bạn</h2>
+	<div th:insert="~{user/header :: header}"></div>
+	<div class="container mt-3">
+		<h2 class="mb-3 text-center">Đơn Hàng Của Bạn</h2>
 
         <table class="table table-bordered table-striped">
             <thead class="table-dark">
@@ -153,5 +155,6 @@
             </div>
         </form>
     </div>
+
 </body>
 </html>

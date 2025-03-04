@@ -22,4 +22,8 @@ public interface CartDetailJPA extends JpaRepository<CartDetail, Integer> {
 	  
 		/* List<CartDetail> findAllById(List<Integer> ids); */
 	  List<CartDetail> findByIdIn(List<Long> ids);
+	  
+	  @Query(value = "SELECT cd.*, c.cart_id AS id FROM cart_details cd JOIN cart c ON cd.cart_id = c.cart_id WHERE c.user_id = ?1", nativeQuery = true)
+	  List<CartDetail> findByUserId(int id);
+
 }
